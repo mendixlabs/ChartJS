@@ -12,10 +12,10 @@
 	], function (declare, _WidgetBase, _Widget, _Templated, domMx, dom, domQuery, domProp, domGeom, domClass, domStyle, domConstruct, dojoArray, win, on, lang, text, _charts) {
 
 		// Declare widget.
-		return declare('ChartJS.widgets.Bar.widget.Bar', [ _WidgetBase, _Widget, _Templated, _charts ], {
+		return declare('ChartJS.widgets.MultiSeries.widget.MultiSeries', [ _WidgetBase, _Widget, _Templated, _charts ], {
 
 			// Template path
-			templatePath: require.toUrl('ChartJS/widgets/Bar/widget/templates/bar.html'),
+			templatePath: require.toUrl('ChartJS/widgets/MultiSeries/widget/templates/MultiSeries.html'),
 
 			_chartJS : null,
 			_chart : null,
@@ -79,6 +79,7 @@
 											label : dataset.get(this.datasetlabel),
 											fillColor: this._hexToRgb(color, "0.5"),
 											strokeColor: this._hexToRgb(color, "0.8"),
+											pointColor: this._hexToRgb(color, "0.8"),
 											highlightFill: this._hexToRgb(color, "0.75"),
 											highlightStroke: this._hexToRgb(color, "1"),
 											data : points
@@ -94,13 +95,15 @@
 						}, lang.hitch(this, function () {
 							data.labels = xlabels;
 							
-							var myNewChart = null;
 							if (this.chartType === "Bar")
-								myNewChart = new this._chartJS(this._ctx).Bar(data);
+								this._chart = new this._chartJS(this._ctx).Bar(data);
 							else if (this.chartType === "Radar")
-								myNewChart = new this._chartJS(this._ctx).Radar(data);
-							else
-								myNewChart = new this._chartJS(this._ctx).Line(data);
+								this._chart = new this._chartJS(this._ctx).Radar(data);
+							else // "Line"
+								this._chart = new this._chartJS(this._ctx).Line(data);
+							
+							this.legendNode.innerHTML = this._chart.generateLegend();
+							
 						}))
 					});
 				}));

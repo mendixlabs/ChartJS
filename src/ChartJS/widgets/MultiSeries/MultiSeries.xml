@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="ChartJS.widgets.MultiSeries.widget.MultiSeries" needsEntityContext="false" xmlns="http://www.mendix.com/widget/1.0/">
+	<name>ChartJS - Multi-series for Bar/Line/Radar charts</name>
+	<description></description>
+
+	<icon>
+		iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAFRklEQVR42u3csUqtVxSF0QNK7A56q1uIgljFVKmtU6Y5ksoq75LHy+OEVCHRi31g4tXFmmPARNu9/fdXejgAAAAAAAAAAAAAAAAAAPA/np+fz0+n09emvZ75s+8dRnh4ePjx5ce/TXs7MyAAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAgDFBACKCQAUEwAoJgBQTACgmABAMQGAYgIAxQQAigkAFBMAKCYAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAgDFBACKCQAUEwAoJgBQTACgmABAMQGAYgIAxQQAigkAFBMAKCYAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAsAKV1dXPx2Px99adnl5+ct73JsAsML5+fkfhwEf10ft7Ozsz/e4NwFgBQHICAArCEBGAFhBADICwAoCkBEAVhCAjACwggBkBIAVBCAjAKwgABkBYAUByAgAKwhARgBYQQAyAsAKApARAFYQgIwAsIIAZASAFQQgIwCsIAAZAWAFAcgIACsIQEYAWEEAMgLACgKQEQBWEICMALCCAGQEgBUEICMArCAAGQFgBQHICAArCEBGAFhBADICwAoCkBEAVhCAjACwggBkBIAVBCAjAKwgABkBYAUByAgAKwhARgBYQQAyAsAKApARAFYQgIwAsIIAZASAFQQgIwCsIAAZAWAFAcgIACsIQEYAWEEAMgLACgKQEQBWEICMALCCAGQEgBUEICMArCAAGQFgBQHICAArCEBGAFhBADICwAoCkBGA3M3Nza/X19e/t+z29vbn97i370IAMgKQe/sbfPp5Pmpvb2wmAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGCQ+/v7L3d3d/cte3H9Hvf2+Pj4w2ef5aP3euZ3+uauP/ssH/zNffncVw4AAAAAAAAAAAAAAAAAAAB8d8fj8a+Li4u/zaxrr2//8PLLP4cB/+rIzD52396+AJh1TgDMiicAZsUTALPiCYBZ8QTArHgCYFY8ATArngCYFU8AzIonAGbFEwCz4gmAWfEEwKx4AmBWPAEwK54AmBVPAMyKJwBmxRMAs+IJgFnxBMCseAJgVjwBMCueAJgVTwDMivft7T89PX09nU5mVrbXt38AAAAAAAAAAAAAAAAAAIb7D5VqMu+N+RwAAAAAAElFTkSuQmCC
+	</icon>
+
+	<properties>
+		<property key="chartType" type="enumeration" defaultValue="Line">
+			<caption>Chart Type</caption>
+			<category>Appearance</category>
+			<description>This field determines the display direction.</description> 
+			<enumerationValues>
+				<enumerationValue key="Line">Line</enumerationValue>
+				<enumerationValue key="Bar">Bar</enumerationValue>
+				<enumerationValue key="Radar">Radar</enumerationValue>
+			</enumerationValues>
+		</property>
+		<property key="width" type="integer" required="true" defaultValue="850">
+			<caption>Width</caption>
+			<category>Appearance</category>
+			<description></description>
+		</property>
+		<property key="height" type="integer" required="true" defaultValue="450">
+			<caption>Height</caption>
+			<category>Appearance</category>
+			<description></description>
+		</property>
+		<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
+			<caption>Chart Entity</caption>
+			<category>1) Data Source</category>
+			<description></description>
+		</property>
+		<property key="datasourcemf" type="microflow" required="false">
+			<caption>Microflow</caption>
+			<category>1) Data Source</category>
+			<description></description>
+			<returnType type="Object" entityProperty="sourceentity"></returnType>
+		</property>
+		<property key="yaxisMinValue" type="attribute" entityProperty="sourceentity">
+			<caption>Minimum value Y Axis</caption>
+			<category>1) Data Source</category>
+			<description>The minimum value of the Y Axis.</description>
+			<attributeTypes>
+				<attributeType name="Float"/>
+				<attributeType name="Integer"/>
+			</attributeTypes>
+		</property>
+		<property key="yaxisMaxValue" type="attribute" entityProperty="sourceentity">
+			<caption>Maximum value Y Axis</caption>
+			<category>1) Data Source</category>
+			<description>The minimum value of the Y Axis.</description>
+			<attributeTypes>
+				<attributeType name="Float"/>
+				<attributeType name="Integer"/>
+			</attributeTypes>
+		</property>
+		<property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
+			<caption>Data Set Entity</caption>
+			<category>2) Data Set</category>
+			<description></description>
+		</property>
+
+		<property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+			<caption>Data Set label</caption>
+			<category>2) Data Set</category>
+			<description></description>
+			<attributeTypes>
+				<attributeType name="Enum"/>
+				<attributeType name="String"/>
+			</attributeTypes>
+		</property>
+		<property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+			<caption>Sorting</caption>
+			<category>2) Data Set</category>
+			<description></description>
+			<attributeTypes>
+				<attributeType name="AutoNumber"/>
+				<attributeType name="Currency"/>
+				<attributeType name="DateTime"/>
+				<attributeType name="Float"/>
+				<attributeType name="Integer"/>
+				<attributeType name="Long"/>
+			</attributeTypes>
+		</property>
+		<property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+			<caption>Color (in Hex)</caption>
+			<category>2) Data Set</category>
+			<description>Set the colour of the bar or line.</description>
+			<attributeTypes>
+				<attributeType name="AutoNumber"/>
+				<attributeType name="Boolean"/>
+				<attributeType name="Currency"/>
+				<attributeType name="DateTime"/>
+				<attributeType name="Enum"/>
+				<attributeType name="Float"/>
+				<attributeType name="Integer"/>
+				<attributeType name="Long"/>
+				<attributeType name="String"/>
+			</attributeTypes>
+		</property>
+		<property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
+			<caption>Data Point Entity</caption>
+			<category>3) Data Point</category>
+			<description></description>
+		</property>
+		<property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+			<caption>X Value</caption>
+			<category>3) Data Point</category>
+			<description></description>
+			<attributeTypes>
+				<attributeType name="AutoNumber"/>
+				<attributeType name="Boolean"/>
+				<attributeType name="Currency"/>
+				<attributeType name="DateTime"/>
+				<attributeType name="Enum"/>
+				<attributeType name="Float"/>
+				<attributeType name="Integer"/>
+				<attributeType name="Long"/>
+				<attributeType name="String"/>
+			</attributeTypes>
+		</property>
+		<property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+			<caption>X sorting</caption>
+			<category>3) Data Point</category>
+			<description></description>
+			<attributeTypes>
+				<attributeType name="AutoNumber"/>
+				<attributeType name="Currency"/>
+				<attributeType name="DateTime"/>
+				<attributeType name="Float"/>
+				<attributeType name="Integer"/>
+				<attributeType name="Long"/>
+			</attributeTypes>
+		</property>
+		<property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+			<caption>Y value</caption>
+			<category>3) Data Point</category>
+			<description></description>
+			<attributeTypes>
+				<attributeType name="AutoNumber"/>
+				<attributeType name="Boolean"/>
+				<attributeType name="Currency"/>
+				<attributeType name="DateTime"/>
+				<attributeType name="Enum"/>
+				<attributeType name="Float"/>
+				<attributeType name="Integer"/>
+				<attributeType name="Long"/>
+				<attributeType name="String"/>
+			</attributeTypes>
+		</property>
+	</properties>
+</widget>
+

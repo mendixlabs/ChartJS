@@ -1,0 +1,21 @@
+.legend-node {
+	width: 250px;
+	padding: 5px;
+}
+
+.legend-node ul {
+	padding: 5px 0 5px 15px;
+	margin: 0;
+}
+
+.legend-node ul span {
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	border-radius: 4px;
+	margin-right: 8px;
+}
+
+.legend-node ul li {
+	list-style-type : none;
+}
