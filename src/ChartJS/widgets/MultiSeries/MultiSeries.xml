@@ -15,6 +15,7 @@
 			<enumerationValues>
 				<enumerationValue key="Line">Line</enumerationValue>
 				<enumerationValue key="Bar">Bar</enumerationValue>
+				<enumerationValue key="StackedBar">Stacked Bar</enumerationValue>
 				<enumerationValue key="Radar">Radar</enumerationValue>
 			</enumerationValues>
 		</property>

@@ -21,6 +21,8 @@
 			_chart : null,
 			_ctx : null,
 			_dataset : null,
+			_datasetCounter : 0,
+			_data : null,
 
 			startup: function () {
 				this._chartJS = _charts().chartssrc();
@@ -37,84 +39,125 @@
 				this._ctx = this.canvasNode.getContext("2d");
 				this._dataset = this.datasetentity.split("/")[0];
 				this._datapoint = this.datapointentity.split("/")[0];
+				this._data = {};
 			},
 
 			update : function (obj, callback) {
 				this._executeMicroflow(lang.hitch(this, function (objs) {
-					var obj = objs[0],
-						data = {
-							datasets : []
-						},
-						xlabels = [],
-						xlabelsSet = false;
+					var obj = objs[0]; // Chart object is always only one.
+					this._data.object = obj;
 
+					// Retrieve datasets
 					mx.data.get({
 						guids : obj.get(this._dataset),
-						callback : lang.hitch(this, function (finalCallback, datasets) {
-
-							var len = datasets.length;
+						callback : lang.hitch(this, function (datasets) {
+							this._datasetCounter = datasets.length;
+							this._data.datasets = [];
 
 							for(var j=0;j < datasets.length; j++) {
 								var dataset = datasets[j];
 
+								// Retrieve datapoints for each dataset
 								mx.data.get({
 									guids : dataset.get(this._datapoint),
-									callback : lang.hitch(this, function ( dataset, len, j, finalCallback, datapoints) {
-										var points = [];
-
-										var datapoints = this._sortDatapoints(datapoints);
-
-										for(var i=0;i < datapoints.length; i++) {
-											if (!xlabelsSet)
-												xlabels.push(datapoints[i].get(this.seriesxlabel));
-
-											points.push(datapoints[i].get(this.seriesylabel));
-										}
-
-										if (!xlabelsSet)
-											xlabelsSet = true;
-										var color = dataset.get(this.seriescolor);
-
-										data.datasets.push({
-											label : dataset.get(this.datasetlabel),
-											fillColor: this._hexToRgb(color, "0.5"),
-											strokeColor: this._hexToRgb(color, "0.8"),
-											pointColor: this._hexToRgb(color, "0.8"),
-											highlightFill: this._hexToRgb(color, "0.75"),
-											highlightStroke: this._hexToRgb(color, "1"),
-											data : points
+									callback : lang.hitch(this, function ( dataset, datapoints) {
+										this._data.datasets.push({
+											dataset : dataset,
+											sorting : +(dataset.get(this.datasetsorting)),
+											points : datapoints
 										});
 
-										if (len-1 === j){
-											finalCallback();
+										this._datasetCounter--;
+										if (this._datasetCounter === 0){
+											this._processData();
 										}
 
-									}, dataset, len, j, finalCallback)
+									}, dataset)
 								});
 							}
-						}, lang.hitch(this, function () {
-							data.labels = xlabels;
-							
-							if (this.chartType === "Bar")
-								this._chart = new this._chartJS(this._ctx).Bar(data);
-							else if (this.chartType === "Radar")
-								this._chart = new this._chartJS(this._ctx).Radar(data);
-							else // "Line"
-								this._chart = new this._chartJS(this._ctx).Line(data);
-							
-							this.legendNode.innerHTML = this._chart.generateLegend();
-							
-						}))
+						})
 					});
 				}));
 
 				callback && callback();
 			},
 
-			_sortDatapoints : function (points) {
-				return points.sort(lang.hitch(this, function (a,b) {
-					var aa = a.get(this.sortingxvalue);
-					var bb = b.get(this.sortingxvalue);
+			_processData : function () {
+				var sets = [],
+					chartData = {
+						datasets : []
+					},
+					points = null,
+					set = {
+						points : []
+					},
+					xlabels = [],
+					xlabelsSet = false,
+					color = "",
+					label = "";
+
+				sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
+
+				for(var j=0;j < sets.length; j++) {
+					set = sets[j];
+					points = [];
+					set.points = this._sortArrayMx(set.points, this.sortingxvalue);
+					color = set.dataset.get(this.seriescolor);
+					label = set.dataset.get(this.datasetlabel);
+
+					for(var i=0;i < set.points.length; i++) {
+						if (!xlabelsSet)
+							xlabels.push(set.points[i].get(this.seriesxlabel));
+
+						points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
+					}
+
+					if (!xlabelsSet)
+						xlabelsSet = true;
+
+					chartData.datasets.push({
+						label : label,
+						fillColor: this._hexToRgb(color, "0.5"),
+						strokeColor: this._hexToRgb(color, "0.8"),
+						pointColor: this._hexToRgb(color, "0.8"),
+						highlightFill: this._hexToRgb(color, "0.75"),
+						highlightStroke: this._hexToRgb(color, "1"),
+						data : points
+					});
+				}
+				chartData.labels = xlabels;
+
+				if (this.chartType === "Bar")
+					this._chart = new this._chartJS(this._ctx).Bar(chartData);
+				else if (this.chartType === "Radar")
+					this._chart = new this._chartJS(this._ctx).Radar(chartData);
+				else if (this.chartType === "StackedBar")
+					this._chart = new this._chartJS(this._ctx).StackedBar(chartData);
+				else // "Line"
+					this._chart = new this._chartJS(this._ctx).Line(chartData);
+
+				this.legendNode.innerHTML = this._chart.generateLegend();
+			},
+
+			_sortArrayObj : function (values) {
+				return values.sort(lang.hitch(this, function (a,b) {
+					var aa = a.sorting;
+					var bb = b.sorting;
+					if (aa > bb) {
+						return 1;
+					}
+					if (aa < bb) {
+						return -1;
+					}
+					// a must be equal to b
+					return 0;
+				}));
+			},
+
+			_sortArrayMx : function (values, sortAttr) {
+				return values.sort(lang.hitch(this, function (a,b) {
+					var aa = a.get(sortAttr);
+					var bb = b.get(sortAttr);
 					if (aa > bb) {
 						return 1;
 					}
