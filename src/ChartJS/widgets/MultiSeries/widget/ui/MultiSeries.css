@@ -18,6 +18,7 @@
 
 .legend-node ul li {
 	list-style-type : none;
+	cursor: pointer;
 }
 
 .legend-node ul li.legend-inactive {

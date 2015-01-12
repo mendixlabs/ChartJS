@@ -2,6 +2,9 @@
 	width: 100%;
 	padding: 5px;
 }
+.legend-node li {
+	cursor: pointer;
+}
 .pie-legend {
 	text-align	: center;
 }
