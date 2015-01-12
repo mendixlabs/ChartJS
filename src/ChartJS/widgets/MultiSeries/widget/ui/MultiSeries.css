@@ -19,3 +19,8 @@
 .legend-node ul li {
 	list-style-type : none;
 }
+
+.legend-node ul li.legend-inactive {
+	opacity: 0.5;
+	filter:Alpha(opacity=50);
+}

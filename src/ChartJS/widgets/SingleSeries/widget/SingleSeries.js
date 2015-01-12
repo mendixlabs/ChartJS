@@ -102,17 +102,6 @@
                     color = set.dataset.get(this.seriescolor);
                     label = set.dataset.get(this.datasetlabel);
 
-                    /*for(var i=0;i < set.points.length; i++) {
-                        if (!xlabelsSet)
-                            xlabels.push(set.points[i].get(this.seriesxlabel));
-
-                        points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
-                    }
-
-                    if (!xlabelsSet)
-                        xlabelsSet = true;
-*/
-
                     chartData.push({
                         label : label,
                         color: this._hexToRgb(color, "0.5"),
