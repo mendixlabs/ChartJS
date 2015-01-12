@@ -1,145 +1,157 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <widget id="ChartJS.widgets.SingleSeries.widget.SingleSeries" needsEntityContext="false" xmlns="http://www.mendix.com/widget/1.0/">
-	<name>ChartJS - Single-series for Pie/Doughnut/Polar charts</name>
-	<description></description>
+    <name>ChartJS - Single-series for Pie/Doughnut/Polar charts</name>
+    <description></description>
 
-	<icon>
-	
-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
+    <icon>
 
-	</icon>
+        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
 
-	<properties>
-		<property key="chartType" type="enumeration" defaultValue="Line">
-			<caption>Chart Type</caption>
-			<category>Appearance</category>
-			<description>This field determines the display direction.</description> 
-			<enumerationValues>
-				<enumerationValue key="Line">Line</enumerationValue>
-				<enumerationValue key="Bar">Bar</enumerationValue>
-				<enumerationValue key="Radar">Radar</enumerationValue>
-			</enumerationValues>
-		</property>
-		<property key="width" type="integer" required="true" defaultValue="850">
-			<caption>Width</caption>
-			<category>Appearance</category>
-			<description></description>
-		</property>
-		<property key="height" type="integer" required="true" defaultValue="450">
-			<caption>Height</caption>
-			<category>Appearance</category>
-			<description></description>
-		</property>
-		<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
-			<caption>Source entity</caption>
-			<category>Data source</category>
-			<description></description>
-		</property>
-		<property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
-			<caption>Data set entity</caption>
-			<category>Data source</category>
-			<description></description>
-		</property>
-		<property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
-			<caption>Data point entity</caption>
-			<category>Data source</category>
-			<description></description>
-		</property>
-		<property key="datasourcemf" type="microflow" required="false">
-			<caption>Microflow</caption>
-			<category>Data source</category>
-			<description></description>
-			<returnType type="Object" entityProperty="sourceentity"></returnType>
-		</property>
-		<property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-			<caption>Dataset label</caption>
-			<category>Data source</category>
-			<description></description>
-			<attributeTypes>
-				<attributeType name="Enum"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
-		<property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>Category x</caption>
-			<category>Data source</category>
-			<description>The attribute which specifies the categorie or X value of a point in the chart. Note that all series should use a Category attribute which returns comparable values from the same domain, otherwise the X-axis might contain undesired values. References are allowed here.</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Boolean"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Enum"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
-		<property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>Sorting x</caption>
-			<category>Data source</category>
-			<description></description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-			</attributeTypes>
-		</property>
-		<property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>Category y</caption>
-			<category>Data source</category>
-			<description>The attribute which specifies the categorie or X value of a point in the chart. Note that all series should use a Category attribute which returns comparable values from the same domain, otherwise the X-axis might contain undesired values. References are allowed here.</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Boolean"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Enum"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
-		<property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-			<caption>Color (in Hex)</caption>
-			<category>Data source</category>
-			<description>Set the colour of the bar or line.</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Boolean"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Enum"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
+    </icon>
 
-		<property key="yaxisMinValue" type="attribute" entityProperty="sourceentity">
-			<caption>Minimum value Y Axis</caption>
-			<category>Y Axis</category>
-			<description>The minimum value of the Y Axis.</description>
-			<attributeTypes>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-			</attributeTypes>
-		</property>
-		<property key="yaxisMaxValue" type="attribute" entityProperty="sourceentity">
-			<caption>Maximum value Y Axis</caption>
-			<category>Y Axis</category>
-			<description>The minimum value of the Y Axis.</description>
-			<attributeTypes>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-			</attributeTypes>
-		</property>
-	</properties>
+    <properties>
+        <property key="chartType" type="enumeration" defaultValue="Pie">
+            <caption>Chart Type</caption>
+            <category>Appearance</category>
+            <description>This field determines the display direction.</description> 
+            <enumerationValues>
+                <enumerationValue key="Pie">Pie</enumerationValue>
+                <enumerationValue key="Doughnut">Doughnut</enumerationValue>
+                <enumerationValue key="Polar">Polar</enumerationValue>
+            </enumerationValues>
+        </property>
+        <property key="width" type="integer" required="true" defaultValue="850">
+            <caption>Width</caption>
+            <category>Appearance</category>
+            <description></description>
+        </property>
+        <property key="height" type="integer" required="true" defaultValue="450">
+            <caption>Height</caption>
+            <category>Appearance</category>
+            <description></description>
+        </property>
+        <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
+            <caption>Chart Entity</caption>
+            <category>1) Data Source</category>
+            <description></description>
+        </property>
+        <property key="datasourcemf" type="microflow" required="false">
+            <caption>Microflow</caption>
+            <category>1) Data Source</category>
+            <description></description>
+            <returnType type="Object" entityProperty="sourceentity"></returnType>
+        </property>
+        <property key="yaxisMinValue" type="attribute" entityProperty="sourceentity">
+            <caption>Minimum value Y Axis</caption>
+            <category>1) Data Source</category>
+            <description>The minimum value of the Y Axis.</description>
+            <attributeTypes>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+            </attributeTypes>
+        </property>
+        <property key="yaxisMaxValue" type="attribute" entityProperty="sourceentity">
+            <caption>Maximum value Y Axis</caption>
+            <category>1) Data Source</category>
+            <description>The minimum value of the Y Axis.</description>
+            <attributeTypes>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+            </attributeTypes>
+        </property>
+        <property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
+            <caption>Data Set Entity</caption>
+            <category>2) Data Set</category>
+            <description></description>
+        </property>
+
+        <property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+            <caption>Data Set label</caption>
+            <category>2) Data Set</category>
+            <description></description>
+            <attributeTypes>
+                <attributeType name="Enum"/>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
+        <property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+            <caption>Sorting</caption>
+            <category>2) Data Set</category>
+            <description></description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+            </attributeTypes>
+        </property>
+        <property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+            <caption>Color (in Hex)</caption>
+            <category>2) Data Set</category>
+            <description>Set the colour of the bar or line.</description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Boolean"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Enum"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
+        <property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="reference">
+            <caption>Data Point Entity</caption>
+            <category>3) Data Point</category>
+            <description></description>
+        </property>
+        <property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+            <caption>X Value</caption>
+            <category>3) Data Point</category>
+            <description></description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Boolean"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Enum"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
+        <property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+            <caption>X sorting</caption>
+            <category>3) Data Point</category>
+            <description></description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+            </attributeTypes>
+        </property>
+        <property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+            <caption>Y value</caption>
+            <category>3) Data Point</category>
+            <description></description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Boolean"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Enum"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
+    </properties>
 </widget>
-
