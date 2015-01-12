@@ -5,90 +5,14 @@
 	// Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
 	require([
 
-		'dojo/_base/declare', 'mxui/widget/_WidgetBase', 'dijit/_Widget', 'dijit/_TemplatedMixin',
-		'mxui/dom', 'dojo/dom', 'dojo/query', 'dojo/dom-prop', 'dojo/dom-geometry', 'dojo/dom-class', 'dojo/dom-style', 'dojo/dom-construct', 'dojo/_base/array', 'dojo/window', 'dojo/on', 'dojo/_base/lang', 'dojo/text',
-		'ChartJS/lib/charts'
+		'dojo/_base/declare', 'dojo/_base/lang', 'dojo/query', 'dojo/on', 'ChartJS/widgets/Core'
 
-	], function (declare, _WidgetBase, _Widget, _Templated, domMx, dom, domQuery, domProp, domGeom, domClass, domStyle, domConstruct, dojoArray, win, on, lang, text, _charts) {
+	], function (declare, lang, domQuery, on, _core) {
 
 		// Declare widget.
-		return declare('ChartJS.widgets.MultiSeries.widget.MultiSeries', [ _WidgetBase, _Widget, _Templated, _charts ], {
+		return declare('ChartJS.widgets.MultiSeries.widget.MultiSeries', [ _core ], {
 
-			// Template path
-			templatePath: require.toUrl('ChartJS/widgets/MultiSeries/widget/templates/MultiSeries.html'),
-
-			_chartJS : null,
-			_chart : null,
-			_ctx : null,
-			_dataset : null,
-			_datasetCounter : 0,
-			_data : null,
-			_chartData : null,
-			_activeDatasets : null,
-			_legendNode : null,
-
-			startup: function () {
-				this._chartJS = _charts().chartssrc();
-				this._chartJS.defaults.global.responsive = true;
-				this._chartJS.defaults.Line.legendTemplate = "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li class=\"legend-node-<%=i%>\"><span style=\"background-color:<%=datasets[i].pointColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>";
-				this._chartData = {
-					datasets : []
-				};
-				this._activeDatasets = [];
-
-				domStyle.set(this.domNode, {
-					padding: 0,
-					width : '100%',
-					maxWidth : '100%',
-					maxHeight : '100%',
-					overflow : 'hidden'
-				});
-
-				this._ctx = this.canvasNode.getContext("2d");
-				this._dataset = this.datasetentity.split("/")[0];
-				this._datapoint = this.datapointentity.split("/")[0];
-				this._data = {};
-			},
-
-			update : function (obj, callback) {
-				this._executeMicroflow(lang.hitch(this, function (objs) {
-					var obj = objs[0]; // Chart object is always only one.
-					this._data.object = obj;
-
-					// Retrieve datasets
-					mx.data.get({
-						guids : obj.get(this._dataset),
-						callback : lang.hitch(this, function (datasets) {
-							this._datasetCounter = datasets.length;
-							this._data.datasets = [];
-
-							for(var j=0;j < datasets.length; j++) {
-								var dataset = datasets[j];
-
-								// Retrieve datapoints for each dataset
-								mx.data.get({
-									guids : dataset.get(this._datapoint),
-									callback : lang.hitch(this, function (dataset, datapoints) {
-										this._data.datasets.push({
-											dataset : dataset,
-											sorting : +(dataset.get(this.datasetsorting)),
-											points : datapoints
-										});
-
-										this._datasetCounter--;
-										if (this._datasetCounter === 0){
-											this._processData();
-										}
-
-									}, dataset)
-								});
-							}
-						})
-					});
-				}));
-
-				callback && callback();
-			},
+			// Overwrite functions from _core here...
 
 			_processData : function () {
 				var sets = [],
@@ -145,15 +69,9 @@
 
 				if (listNodes.length > 0) {
 					for (var k = 0; k < listNodes.length; k++) {
-						on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k));
+						on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k, false/*Use multi series data format*/));
 					}
 				}
-
-				/*window.setTimeout(lang.hitch(this, function () {
-                    this._chart.datasets = [];
-                    this._chart.addData(this._chartData.datasets[0]);
-                    this._chart.update();
-                }), 5000);*/
 			},
 
 			_createChart : function (data) {
@@ -165,100 +83,7 @@
 					this._chart = new this._chartJS(this._ctx).StackedBar(data);
 				else // "Line"
 					this._chart = new this._chartJS(this._ctx).Line(data);
-			},
-
-			_onClickLegend : function (idx) {
-				var activeSet = null,
-					activeSetLegend = null,
-					newDatasets = {
-						datasets : [],
-						labels : this._chartData.labels
-					};
-
-				this._activeDatasets[idx].active = !this._activeDatasets[idx].active;
-
-				this._chart.destroy();
-				for (var i=0; i< this._activeDatasets.length;i++) {
-					activeSet = this._activeDatasets[i];
-					activeSetLegend = domQuery("li.legend-node-"+activeSet.idx, this._legendNode)[0];
-
-					if (activeSet.active) {
-						if (domClass.contains(activeSetLegend, "legend-inactive"))
-							domClass.remove(activeSetLegend, "legend-inactive");
-
-						newDatasets.datasets.push(activeSet.dataset);
-					} else if (!domClass.contains(activeSetLegend, "legend-inactive")) {
-						domClass.add(activeSetLegend, "legend-inactive");
-					}
-				}
-
-				this._createChart(newDatasets);
-			},
-
-			_sortArrayObj : function (values) {
-				return values.sort(lang.hitch(this, function (a,b) {
-					var aa = a.sorting;
-					var bb = b.sorting;
-					if (aa > bb) {
-						return 1;
-					}
-					if (aa < bb) {
-						return -1;
-					}
-					// a must be equal to b
-					return 0;
-				}));
-			},
-
-			_sortArrayMx : function (values, sortAttr) {
-				return values.sort(lang.hitch(this, function (a,b) {
-					var aa = a.get(sortAttr);
-					var bb = b.get(sortAttr);
-					if (aa > bb) {
-						return 1;
-					}
-					if (aa < bb) {
-						return -1;
-					}
-					// a must be equal to b
-					return 0;
-				}));
-			},
-
-			_hexToRgb : function (hex, alpha) {
-				// From Stackoverflow here: http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-				// Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-				var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-				hex = hex.replace(shorthandRegex, function(m, r, g, b) {
-					return r + r + g + g + b + b;
-				});
-
-				var regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-				if (regex) {
-					var result = {
-						r: parseInt(regex[1], 16),
-						g: parseInt(regex[2], 16),
-						b: parseInt(regex[3], 16)
-					};
-					return "rgba("+result.r+","+result.g+","+result.b+","+alpha+")";
-				}
-				return "rgba(220,220,220,"+alpha+")";
-			},
-
-			_executeMicroflow : function (callback) {
-				mx.data.action({
-					params: {
-						applyto: 'selection',
-						actionname: this.datasourcemf,
-						guids: []
-					},
-					callback: lang.hitch(this, callback),
-					error: function (error) {
-						console.log(error.description);
-					}
-				}, this);
 			}
-
 		});
 	});
 

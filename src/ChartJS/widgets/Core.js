@@ -1,0 +1,208 @@
+/*global mx, mendix, require, console, define, module, logger */
+
+// Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
+define([
+
+	'dojo/_base/declare', 'mxui/widget/_WidgetBase', 'dijit/_Widget', 'dijit/_TemplatedMixin',
+	'mxui/dom', 'dojo/dom', 'dojo/query', 'dojo/dom-prop', 'dojo/dom-geometry', 'dojo/dom-class', 'dojo/dom-style', 'dojo/dom-construct', 'dojo/_base/array', 'dojo/window', 'dojo/on', 'dojo/_base/lang', 'dojo/text',
+	'ChartJS/lib/charts'
+
+], function (declare, _WidgetBase, _Widget, _Templated, domMx, dom, domQuery, domProp, domGeom, domClass, domStyle, domConstruct, dojoArray, win, on, lang, text, _charts) {
+
+	// Declare widget.
+	return declare([ _WidgetBase, _Widget, _Templated, _charts ], {
+
+		// Template path
+		templatePath: require.toUrl('ChartJS/templates/chartjs.html'),
+
+		_chartJS : null,
+		_chart : null,
+		_ctx : null,
+		_dataset : null,
+		_datasetCounter : 0,
+		_data : null,
+		_chartData : null,
+		_activeDatasets : null,
+		_legendNode : null,
+
+		startup: function () {
+			this._chartJS = _charts().chartssrc();
+			this._chartJS.defaults.global.responsive = true;
+			this._chartData = {
+				datasets : []
+			};
+			this._activeDatasets = [];
+
+			domStyle.set(this.domNode, {
+				padding: 0,
+				width : '100%',
+				maxWidth : '100%',
+				maxHeight : '100%',
+				overflow : 'hidden'
+			});
+
+			this._ctx = this.canvasNode.getContext("2d");
+			this._dataset = this.datasetentity.split("/")[0];
+			this._datapoint = this.datapointentity.split("/")[0];
+			this._data = {};
+		},
+
+		update : function (obj, callback) {
+			this._executeMicroflow(lang.hitch(this, function (objs) {
+				var obj = objs[0]; // Chart object is always only one.
+
+				this._data.object = obj;
+
+				// Retrieve datasets
+				mx.data.get({
+					guids : obj.get(this._dataset),
+					callback : lang.hitch(this, function (datasets) {
+						this._datasetCounter = datasets.length;
+						this._data.datasets = [];
+
+						for(var j=0;j < datasets.length; j++) {
+							var dataset = datasets[j];
+							var pointguids = dataset.get(this._datapoint);
+							if (typeof pointguids == "string") {
+								pointguids = [pointguids];
+							}
+							mx.data.get({
+								guids : pointguids,
+								callback : lang.hitch(this, function (dataset, datapoints) {
+									var set = {
+										dataset : dataset,
+										sorting : +(dataset.get(this.datasetsorting))
+									}
+									if (datapoints.length === 1) {
+										set.point = datapoints[0];
+									} else {
+										set.points = datapoints;
+									}
+
+									this._data.datasets.push(set);
+
+									this._datasetCounter--;
+									if (this._datasetCounter === 0){
+										this._processData();
+									}
+
+								}, dataset)
+							});
+						}
+					})
+				});
+			}));
+
+			if(typeof callback !== 'undefined'){
+				callback();
+			}
+		},
+
+		_processData : function () {
+			// STUB
+			console.error('_processData: This is placeholder function that should be overwritten by the implementing widget.');
+		},
+
+		_createChart : function (data) {
+			// STUB
+			console.error('_createChart: This is placeholder function that should be overwritten by the implementing widget.');
+		},
+
+		_onClickLegend : function (idx, isSingleSeries) {
+			debugger;
+			var activeSet = null,
+				activeSetLegend = null,
+				newDatasets = {
+					datasets : [],
+					labels : this._chartData.labels
+				};
+
+			this._activeDatasets[idx].active = !this._activeDatasets[idx].active;
+
+			this._chart.destroy();
+			for (var i=0; i< this._activeDatasets.length;i++) {
+				activeSet = this._activeDatasets[i];
+				activeSetLegend = domQuery("li", this._legendNode)[activeSet.idx];
+
+				if (activeSet.active) {
+					if (domClass.contains(activeSetLegend, "legend-inactive"))
+						domClass.remove(activeSetLegend, "legend-inactive");
+
+					newDatasets.datasets.push(activeSet.dataset);
+				} else if (!domClass.contains(activeSetLegend, "legend-inactive")) {
+					domClass.add(activeSetLegend, "legend-inactive");
+				}
+			}
+			if (isSingleSeries) {
+				this._createChart(newDatasets.datasets);
+			} else {
+				this._createChart(newDatasets);
+			}
+		},
+
+		_sortArrayObj : function (values) {
+			return values.sort(lang.hitch(this, function (a,b) {
+				var aa = a.sorting;
+				var bb = b.sorting;
+				if (aa > bb) {
+					return 1;
+				}
+				if (aa < bb) {
+					return -1;
+				}
+				// a must be equal to b
+				return 0;
+			}));
+		},
+
+		_sortArrayMx : function (values, sortAttr) {
+			return values.sort(lang.hitch(this, function (a,b) {
+				var aa = a.get(sortAttr);
+				var bb = b.get(sortAttr);
+				if (aa > bb) {
+					return 1;
+				}
+				if (aa < bb) {
+					return -1;
+				}
+				// a must be equal to b
+				return 0;
+			}));
+		},
+
+		_hexToRgb : function (hex, alpha) {
+			// From Stackoverflow here: http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+			// Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+			var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+			hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+				return r + r + g + g + b + b;
+			});
+
+			var regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+			if (regex) {
+				var result = {
+					r: parseInt(regex[1], 16),
+					g: parseInt(regex[2], 16),
+					b: parseInt(regex[3], 16)
+				};
+				return "rgba("+result.r+","+result.g+","+result.b+","+alpha+")";
+			}
+			return "rgba(220,220,220,"+alpha+")";
+		},
+
+		_executeMicroflow : function (callback) {
+			mx.data.action({
+				params: {
+					applyto: 'selection',
+					actionname: this.datasourcemf,
+					guids: []
+				},
+				callback: lang.hitch(this, callback),
+				error: function (error) {
+					console.log(error.description);
+				}
+			}, this);
+		}
+
+	});
+});
