@@ -83,6 +83,10 @@
 					this._chart = new this._chartJS(this._ctx).StackedBar(data);
 				else // "Line"
 					this._chart = new this._chartJS(this._ctx).Line(data);
+
+				if (this.onclickmf || this.onclickmfcontext) {
+					on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
+				}
 			}
 		});
 	});

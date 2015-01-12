@@ -24,6 +24,7 @@ define([
 		_chartData : null,
 		_activeDatasets : null,
 		_legendNode : null,
+		_mxObj : null,
 
 		startup: function () {
 			this._chartJS = _charts().chartssrc();
@@ -48,7 +49,8 @@ define([
 		},
 
 		update : function (obj, callback) {
-			this._executeMicroflow(lang.hitch(this, function (objs) {
+			this._mxObj = obj;
+			this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
 				var obj = objs[0]; // Chart object is always only one.
 
 				this._data.object = obj;
@@ -106,6 +108,13 @@ define([
 		_createChart : function (data) {
 			// STUB
 			console.error('_createChart: This is placeholder function that should be overwritten by the implementing widget.');
+		},
+
+		_onClickChart : function () {
+			if (this.onclickmfcontext && this._mxObj)
+				this._executeMicroflow(this.onclickmfcontext, null, this._mxObj);
+			else
+				this._executeMicroflow(this.onclickmf);
 		},
 
 		_onClickLegend : function (idx, isSingleSeries) {
@@ -189,14 +198,24 @@ define([
 			return "rgba(220,220,220,"+alpha+")";
 		},
 
-		_executeMicroflow : function (callback) {
+		_executeMicroflow : function (mf, callback, obj) {
+			debugger;
+			var _params = {
+				applyto: 'selection',
+				actionname: mf,
+				guids : []
+			};
+
+			if (obj && obj.getGuid()) {
+				_params.guids = [obj.getGuid()];
+			}
 			mx.data.action({
-				params: {
-					applyto: 'selection',
-					actionname: this.datasourcemf,
-					guids: []
-				},
-				callback: lang.hitch(this, callback),
+				params : _params,
+				callback: lang.hitch(this, function  (obj) {
+					if(typeof callback !== 'undefined'){
+						callback(obj);
+					}
+				}),
 				error: function (error) {
 					console.log(error.description);
 				}

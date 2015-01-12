@@ -152,6 +152,23 @@
 				<attributeType name="String"/>
 			</attributeTypes>
 		</property>
+		<property key="onclickmf" type="microflow" required="false">
+			<caption>On click microflow</caption>
+			<category>Behavior</category>
+			<description></description>
+			<returnType type="Void"></returnType>
+		</property>
+		<property key="onclickmfcontextentity" type="entity" required="false" allowNonPersistableEntities="true">
+			<caption>Dataview onclick entity</caption>
+			<category>Behavior</category>
+			<description></description>
+		</property>
+		<property key="onclickmfcontext" type="microflow" required="false" entityProperty="onclickmfcontextentity">
+			<caption>Dataview onclick microflow</caption>
+			<category>Behavior</category>
+			<description></description>
+			<returnType type="Void"></returnType>
+		</property>
 	</properties>
 </widget>
 

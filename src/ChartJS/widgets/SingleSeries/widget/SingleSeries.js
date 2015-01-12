@@ -67,6 +67,10 @@
 					this._chart = new this._chartJS(this._ctx).Doughnut(data);
 				else // "Pie"
 					this._chart = new this._chartJS(this._ctx).Pie(data);
+
+				if (this.onclickmf || this.onclickmfcontext) {
+					on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
+				}
 			}
 		});
 	});
