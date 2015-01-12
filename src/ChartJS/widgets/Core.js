@@ -109,7 +109,6 @@ define([
 		},
 
 		_onClickLegend : function (idx, isSingleSeries) {
-			debugger;
 			var activeSet = null,
 				activeSetLegend = null,
 				newDatasets = {
