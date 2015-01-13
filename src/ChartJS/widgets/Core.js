@@ -1,4 +1,6 @@
+/*jslint white:true, nomen: true, plusplus: true */
 /*global mx, mendix, require, console, define, module, logger */
+/*mendix */
 
 // Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
 define([
@@ -8,7 +10,8 @@ define([
 	'ChartJS/lib/charts'
 
 ], function (declare, _WidgetBase, _Widget, _Templated, domMx, dom, domQuery, domProp, domGeom, domClass, domStyle, domConstruct, dojoArray, win, on, lang, text, _charts) {
-
+    'use strict';
+    
 	// Declare widget.
 	return declare([ _WidgetBase, _Widget, _Templated, _charts ], {
 
@@ -51,8 +54,11 @@ define([
 		update : function (obj, callback) {
 			this._mxObj = obj;
 			this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
-				var obj = objs[0]; // Chart object is always only one.
-
+				var obj = objs[0], // Chart object is always only one.
+                    j = null,
+                    dataset = null,
+                    pointguids = null;
+                    
 				this._data.object = obj;
 
 				// Retrieve datasets
@@ -62,33 +68,34 @@ define([
 						this._datasetCounter = datasets.length;
 						this._data.datasets = [];
 
-						for(var j=0;j < datasets.length; j++) {
-							var dataset = datasets[j];
-							var pointguids = dataset.get(this._datapoint);
-							if (typeof pointguids == "string") {
+                        var func = function (dataset, datapoints) {
+                            var set = {
+                                dataset : dataset,
+                                sorting : +(dataset.get(this.datasetsorting))
+                            };
+                            if (datapoints.length === 1) {
+                                set.point = datapoints[0];
+                            } else {
+                                set.points = datapoints;
+                            }
+
+                            this._data.datasets.push(set);
+
+                            this._datasetCounter--;
+                            if (this._datasetCounter === 0){
+                                this._processData();
+                            }
+                        };
+                        
+						for(j = 0;j < datasets.length; j++) {
+							dataset = datasets[j];
+							pointguids = dataset.get(this._datapoint);
+							if (typeof pointguids === "string") {
 								pointguids = [pointguids];
 							}
 							mx.data.get({
 								guids : pointguids,
-								callback : lang.hitch(this, function (dataset, datapoints) {
-									var set = {
-										dataset : dataset,
-										sorting : +(dataset.get(this.datasetsorting))
-									}
-									if (datapoints.length === 1) {
-										set.point = datapoints[0];
-									} else {
-										set.points = datapoints;
-									}
-
-									this._data.datasets.push(set);
-
-									this._datasetCounter--;
-									if (this._datasetCounter === 0){
-										this._processData();
-									}
-
-								}, dataset)
+								callback : lang.hitch(this, func, dataset)
 							});
 						}
 					})
@@ -111,10 +118,11 @@ define([
 		},
 
 		_onClickChart : function () {
-			if (this.onclickmfcontext && this._mxObj)
+			if (this.onclickmfcontext && this._mxObj) {
 				this._executeMicroflow(this.onclickmfcontext, null, this._mxObj);
-			else
+            } else {
 				this._executeMicroflow(this.onclickmf);
+            }
 		},
 
 		_onClickLegend : function (idx, isSingleSeries) {
@@ -123,18 +131,20 @@ define([
 				newDatasets = {
 					datasets : [],
 					labels : this._chartData.labels
-				};
+				},
+                i = null;
 
 			this._activeDatasets[idx].active = !this._activeDatasets[idx].active;
 
 			this._chart.destroy();
-			for (var i=0; i< this._activeDatasets.length;i++) {
+			for (i = 0; i < this._activeDatasets.length;i++) {
 				activeSet = this._activeDatasets[i];
 				activeSetLegend = domQuery("li", this._legendNode)[activeSet.idx];
 
 				if (activeSet.active) {
-					if (domClass.contains(activeSetLegend, "legend-inactive"))
+					if (domClass.contains(activeSetLegend, "legend-inactive")) {
 						domClass.remove(activeSetLegend, "legend-inactive");
+                    }
 
 					newDatasets.datasets.push(activeSet.dataset);
 				} else if (!domClass.contains(activeSetLegend, "legend-inactive")) {
@@ -150,8 +160,8 @@ define([
 
 		_sortArrayObj : function (values) {
 			return values.sort(lang.hitch(this, function (a,b) {
-				var aa = a.sorting;
-				var bb = b.sorting;
+				var aa = a.sorting,
+				    bb = b.sorting;
 				if (aa > bb) {
 					return 1;
 				}
@@ -165,8 +175,8 @@ define([
 
 		_sortArrayMx : function (values, sortAttr) {
 			return values.sort(lang.hitch(this, function (a,b) {
-				var aa = a.get(sortAttr);
-				var bb = b.get(sortAttr);
+				var aa = a.get(sortAttr),
+                    bb = b.get(sortAttr);
 				if (aa > bb) {
 					return 1;
 				}
@@ -179,16 +189,20 @@ define([
 		},
 
 		_hexToRgb : function (hex, alpha) {
+            var regex = null,
+                shorthandRegex = null,
+                result = null;
+                
 			// From Stackoverflow here: http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 			// Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-			var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+			shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
 			hex = hex.replace(shorthandRegex, function(m, r, g, b) {
 				return r + r + g + g + b + b;
 			});
 
-			var regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+			regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 			if (regex) {
-				var result = {
+				result = {
 					r: parseInt(regex[1], 16),
 					g: parseInt(regex[2], 16),
 					b: parseInt(regex[3], 16)
@@ -199,7 +213,6 @@ define([
 		},
 
 		_executeMicroflow : function (mf, callback, obj) {
-			debugger;
 			var _params = {
 				applyto: 'selection',
 				actionname: mf,
