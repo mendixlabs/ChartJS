@@ -86,15 +86,193 @@
 
             _createChart : function (data) {
                 if (this.chartType === "Bar") {
-                    this._chart = new this._chartJS(this._ctx).Bar(data);
+                    this._chart = new this._chartJS(this._ctx).Bar(data, {
+                        
+                        //Boolean - Whether to show labels on the scale
+                        scaleShowLabels : this.scaleShowLabels,
+                        
+                        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                        scaleBeginAtZero : this.scaleBeginAtZero,
+
+                        //Boolean - Whether grid lines are shown across the chart
+                        scaleShowGridLines : this.scaleShowGridLines,
+
+                        //String - Colour of the grid lines
+                        scaleGridLineColor : this.scaleGridLineColor,
+
+                        //Number - Width of the grid lines
+                        scaleGridLineWidth : this.scaleGridLineWidth,
+
+                        //Boolean - Whether to show horizontal lines (except X axis)
+                        scaleShowHorizontalLines: this.scaleShowHorizontalLines,
+
+                        //Boolean - Whether to show vertical lines (except Y axis)
+                        scaleShowVerticalLines: this.scaleShowVerticalLines,
+
+                        //Boolean - If there is a stroke on each bar
+                        barShowStroke : this.barShowStroke,
+
+                        //Number - Pixel width of the bar stroke
+                        barStrokeWidth : this.barStrokeWidth,
+
+                        //Number - Spacing between each of the X value sets
+                        barValueSpacing : this.barValueSpacing,
+
+                        //Number - Spacing between data sets within X values
+                        barDatasetSpacing : this.barDatasetSpacing,
+
+                        //String - A legend template
+                        legendTemplate : this.legendTemplate
+
+                    });
                 } else if (this.chartType === "Radar") {
-                    this._chart = new this._chartJS(this._ctx).Radar(data);
+                    this._chart = new this._chartJS(this._ctx).Radar(data, {
+                        //Boolean - Whether to show lines for each scale point
+                        scaleShowLine : this.scaleShowLine,
+
+                        //Boolean - Whether we show the angle lines out of the radar
+                        angleShowLineOut : this.angleShowLineOut,
+
+                        //Boolean - Whether to show labels on the scale
+                        scaleShowLabels : this.scaleShowLabels,
+
+                        // Boolean - Whether the scale should begin at zero
+                        scaleBeginAtZero : this.scaleBeginAtZero,
+
+                        //String - Colour of the angle line
+                        angleLineColor : this.angleLineColor,
+
+                        //Number - Pixel width of the angle line
+                        angleLineWidth : this.angleLineWidth,
+
+                        //String - Point label font declaration
+                        pointLabelFontFamily : this.pointLabelFontFamily,
+
+                        //String - Point label font weight
+                        pointLabelFontStyle : this.pointLabelFontStyle,
+
+                        //Number - Point label font size in pixels
+                        pointLabelFontSize : this.pointLabelFontSize,
+
+                        //String - Point label font colour
+                        pointLabelFontColor : this.pointLabelFontColor,
+
+                        //Boolean - Whether to show a dot for each point
+                        pointDot : this.pointDot,
+
+                        //Number - Radius of each point dot in pixels
+                        pointDotRadius : this.pointDotRadius,
+
+                        //Number - Pixel width of point dot stroke
+                        pointDotStrokeWidth : this.pointDotStrokeWidth,
+
+                        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                        pointHitDetectionRadius : this.pointHitDetectionRadius,
+
+                        //Boolean - Whether to show a stroke for datasets
+                        datasetStroke : this.datasetStroke,
+
+                        //Number - Pixel width of dataset stroke
+                        datasetStrokeWidth : this.datasetStrokeWidth,
+
+                        //Boolean - Whether to fill the dataset with a colour
+                        datasetFill : this.datasetFill,
+
+                        //String - A legend template
+                        legendTemplate : this.legendTemplate
+
+                    });
                 } else if (this.chartType === "StackedBar") {
-                    this._chart = new this._chartJS(this._ctx).StackedBar(data);
+                    this._chart = new this._chartJS(this._ctx).StackedBar(data, {
+                        
+                        //Boolean - Whether to show labels on the scale
+                        scaleShowLabels : this.scaleShowLabels,
+                        
+                        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                        scaleBeginAtZero : this.scaleBeginAtZero,
+
+                        //Boolean - Whether grid lines are shown across the chart
+                        scaleShowGridLines : this.scaleShowGridLines,
+
+                        //String - Colour of the grid lines
+                        scaleGridLineColor : this.scaleGridLineColor,
+
+                        //Number - Width of the grid lines
+                        scaleGridLineWidth : this.scaleGridLineWidth,
+
+                        //Boolean - If there is a stroke on each bar
+                        barShowStroke : this.barShowStroke,
+
+                        //Number - Pixel width of the bar stroke
+                        barStrokeWidth : this.barStrokeWidth,
+
+                        //Number - Spacing between each of the X value sets
+                        barValueSpacing : this.barValueSpacing,
+
+                        //Number - Spacing between data sets within X values
+                        barDatasetSpacing : this.barDatasetSpacing,
+
+                        //Boolean - Whether bars should be rendered on a percentage base
+                        relativeBars : this.relativeBars,
+
+                        //String - A legend template
+                        legendTemplate : this.legendTemplate
+                        
+                    });
                 } else { // "Line"
-                    this._chart = new this._chartJS(this._ctx).Line(data);
+                    this._chart = new this._chartJS(this._ctx).Line(data, {
+                        
+                        //Boolean - Whether to show labels on the scale
+                        scaleShowLabels : this.scaleShowLabels,
+
+                        ///Boolean - Whether grid lines are shown across the chart
+                        scaleShowGridLines : this.scaleShowGridLines,
+
+                        //String - Colour of the grid lines
+                        scaleGridLineColor : this.scaleGridLineColor,
+
+                        //Number - Width of the grid lines
+                        scaleGridLineWidth : this.scaleGridLineWidth,
+
+                        //Boolean - Whether to show horizontal lines (except X axis)
+                        scaleShowHorizontalLines : this.scaleShowHorizontalLines,
+
+                        //Boolean - Whether to show vertical lines (except Y axis)
+                        scaleShowVerticalLines : this.scaleShowVerticalLines,
+
+                        //Boolean - Whether the line is curved between points
+                        bezierCurve : this.bezierCurve,
+
+                        //Number - Tension of the bezier curve between points
+                        bezierCurveTension : this.bezierCurveTension,
+
+                        //Boolean - Whether to show a dot for each point
+                        pointDot : this.pointDot,
+
+                        //Number - Radius of each point dot in pixels
+                        pointDotRadius : this.pointDotRadius,
+
+                        //Number - Pixel width of point dot stroke
+                        pointDotStrokeWidth : this.pointDotStrokeWidth,
+
+                        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                        pointHitDetectionRadius : this.pointHitDetectionRadius,
+
+                        //Boolean - Whether to show a stroke for datasets
+                        datasetStroke : this.datasetStroke,
+
+                        //Number - Pixel width of dataset stroke
+                        datasetStrokeWidth : this.datasetStrokeWidth,
+
+                        //Boolean - Whether to fill the dataset with a colour
+                        datasetFill : this.datasetFill,
+
+                        //String - A legend template
+                        legendTemplate : this.legendTemplate
+
+                    });
                 }
-                
+
                 if (this.onclickmf || this.onclickmfcontext) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
                 }

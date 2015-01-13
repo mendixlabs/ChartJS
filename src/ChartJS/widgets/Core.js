@@ -31,7 +31,10 @@ define([
 
 		startup: function () {
 			this._chartJS = _charts().chartssrc();
-			this._chartJS.defaults.global.responsive = true;
+            
+            ///Boolean - Whether the chart is responsive
+            this._chartJS.defaults.global.responsive = this.responsive;
+                
 			this._chartData = {
 				datasets : []
 			};
@@ -51,16 +54,36 @@ define([
 			this._data = {};
 		},
 
+        datasetAdd : function (dataset, datapoints) {
+            var set = {
+                dataset : dataset,
+                sorting : +(dataset.get(this.datasetsorting))
+            };
+            if (datapoints.length === 1) {
+                set.point = datapoints[0];
+            } else {
+                set.points = datapoints;
+            }
+
+            this._data.datasets.push(set);
+
+            this._datasetCounter--;
+            if (this._datasetCounter === 0){
+                this._processData();
+            }
+        },
+        
 		update : function (obj, callback) {
 			this._mxObj = obj;
 			this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
 				var obj = objs[0], // Chart object is always only one.
                     j = null,
                     dataset = null,
-                    pointguids = null;
+                    pointguids = null,
+                    func = null;
                     
 				this._data.object = obj;
-
+                
 				// Retrieve datasets
 				mx.data.get({
 					guids : obj.get(this._dataset),
@@ -68,25 +91,6 @@ define([
 						this._datasetCounter = datasets.length;
 						this._data.datasets = [];
 
-                        var func = function (dataset, datapoints) {
-                            var set = {
-                                dataset : dataset,
-                                sorting : +(dataset.get(this.datasetsorting))
-                            };
-                            if (datapoints.length === 1) {
-                                set.point = datapoints[0];
-                            } else {
-                                set.points = datapoints;
-                            }
-
-                            this._data.datasets.push(set);
-
-                            this._datasetCounter--;
-                            if (this._datasetCounter === 0){
-                                this._processData();
-                            }
-                        };
-                        
 						for(j = 0;j < datasets.length; j++) {
 							dataset = datasets[j];
 							pointguids = dataset.get(this._datapoint);
@@ -95,7 +99,7 @@ define([
 							}
 							mx.data.get({
 								guids : pointguids,
-								callback : lang.hitch(this, func, dataset)
+								callback : lang.hitch(this, this.datasetAdd, dataset)
 							});
 						}
 					})

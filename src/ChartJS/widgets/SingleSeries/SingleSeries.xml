@@ -169,5 +169,89 @@
 			<description></description>
 			<returnType type="Void"></returnType>
 		</property>
+        
+		<property key="responsive" type="boolean" required="true" defaultValue="true">
+			<caption>Responsive</caption>
+			<category>Settings</category>
+			<description>Whether the chart is responsive.</description>
+		</property>
+        <property key="segmentShowStroke" type="boolean" required="true" defaultValue="true">
+			<caption>Segment Show Stroke</caption>
+			<category>Settings</category>
+			<description>Stroke a line around each segment in the chart.</description>
+		</property>
+        <property key="segmentStrokeColor" type="string" required="true" defaultValue="#fff">
+			<caption>Segment Stroke Color</caption>
+			<category>Settings</category>
+			<description>The colour of the stroke on each segement.</description>
+		</property>
+        <property key="segmentStrokeWidth" type="string" required="true" defaultValue="2">
+			<caption>Segment Stroke Width</caption>
+			<category>Settings</category>
+			<description>The width of the stroke value in pixels.</description>
+		</property>
+        <property key="animationSteps" type="string" required="true" defaultValue="100">
+			<caption>Polar Animation Steps</caption>
+			<category>Settings</category>
+			<description>Amount of animation steps.</description>
+		</property>
+        <property key="animationEasing" type="string" required="true" defaultValue="easeOutBounce">
+			<caption>Polar Animation Easing</caption>
+			<category>Settings</category>
+			<description>Animation easing effect.</description>
+		</property>
+        <property key="animateRotate" type="boolean" required="true" defaultValue="true">
+			<caption>Polar Animate Rotate</caption>
+			<category>Settings</category>
+			<description>Whether to animate the rotation of the chart.</description>
+		</property>
+        <property key="animateScale" type="boolean" required="true" defaultValue="false">
+			<caption>Polar Animate Scale</caption>
+			<category>Settings</category>
+			<description>Whether to animate scaling the chart from the centre.</description>
+		</property>
+        <property key="legendTemplate" type="string" required="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;segments.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=segments[i].fillColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(segments[i].label){%&gt;&lt;%=segments[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;">
+			<caption>Polar Legend Template</caption>
+			<category>Settings</category>
+			<description>A legend template</description>
+		</property>
+        
+        <property key="polarScaleShowLabelBackdrop" type="boolean" required="true" defaultValue="true">
+			<caption>Polar Scale Show Label Backdrop</caption>
+			<category>Settings Polar Chart</category>
+			<description>Show a backdrop to the scale label.</description>
+		</property>
+        <property key="polarScaleBackdropColor" type="string" required="true" defaultValue="rgba(255,255,255,0.75)">
+			<caption>Polar Scale Backdrop Color</caption>
+			<category>Settings Polar Chart</category>
+			<description>The colour of the label backdrop.</description>
+		</property>
+        <property key="polarScaleBeginAtZero" type="boolean" required="true" defaultValue="true">
+			<caption>Polar Scale Begin At Zero</caption>
+			<category>Settings Polar Chart</category>
+			<description>Whether the scale should begin at zero.</description>
+		</property>
+        <property key="polarScaleBackdropPaddingY" type="string" required="true" defaultValue="2">
+			<caption>Polar Scale Backdrop Padding Y</caption>
+			<category>Settings Polar Chart</category>
+			<description>The backdrop padding above and below the label in pixels.</description>
+		</property>
+        <property key="polarScaleBackdropPaddingX" type="string" required="true" defaultValue="2">
+			<caption>Polar Scale Backdrop Padding X</caption>
+			<category>Settings Polar Chart</category>
+			<description>The backdrop padding to the side of the label in pixels.</description>
+		</property>
+        <property key="polarScaleShowLine" type="boolean" required="true" defaultValue="true">
+			<caption>Polar Scale Show Line</caption>
+			<category>Settings Polar Chart</category>
+			<description>Show line for each value in the scale.</description>
+		</property>
+        
+        <property key="percentageInnerCutout" type="string" required="true" defaultValue="50">
+			<caption>Percentage Inner Cutout</caption>
+			<category>Settings Doughnut Chart</category>
+			<description>The percentage of the chart that we cut out of the middle.</description>
+		</property>
+        
 	</properties>
 </widget>

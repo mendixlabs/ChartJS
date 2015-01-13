@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <widget id="ChartJS.widgets.MultiSeries.widget.MultiSeries" needsEntityContext="false" xmlns="http://www.mendix.com/widget/1.0/">
 	<name>ChartJS - Multi-series for Bar/Line/Radar charts</name>
-	<description></description>
+	<description>.</description>
 
 	<icon>
 		iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAFRklEQVR42u3csUqtVxSF0QNK7A56q1uIgljFVKmtU6Y5ksoq75LHy+OEVCHRi31g4tXFmmPARNu9/fdXejgAAAAAAAAAAAAAAAAAAPA/np+fz0+n09emvZ75s+8dRnh4ePjx5ce/TXs7MyAAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAgDFBACKCQAUEwAoJgBQTACgmABAMQGAYgIAxQQAigkAFBMAKCYAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAgDFBACKCQAUEwAoJgBQTACgmABAMQGAYgIAxQQAigkAFBMAKCYAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAsAKV1dXPx2Px99adnl5+ct73JsAsML5+fkfhwEf10ft7Ozsz/e4NwFgBQHICAArCEBGAFhBADICwAoCkBEAVhCAjACwggBkBIAVBCAjAKwgABkBYAUByAgAKwhARgBYQQAyAsAKApARAFYQgIwAsIIAZASAFQQgIwCsIAAZAWAFAcgIACsIQEYAWEEAMgLACgKQEQBWEICMALCCAGQEgBUEICMArCAAGQFgBQHICAArCEBGAFhBADICwAoCkBEAVhCAjACwggBkBIAVBCAjAKwgABkBYAUByAgAKwhARgBYQQAyAsAKApARAFYQgIwAsIIAZASAFQQgIwCsIAAZAWAFAcgIACsIQEYAWEEAMgLACgKQEQBWEICMALCCAGQEgBUEICMArCAAGQFgBQHICAArCEBGAFhBADICwAoCkBGA3M3Nza/X19e/t+z29vbn97i370IAMgKQe/sbfPp5Pmpvb2wmAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGCQ+/v7L3d3d/cte3H9Hvf2+Pj4w2ef5aP3euZ3+uauP/ssH/zNffncVw4AAAAAAAAAAAAAAAAAAAB8d8fj8a+Li4u/zaxrr2//8PLLP4cB/+rIzD52396+AJh1TgDMiicAZsUTALPiCYBZ8QTArHgCYFY8ATArngCYFU8AzIonAGbFEwCz4gmAWfEEwKx4AmBWPAEwK54AmBVPAMyKJwBmxRMAs+IJgFnxBMCseAJgVjwBMCueAJgVTwDMivft7T89PX09nU5mVrbXt38AAAAAAAAAAAAAAAAAAIb7D5VqMu+N+RwAAAAAAElFTkSuQmCC
@@ -22,22 +22,22 @@
 		<property key="width" type="integer" required="true" defaultValue="850">
 			<caption>Width</caption>
 			<category>Appearance</category>
-			<description></description>
+			<description>.</description>
 		</property>
 		<property key="height" type="integer" required="true" defaultValue="450">
 			<caption>Height</caption>
 			<category>Appearance</category>
-			<description></description>
+			<description>.</description>
 		</property>
 		<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
 			<caption>Chart Entity</caption>
 			<category>1) Data Source</category>
-			<description></description>
+			<description>.</description>
 		</property>
 		<property key="datasourcemf" type="microflow" required="false">
 			<caption>Microflow</caption>
 			<category>1) Data Source</category>
-			<description></description>
+			<description>.</description>
 			<returnType type="Object" entityProperty="sourceentity"></returnType>
 		</property>
 		<property key="yaxisMinValue" type="attribute" entityProperty="sourceentity">
@@ -61,13 +61,13 @@
 		<property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
 			<caption>Data Set Entity</caption>
 			<category>2) Data Set</category>
-			<description></description>
+			<description>.</description>
 		</property>
 
 		<property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
 			<caption>Data Set label</caption>
 			<category>2) Data Set</category>
-			<description></description>
+			<description>.</description>
 			<attributeTypes>
 				<attributeType name="Enum"/>
 				<attributeType name="String"/>
@@ -76,7 +76,7 @@
 		<property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
 			<caption>Sorting</caption>
 			<category>2) Data Set</category>
-			<description></description>
+			<description>.</description>
 			<attributeTypes>
 				<attributeType name="AutoNumber"/>
 				<attributeType name="Currency"/>
@@ -105,12 +105,12 @@
 		<property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
 			<caption>Data Point Entity</caption>
 			<category>3) Data Point</category>
-			<description></description>
+			<description>.</description>
 		</property>
 		<property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
 			<caption>X Value</caption>
 			<category>3) Data Point</category>
-			<description></description>
+			<description>.</description>
 			<attributeTypes>
 				<attributeType name="AutoNumber"/>
 				<attributeType name="Boolean"/>
@@ -126,7 +126,7 @@
 		<property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
 			<caption>X sorting</caption>
 			<category>3) Data Point</category>
-			<description></description>
+			<description>.</description>
 			<attributeTypes>
 				<attributeType name="AutoNumber"/>
 				<attributeType name="Currency"/>
@@ -139,7 +139,7 @@
 		<property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
 			<caption>Y value</caption>
 			<category>3) Data Point</category>
-			<description></description>
+			<description>.</description>
 			<attributeTypes>
 				<attributeType name="AutoNumber"/>
 				<attributeType name="Boolean"/>
@@ -155,19 +155,172 @@
 		<property key="onclickmf" type="microflow" required="false">
 			<caption>On click microflow</caption>
 			<category>Behavior</category>
-			<description></description>
+			<description>.</description>
 			<returnType type="Void"></returnType>
 		</property>
 		<property key="onclickmfcontextentity" type="entity" required="false" allowNonPersistableEntities="true">
 			<caption>Dataview onclick entity</caption>
 			<category>Behavior</category>
-			<description></description>
+			<description>.</description>
 		</property>
 		<property key="onclickmfcontext" type="microflow" required="false" entityProperty="onclickmfcontextentity">
 			<caption>Dataview onclick microflow</caption>
 			<category>Behavior</category>
-			<description></description>
+			<description>.</description>
 			<returnType type="Void"></returnType>
+		</property>
+		<property key="responsive" type="boolean" required="true" defaultValue="true">
+			<caption>Responsive</caption>
+			<category>Settings</category>
+			<description>Whether the chart is responsive.</description>
+		</property>
+		<property key="scaleBeginAtZero" type="boolean" required="true" defaultValue="true">
+			<caption>Begin at zero</caption>
+			<category>Settings</category>
+			<description>Whether grid lines are shown across the chart.</description>
+		</property>
+		<property key="scaleShowGridLines" type="boolean" required="true" defaultValue="true">
+			<caption>Show grid lines</caption>
+			<category>Settings</category>
+			<description>Whether grid lines are shown across the chart.</description>
+		</property>
+		<property key="scaleGridLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.05)">
+			<caption>Grid line color</caption>
+			<category>Settings</category>
+			<description>Colour of the grid lines.</description>
+		</property>
+		<property key="scaleGridLineWidth" type="string" required="true" defaultValue="1">
+			<caption>Grid line width</caption>
+			<category>Settings</category>
+			<description>Width of the grid lines.</description>
+		</property>
+		<property key="scaleShowHorizontalLines" type="boolean" required="true" defaultValue="true">
+			<caption>Show horizontal lines</caption>
+			<category>Settings</category>
+			<description>Whether to show horizontal lines (except X axis).</description>
+		</property>
+		<property key="scaleShowVerticalLines" type="boolean" required="true" defaultValue="true">
+			<caption>Show vertical lines</caption>
+			<category>Settings</category>
+			<description>Whether to show vertical lines (except Y axis).</description>
+		</property>
+		<property key="datasetStroke" type="boolean" required="true" defaultValue="true">
+			<caption>DataSet stroke</caption>
+			<category>Settings</category>
+			<description>Whether to show a stroke for datasets.</description>
+		</property>
+        <property key="datasetStrokeWidth" type="string" required="true" defaultValue="2">
+			<caption>DataSet stroke width</caption>
+			<category>Settings</category>
+			<description>Pixel width of dataset stroke.</description>
+		</property>
+        <property key="datasetFill" type="boolean" required="true" defaultValue="true">
+			<caption>DataSet fill</caption>
+			<category>Settings</category>
+			<description>Whether to fill the dataset with a colour.</description>
+		</property>
+        <property key="legendTemplate" type="string" required="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].lineColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;"> 
+			<caption>Legend template</caption>
+			<category>Settings</category>
+			<description>A legend template.</description>
+		</property>
+        <property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
+			<caption>Radar show labels</caption>
+			<category>Settings</category>
+			<description>Whether to show labels on the scale.</description>
+		</property>
+        <!-- Bar chart settings -->
+        <property key="barShowStroke" type="boolean" required="true" defaultValue="true">
+			<caption>Bar show stroke</caption>
+			<category>Settings (Stacked) Bar Chart</category>
+			<description>If there is a stroke on each bar.</description>
+		</property>
+        <property key="barStrokeWidth" type="string" required="true" defaultValue="2">
+			<caption>Bar stroke width</caption>
+			<category>Settings (Stacked) Bar Chart</category>
+			<description>Pixel width of the bar stroke.</description>
+		</property>
+        <property key="barValueSpacing" type="string" required="true" defaultValue="5">
+			<caption>Bar X Spacing</caption>
+			<category>Settings (Stacked) Bar Chart</category>
+			<description>Spacing between each of the X value sets.</description>
+		</property>
+        <property key="barDatasetSpacing" type="string" required="true" defaultValue="1">
+			<caption>Bar dataset spacing</caption>
+			<category>Settings (Stacked) Bar Chart</category>
+			<description>Spacing between data sets within X values.</description>
+		</property>
+        <property key="relativeBars" type="string" required="true" defaultValue="1">
+			<caption>Stacked Bar Relative Bars</caption>
+			<category>Settings (Stacked) Bar Chart</category>
+			<description>Spacing between data sets within X values.</description>
+		</property>
+        <!-- Radar settings -->
+        <property key="pointLabelFontFamily" type="string" required="true" defaultValue="'Arial'">
+			<caption>Point Label Font Family</caption>
+			<category>Settings Radar Chart</category>
+			<description>Point label font declaration.</description>
+		</property>
+        <property key="angleLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.1)">
+			<caption>Angle Line Color</caption>
+			<category>Settings Radar Chart</category>
+			<description>Colour of the angle line.</description>
+		</property>
+        <property key="angleShowLineOut" type="boolean" required="true" defaultValue="true">
+			<caption>Radar show lineout</caption>
+			<category>Settings Radar Chart</category>
+			<description>Whether we show the angle lines out of the radar.</description>
+		</property>
+        <property key="angleLineWidth" type="string" required="true" defaultValue="1">
+			<caption>Angle Line Width</caption>
+			<category>Settings Radar Chart</category>
+			<description>Pixel width of the angle line.</description>
+		</property>
+        <property key="pointLabelFontStyle" type="string" required="true" defaultValue="normal">
+			<caption>Point Label Font Style</caption>
+			<category>Settings Radar Chart</category>
+			<description>Point label font weight.</description>
+		</property>
+        <property key="pointLabelFontSize" type="string" required="true" defaultValue="10">
+			<caption>Point Label Font Size</caption>
+			<category>Settings Radar Chart</category>
+			<description>Point label font size in pixels.</description>
+		</property>
+        <property key="pointLabelFontColor" type="string" required="true" defaultValue="#666">
+			<caption>Point Label Font Color</caption>
+			<category>Settings Radar Chart</category>
+			<description>Point label font colour.</description>
+		</property>
+        <!-- Line settings -->
+		<property key="bezierCurve" type="boolean" required="true" defaultValue="true">
+			<caption>Bezier curve</caption>
+			<category>Settings Line Chart</category>
+			<description>Whether the line is curved between points.</description>
+		</property>
+		<property key="bezierCurveTension" type="string" required="true" defaultValue="0.4">
+			<caption>Bezier curve tension</caption>
+			<category>Settings Line Chart</category>
+			<description>Tension of the bezier curve between points.</description>
+		</property>
+		<property key="pointDot" type="boolean" required="true" defaultValue="true">
+			<caption>Point dot</caption>
+			<category>Settings Line Chart</category>
+			<description>Whether to show a dot for each point.</description>
+		</property>
+		<property key="pointDotRadius" type="string" required="true" defaultValue="4">
+			<caption>Point dot radius</caption>
+			<category>Settings Line Chart</category>
+			<description>Radius of each point dot in pixels.</description>
+		</property>
+		<property key="pointDotStrokeWidth" type="string" required="true" defaultValue="1">
+			<caption>Point dot stroke width</caption>
+			<category>Settings Line Chart</category>
+			<description>Pixel width of point dot stroke.</description>
+		</property>
+		<property key="pointHitDetectionRadius" type="string" required="true" defaultValue="20">
+			<caption>Point hit detection radius</caption>
+			<category>Settings Line Chart</category>
+			<description>amount extra to add to the radius to cater for hit detection outside the drawn point.</description>
 		</property>
 	</properties>
 </widget>
