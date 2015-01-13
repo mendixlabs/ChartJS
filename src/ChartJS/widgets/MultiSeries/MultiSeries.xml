@@ -108,7 +108,7 @@
 			<description>.</description>
 		</property>
 		<property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>X Value</caption>
+			<caption>X Value Attribute</caption>
 			<category>3) Data Point</category>
 			<description>.</description>
 			<attributeTypes>
@@ -124,7 +124,7 @@
 			</attributeTypes>
 		</property>
 		<property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>X sorting</caption>
+			<caption>X Sorting Attribute</caption>
 			<category>3) Data Point</category>
 			<description>.</description>
 			<attributeTypes>
@@ -137,7 +137,7 @@
 			</attributeTypes>
 		</property>
 		<property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>Y value</caption>
+			<caption>Y Value Attribute</caption>
 			<category>3) Data Point</category>
 			<description>.</description>
 			<attributeTypes>
