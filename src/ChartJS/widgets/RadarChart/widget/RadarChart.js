@@ -1,5 +1,5 @@
 /*jslint white:true, nomen: true, plusplus: true */
-/*global mx, mendix, require, console, define, module, logger */
+/*global mx, mendix, require, console, define, module, logger, window */
 /*mendix */
 (function () {
     'use strict';
@@ -142,7 +142,10 @@
                     legendTemplate : this.legendTemplate
 
                 });
-
+                
+                on(window, 'resize', lang.hitch(this, function () {
+                    this._chart.resize();
+                }));
 
                 if (this.onclickmf || this.onclickmfcontext) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));

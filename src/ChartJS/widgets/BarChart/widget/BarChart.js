@@ -1,5 +1,5 @@
-/*jslint white:true, nomen: true, plusplus: true */
-/*global mx, mendix, require, console, define, module, logger */
+/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
+/*global mx, mendix, require, console, define, module, logger, window */
 /*mendix */
 (function () {
     'use strict';
@@ -34,14 +34,14 @@
 
                 sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
-                for(j = 0; j < sets.length; j++) {
+                for (j = 0; j < sets.length; j++) {
                     set = sets[j];
                     points = [];
                     set.points = this._sortArrayMx(set.points, this.sortingxvalue);
                     color = set.dataset.get(this.seriescolor);
                     label = set.dataset.get(this.datasetlabel);
 
-                    for(i = 0;i < set.points.length; i++) {
+                    for (i = 0; i < set.points.length; i++) {
                         if (!xlabelsSet) {
                             xlabels.push(set.points[i].get(this.seriesxlabel));
                         }
@@ -49,7 +49,7 @@
                         points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
                     }
 
-                    if (!xlabelsSet) { 
+                    if (!xlabelsSet) {
                         xlabelsSet = true;
                     }
 
@@ -79,7 +79,7 @@
 
                 if (listNodes.length > 0) {
                     for (k = 0; k < listNodes.length; k++) {
-                        on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k, false/*Use multi series data format*/));
+                        on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k, false)); /*Use multi series data format*/
                     }
                 }
             },
@@ -125,6 +125,10 @@
                     legendTemplate : this.legendTemplate
 
                 });
+                
+                on(window, 'resize', lang.hitch(this, function () {
+                    this._chart.resize();
+                }));
                 
                 if (this.onclickmf || this.onclickmfcontext) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));

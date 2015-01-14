@@ -43,6 +43,15 @@ define([
 			domStyle.set(this.domNode, {
 				padding: 0,
 				width : '100%',
+                height: 'auto !important',
+				maxWidth : '100%',
+				maxHeight : '100%',
+				overflow : 'hidden'
+			});
+            domStyle.set(this.canvasNode, {
+				padding: 0,
+				width : '100%',
+                height: 'auto !important',
 				maxWidth : '100%',
 				maxHeight : '100%',
 				overflow : 'hidden'
