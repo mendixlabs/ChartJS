@@ -28,6 +28,7 @@ define([
 		_activeDatasets : null,
 		_legendNode : null,
 		_mxObj : null,
+        _handle : null,
 
 		startup: function () {
 			this._chartJS = _charts().chartssrc();
@@ -85,7 +86,41 @@ define([
 		update : function (obj, callback) {
             
 			this._mxObj = obj;
-			this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
+            
+            if (this._handle !== null) {
+                mx.data.unsubscribe(this._handle);
+            }
+            this._handle = mx.data.subscribe({
+                guid: this._mxObj.getGuid(),
+                callback: lang.hitch(this, function (obj) {
+
+                    mx.data.get({
+                        guids: [obj],
+                        callback: lang.hitch(this, function (objs) {
+
+                            // Set the object as background.
+                            this._mxObj = objs;
+
+                            // Load data again.
+                            this._loadData();
+
+                        })
+                    });
+
+                })
+            });
+            
+            // Load data again.
+            this._loadData();
+            
+			if(typeof callback !== 'undefined'){
+				callback();
+			}
+		},
+        
+        _loadData : function () {
+            
+            this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
 				var obj = objs[0], // Chart object is always only one.
                     j = null,
                     dataset = null,
@@ -129,11 +164,14 @@ define([
 					})
 				});
 			}), this._mxObj);
-
-			if(typeof callback !== 'undefined'){
-				callback();
-			}
-		},
+        
+        },
+        
+        uninitialize : function () {
+            if (this._handle !== null) {
+                mx.data.unsubscribe(this._handle);
+            }
+        },
 
 		_processData : function () {
 			// STUB
