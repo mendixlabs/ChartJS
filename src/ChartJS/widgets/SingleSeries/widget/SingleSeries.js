@@ -1,4 +1,4 @@
-/*jslint white:true, nomen: true, plusplus: true */
+/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
 /*global mx, mendix, require, console, define, module, logger */
 /*mendix */
 (function () {

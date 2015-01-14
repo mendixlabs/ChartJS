@@ -3,12 +3,27 @@
 	<clientModule name="ChartJS" version="1.0" xmlns="http://www.mendix.com/clientModule/1.0/">
 		<widgetFiles>
 			<widgetFile path="ChartJS/widgets/MultiSeries/MultiSeries.xml"/>
+			<widgetFile path="ChartJS/widgets/BarChart/BarChart.xml"/>
+			<widgetFile path="ChartJS/widgets/LineChart/LineChart.xml"/>
+			<widgetFile path="ChartJS/widgets/StackedBarChart/StackedBarChart.xml"/>
+			<widgetFile path="ChartJS/widgets/RadarChart/RadarChart.xml"/>
 			<widgetFile path="ChartJS/widgets/SingleSeries/SingleSeries.xml"/>
-
+			<widgetFile path="ChartJS/widgets/PieChart/PieChart.xml"/>
+			<widgetFile path="ChartJS/widgets/PolarChart/PolarChart.xml"/>
+			<widgetFile path="ChartJS/widgets/DoughnutChart/DoughnutChart.xml"/>
+			<widgetFile path="ChartJS/widgets/DoubleDoughnutChart/DoubleDoughnutChart.xml"/>
 		</widgetFiles>
 		<files>
 			<file path="ChartJS/widgets/MultiSeries/widget/"/>
+			<file path="ChartJS/widgets/BarChart/widget/"/>
+			<file path="ChartJS/widgets/LineChart/widget/"/>
+			<file path="ChartJS/widgets/StackedBarChart/widget/"/>
+			<file path="ChartJS/widgets/RadarChart/widget/"/>
 			<file path="ChartJS/widgets/SingleSeries/widget/"/>
+			<file path="ChartJS/widgets/PieChart/widget/"/>
+			<file path="ChartJS/widgets/PolarChart/widget/"/>
+			<file path="ChartJS/widgets/DoughnutChart/widget/"/>
+			<file path="ChartJS/widgets/DoubleDoughnutChart/widget/"/>
 		</files>
 	</clientModule>
 </package>

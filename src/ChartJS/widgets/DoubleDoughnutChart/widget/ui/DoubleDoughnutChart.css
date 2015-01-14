@@ -1,0 +1,15 @@
+.legend-node {
+	width: 100%;
+	padding: 5px;
+}
+.legend-node li {
+	cursor: pointer;
+}
+.pie-legend {
+	text-align	: center;
+}
+.pie-legend li {
+	clear: none;
+	display: inline-block;
+	margin-right: 20px;
+}
