@@ -98,6 +98,8 @@ define([
 				mx.data.get({
 					guids : obj.get(this._dataset),
 					callback : lang.hitch(this, function (datasets) {
+                        var set = {};
+                        
 						this._datasetCounter = datasets.length;
 						this._data.datasets = [];
 
@@ -112,6 +114,15 @@ define([
                                     guids : pointguids,
                                     callback : lang.hitch(this, this.datasetAdd, dataset)
                                 });
+                            } else {
+                                // No points found
+                                set = {
+                                    dataset : dataset,
+                                    sorting : +(dataset.get(this.datasetsorting)),
+                                    nopoints : true
+                                };
+                                this._data.datasets.push(set);
+                                this._datasetCounter--;
                             }
 						}
                         

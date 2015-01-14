@@ -34,22 +34,27 @@
 
                 for (j = 0; j < sets.length; j++) {
                     set = sets[j];
-                    points = [];
-                    color = set.dataset.get(this.seriescolor);
-                    label = set.dataset.get(this.datasetlabel);
-                    point = {
-                        label : label,
-                        color: this._hexToRgb(color, "0.5"),
-                        highlight: this._hexToRgb(color, "0.75"),
-                        value : +(set.point.get(this.seriesylabel))
-                    };
+                    if (set.nopoints === true) {
+                        // No points found!
+                        console.log(this.id + ' - empty dataset');
+                    } else {
+                        points = [];
+                        color = set.dataset.get(this.seriescolor);
+                        label = set.dataset.get(this.datasetlabel);
+                        point = {
+                            label : label,
+                            color: this._hexToRgb(color, "0.5"),
+                            highlight: this._hexToRgb(color, "0.75"),
+                            value : +(set.point.get(this.seriesylabel))
+                        };
 
-                    chartData.push(point);
-                    this._activeDatasets.push({
-                        dataset : point,
-                        idx : j,
-                        active : true
-                    });
+                        chartData.push(point);
+                        this._activeDatasets.push({
+                            dataset : point,
+                            idx : j,
+                            active : true
+                        });
+                    }
                 }
 
                 this._createChart(chartData);
@@ -66,7 +71,7 @@
             },
 
             _createChart : function (data) {
-                
+
                 this._chart = new this._chartJS(this._ctx).Pie(data, {
 
                     //Boolean - Whether we should show a stroke on each segment
@@ -97,7 +102,7 @@
                     legendTemplate : this.legendTemplate
 
                 });
-                
+
                 on(window, 'resize', lang.hitch(this, function () {
                     this._chart.resize();
                 }));
