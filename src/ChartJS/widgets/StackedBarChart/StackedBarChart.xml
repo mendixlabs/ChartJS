@@ -7,17 +7,6 @@
 
 	<properties>
         <!-- Appearance -->
-		<property key="chartType" type="enumeration" defaultValue="Line">
-			<caption>Chart Type</caption>
-			<category>Appearance</category>
-			<description>This field determines the display direction.</description> 
-			<enumerationValues>
-				<enumerationValue key="Line">Line</enumerationValue>
-				<enumerationValue key="Bar">Bar</enumerationValue>
-				<enumerationValue key="StackedBar">Stacked Bar</enumerationValue>
-				<enumerationValue key="Radar">Radar</enumerationValue>
-			</enumerationValues>
-		</property>
 		<property key="width" type="integer" required="true" defaultValue="850">
 			<caption>Width</caption>
 			<category>Appearance</category>
