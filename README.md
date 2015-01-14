@@ -10,47 +10,45 @@ We suggest using the following domain model, but you can create your own as long
 
 ![Datamodel suggested for use with the widget](/assets/datamodel.png)
 
-### Widget configuration
+### 1) Data Source
 
-#### 1) Data Source
+#### Chart Entity
 
-##### Chart Entity
+#### Microflow
 
-##### Microflow
+#### Minimum value Y Axis
 
-##### Minimum value Y Axis
+#### Maximum value Y Axis
 
-##### Maximum value Y Axis
+### 2) Data Set
 
-#### 2) Data Set
+#### Data Set Entity
 
-##### Data Set Entity
+#### Data Set Label
 
-##### Data Set Label
+#### Color (in Hex)
 
-##### Color (in Hex)
+#### Sorting
 
-##### Sorting
+### 3) Data Point
 
-#### 3) Data Point
+#### Data Point Entity
 
-##### Data Point Entity
+#### X Value Attribute
 
-##### X Value Attribute
+#### X Sorting Attribute
 
-##### X Sorting Attribute
+#### Y Value Attribute
 
-##### Y Value Attribute
+### Behavior
 
-#### Behavior
+#### On click microflow
 
-##### On click microflow
+#### Dataview onclick entity
 
-##### Dataview onclick entity
+#### Dataview onclick microflow
 
-##### Dataview onclick microflow
-
-#### Settings
+### Settings
 
 All the settings for this widget match the original ChartJS settings. The documentation for these can be found here: [ChartJS Documentation](http://www.chartjs.org/docs/).
 
