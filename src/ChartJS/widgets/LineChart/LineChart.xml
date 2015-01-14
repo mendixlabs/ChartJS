@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<widget id="ChartJS.widgets.LineChart.widget.LineChart" needsEntityContext="false" xmlns="http://www.mendix.com/widget/1.0/">
+<widget id="ChartJS.widgets.LineChart.widget.LineChart" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
 	<name>ChartJS - Line Chart</name>
 	<description>.</description>
 

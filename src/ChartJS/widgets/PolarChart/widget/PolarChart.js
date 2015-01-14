@@ -67,7 +67,7 @@
 
             _createChart : function (data) {
 
-                this._chart = new this._chartJS(this._ctx).Polar(data, {
+                this._chart = new this._chartJS(this._ctx).PolarArea(data, {
 
                     //Boolean - Show a backdrop to the scale label
                     scaleShowLabelBackdrop : this.polarScaleShowLabelBackdrop,

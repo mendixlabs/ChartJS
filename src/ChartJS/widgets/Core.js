@@ -74,6 +74,7 @@ define([
         },
         
 		update : function (obj, callback) {
+            
 			this._mxObj = obj;
 			this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
 				var obj = objs[0], // Chart object is always only one.
@@ -94,17 +95,20 @@ define([
 						for(j = 0;j < datasets.length; j++) {
 							dataset = datasets[j];
 							pointguids = dataset.get(this._datapoint);
-							if (typeof pointguids === "string") {
+							if (typeof pointguids === "string" && pointguids !== '') {
 								pointguids = [pointguids];
 							}
-							mx.data.get({
-								guids : pointguids,
-								callback : lang.hitch(this, this.datasetAdd, dataset)
-							});
+                            if (typeof pointguids !== "string") {
+                                mx.data.get({
+                                    guids : pointguids,
+                                    callback : lang.hitch(this, this.datasetAdd, dataset)
+                                });
+                            }
 						}
+                        
 					})
 				});
-			}));
+			}), this._mxObj);
 
 			if(typeof callback !== 'undefined'){
 				callback();
@@ -217,7 +221,7 @@ define([
 		},
 
 		_executeMicroflow : function (mf, callback, obj) {
-			var _params = {
+            var _params = {
 				applyto: 'selection',
 				actionname: mf,
 				guids : []

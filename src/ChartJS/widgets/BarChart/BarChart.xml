@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<widget id="ChartJS.widgets.BarChart.widget.BarChart" needsEntityContext="false" xmlns="http://www.mendix.com/widget/1.0/">
+<widget id="ChartJS.widgets.BarChart.widget.BarChart" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
 	<name>ChartJS - Bar Chart</name>
 	<description>.</description>
 

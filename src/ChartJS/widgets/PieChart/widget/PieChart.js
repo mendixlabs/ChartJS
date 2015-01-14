@@ -79,7 +79,7 @@
                     segmentStrokeWidth : this.segmentStrokeWidth,
 
                     //Number - The percentage of the chart that we cut out of the middle
-                    percentageInnerCutout : this.percentageInnerCutout, // This is 0 for Pie charts
+                    percentageInnerCutout : 0, // This is 0 for Pie charts
 
                     //Number - Amount of animation steps
                     animationSteps : this.animationSteps,

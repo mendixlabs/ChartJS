@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<widget id="ChartJS.widgets.PolarChart.widget.PolarChart" needsEntityContext="false" xmlns="http://www.mendix.com/widget/1.0/">
+<widget id="ChartJS.widgets.PolarChart.widget.PolarChart" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
 	<name>ChartJS - Polar Chart</name>
 	<description></description>
 
@@ -7,16 +7,6 @@
 
 	<properties>
         <!-- Appearance -->
-		<property key="chartType" type="enumeration" defaultValue="Pie">
-			<caption>Chart Type</caption>
-			<category>Appearance</category>
-			<description>This field determines the display direction.</description> 
-			<enumerationValues>
-				<enumerationValue key="Pie">Pie</enumerationValue>
-				<enumerationValue key="Doughnut">Doughnut</enumerationValue>
-				<enumerationValue key="Polar">Polar</enumerationValue>
-			</enumerationValues>
-		</property>
 		<property key="width" type="integer" required="true" defaultValue="850">
 			<caption>Width</caption>
 			<category>Appearance</category>
