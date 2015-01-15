@@ -124,8 +124,7 @@ define([
 				var obj = objs[0], // Chart object is always only one.
 					j = null,
 					dataset = null,
-					pointguids = null,
-					func = null;
+					pointguids = null;
 
 				this._data.object = obj;
 
@@ -184,14 +183,12 @@ define([
 		},
 
 		_onClickChart : function () {
-			if (this.onclickmfcontext && this._mxObj) {
-				this._executeMicroflow(this.onclickmfcontext, null, this._mxObj);
-			} else {
+			if (this.onclickmf) {
 				this._executeMicroflow(this.onclickmf);
 			}
 		},
 
-		_createLegend : function () {
+		_createLegend : function (isSingleSeries) {
 			var listNodes = null;
 			if (this.showLegend) {
 				this._legendNode.innerHTML = this._chart.generateLegend();
@@ -200,7 +197,7 @@ define([
 
 				if (listNodes.length > 0) {
 					for (var k = 0; k < listNodes.length; k++) {
-						on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k, false)); /*Use multi series data format*/
+						on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k, isSingleSeries /*isSingleSeries bool to specify which data format to expect (single or multi series)*/)); 
 					}
 				}
 			}

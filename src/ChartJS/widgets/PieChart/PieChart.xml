@@ -9,7 +9,7 @@
 	</icon>
 
 	<properties>
-        <!-- Appearance -->
+		<!-- Appearance -->
 		<property key="width" type="integer" required="true" defaultValue="850">
 			<caption>Width</caption>
 			<category>Appearance</category>
@@ -20,7 +20,7 @@
 			<category>Appearance</category>
 			<description></description>
 		</property>
-        <!-- Data Source -->
+		<!-- Data Source -->
 		<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
 			<caption>Chart Entity</caption>
 			<category>Data Source</category>
@@ -50,7 +50,7 @@
 				<attributeType name="Integer"/>
 			</attributeTypes>
 		</property>
-        <!-- Data Set -->
+		<!-- Data Set -->
 		<property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
 			<caption>Data Set Entity</caption>
 			<category>Data Set</category>
@@ -94,7 +94,7 @@
 				<attributeType name="String"/>
 			</attributeTypes>
 		</property>
-        <!-- Data Point -->
+		<!-- Data Point -->
 		<property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="reference">
 			<caption>Data Point Entity</caption>
 			<category>Data Point</category>
@@ -145,67 +145,61 @@
 				<attributeType name="String"/>
 			</attributeTypes>
 		</property>
-        <!-- Behavior -->
+		<!-- Behavior -->
 		<property key="onclickmf" type="microflow" required="false">
-			<caption>Onclick microflow</caption>
+			<caption>On Click Microflow</caption>
 			<category>Behavior</category>
 			<description></description>
 			<returnType type="Void"></returnType>
 		</property>
-		<property key="onclickmfcontextentity" type="entity" required="false" allowNonPersistableEntities="true">
-			<caption>Dataview onclick entity</caption>
-			<category>Behavior</category>
-			<description></description>
-		</property>
-		<property key="onclickmfcontext" type="microflow" required="false" entityProperty="onclickmfcontextentity">
-			<caption>Dataview onclick microflow</caption>
-			<category>Behavior</category>
-			<description></description>
-			<returnType type="Void"></returnType>
-		</property>
-        <!-- Settings -->
+		<!-- Settings -->
 		<property key="responsive" type="boolean" required="true" defaultValue="true">
 			<caption>Responsive</caption>
 			<category>Settings</category>
 			<description>Whether the chart is responsive.</description>
 		</property>
-        <property key="segmentShowStroke" type="boolean" required="true" defaultValue="true">
+		<property key="segmentShowStroke" type="boolean" required="true" defaultValue="true">
 			<caption>Segment Show Stroke</caption>
 			<category>Settings</category>
 			<description>Stroke a line around each segment in the chart.</description>
 		</property>
-        <property key="segmentStrokeColor" type="string" required="true" defaultValue="#fff">
+		<property key="segmentStrokeColor" type="string" required="true" defaultValue="#fff">
 			<caption>Segment Stroke Color</caption>
 			<category>Settings</category>
 			<description>The colour of the stroke on each segement.</description>
 		</property>
-        <property key="segmentStrokeWidth" type="string" required="true" defaultValue="2">
+		<property key="segmentStrokeWidth" type="string" required="true" defaultValue="2">
 			<caption>Segment Stroke Width</caption>
 			<category>Settings</category>
 			<description>The width of the stroke value in pixels.</description>
 		</property>
-        <property key="animationSteps" type="string" required="true" defaultValue="100">
-			<caption>Polar Animation Steps</caption>
+		<property key="animationSteps" type="string" required="true" defaultValue="100">
+			<caption>Animation Steps</caption>
 			<category>Settings</category>
 			<description>Amount of animation steps.</description>
 		</property>
-        <property key="animationEasing" type="string" required="true" defaultValue="easeOutBounce">
-			<caption>Polar Animation Easing</caption>
+		<property key="animationEasing" type="string" required="true" defaultValue="easeOutBounce">
+			<caption>Animation Easing</caption>
 			<category>Settings</category>
 			<description>Animation easing effect.</description>
 		</property>
-        <property key="animateRotate" type="boolean" required="true" defaultValue="true">
-			<caption>Polar Animate Rotate</caption>
+		<property key="animateRotate" type="boolean" required="true" defaultValue="true">
+			<caption>Animate Rotate</caption>
 			<category>Settings</category>
 			<description>Whether to animate the rotation of the chart.</description>
 		</property>
-        <property key="animateScale" type="boolean" required="true" defaultValue="false">
-			<caption>Polar Animate Scale</caption>
+		<property key="animateScale" type="boolean" required="true" defaultValue="false">
+			<caption>Animate Scale</caption>
 			<category>Settings</category>
 			<description>Whether to animate scaling the chart from the centre.</description>
 		</property>
-        <property key="legendTemplate" type="string" required="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;segments.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=segments[i].fillColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(segments[i].label){%&gt;&lt;%=segments[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;">
-			<caption>Polar Legend Template</caption>
+		<property key="showLegend" type="boolean" required="true" defaultValue="true"> 
+			<caption>Show Legend</caption>
+			<category>Settings</category>
+			<description>Turn the legend on/off.</description>
+		</property>
+		<property key="legendTemplate" type="string" required="true" multiline="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;segments.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=segments[i].fillColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(segments[i].label){%&gt;&lt;%=segments[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;">
+			<caption>Legend Template</caption>
 			<category>Settings</category>
 			<description>A legend template</description>
 		</property>

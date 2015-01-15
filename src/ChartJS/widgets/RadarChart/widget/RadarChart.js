@@ -76,7 +76,7 @@
 
                 this._createChart(this._chartData);
 
-                this._createLegend();
+                this._createLegend(false);
             },
 
             _createChart : function (data) {
@@ -142,7 +142,7 @@
                     this._chart.resize();
                 }));
 
-                if (this.onclickmf || this.onclickmfcontext) {
+                if (this.onclickmf) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
                 }
             }

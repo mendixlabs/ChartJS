@@ -6,7 +6,7 @@
 	<icon>iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAAA3NCSVQICAjb4U/gAAAADFBMVEUAAABUVFQKCgr///+YierFAAAABHRSTlP///8AQCqp9AAAAAlwSFlzAAALEgAACxIB0t1+/AAAABV0RVh0Q3JlYXRpb24gVGltZQAxLzE0LzE1ZGtS1wAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAqSURBVAiZY/gPBAwfbPiRif9/+JlBLGYkFkTW/i+IxYtMgA1oYAACEAEAd/4eWjJEzeQAAAAASUVORK5CYII=</icon>
 
 	<properties>
-        <!-- Appearance -->
+		<!-- Appearance -->
 		<property key="width" type="integer" required="true" defaultValue="850">
 			<caption>Width</caption>
 			<category>Appearance</category>
@@ -17,7 +17,7 @@
 			<category>Appearance</category>
 			<description>.</description>
 		</property>
-        <!-- Data Source -->
+		<!-- Data Source -->
 		<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
 			<caption>Chart Entity</caption>
 			<category>Data Source</category>
@@ -47,7 +47,7 @@
 				<attributeType name="Integer"/>
 			</attributeTypes>
 		</property>
-        <!-- Data Set -->
+		<!-- Data Set -->
 		<property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
 			<caption>Data Set Entity</caption>
 			<category>Data Set</category>
@@ -91,7 +91,7 @@
 				<attributeType name="String"/>
 			</attributeTypes>
 		</property>
-        <!-- Data Point -->
+		<!-- Data Point -->
 		<property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
 			<caption>Data Point Entity</caption>
 			<category>Data Point</category>
@@ -142,25 +142,14 @@
 				<attributeType name="String"/>
 			</attributeTypes>
 		</property>
-        <!-- Behavior -->
+		<!-- Behavior -->
 		<property key="onclickmf" type="microflow" required="false">
-			<caption>On click microflow</caption>
+			<caption>On Click Microflow</caption>
 			<category>Behavior</category>
 			<description>.</description>
 			<returnType type="Void"></returnType>
 		</property>
-		<property key="onclickmfcontextentity" type="entity" required="false" allowNonPersistableEntities="true">
-			<caption>Dataview onclick entity</caption>
-			<category>Behavior</category>
-			<description>.</description>
-		</property>
-		<property key="onclickmfcontext" type="microflow" required="false" entityProperty="onclickmfcontextentity">
-			<caption>Dataview onclick microflow</caption>
-			<category>Behavior</category>
-			<description>.</description>
-			<returnType type="Void"></returnType>
-		</property>
-        <!-- Settings -->
+		<!-- Settings -->
 		<property key="responsive" type="boolean" required="true" defaultValue="true">
 			<caption>Responsive</caption>
 			<category>Settings</category>
@@ -201,48 +190,53 @@
 			<category>Settings</category>
 			<description>Whether to show a stroke for datasets.</description>
 		</property>
-        <property key="datasetStrokeWidth" type="string" required="true" defaultValue="2">
+		<property key="datasetStrokeWidth" type="string" required="true" defaultValue="2">
 			<caption>DataSet stroke width</caption>
 			<category>Settings</category>
 			<description>Pixel width of dataset stroke.</description>
 		</property>
-        <property key="datasetFill" type="boolean" required="true" defaultValue="true">
+		<property key="datasetFill" type="boolean" required="true" defaultValue="true">
 			<caption>DataSet fill</caption>
 			<category>Settings</category>
 			<description>Whether to fill the dataset with a colour.</description>
 		</property>
-        <property key="legendTemplate" type="string" required="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].fillColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;"> 
+		<property key="showLegend" type="boolean" required="true" defaultValue="true"> 
+			<caption>Show Legend</caption>
+			<category>Settings</category>
+			<description>Turn the legend on/off.</description>
+		</property>
+		<property key="legendTemplate" type="string" multiline="true" required="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].fillColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;"> 
 			<caption>Legend template</caption>
 			<category>Settings</category>
 			<description>A legend template.</description>
 		</property>
-        <property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
+		<property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
 			<caption>Radar show labels</caption>
 			<category>Settings</category>
 			<description>Whether to show labels on the scale.</description>
 		</property>
-        <!-- Bar chart settings -->
-        <property key="barShowStroke" type="boolean" required="true" defaultValue="true">
+		<!-- Bar chart settings -->
+		<property key="barShowStroke" type="boolean" required="true" defaultValue="true">
 			<caption>Bar show stroke</caption>
 			<category>Settings (Stacked) Bar Chart</category>
 			<description>If there is a stroke on each bar.</description>
 		</property>
-        <property key="barStrokeWidth" type="string" required="true" defaultValue="2">
+		<property key="barStrokeWidth" type="string" required="true" defaultValue="2">
 			<caption>Bar stroke width</caption>
 			<category>Settings (Stacked) Bar Chart</category>
 			<description>Pixel width of the bar stroke.</description>
 		</property>
-        <property key="barValueSpacing" type="string" required="true" defaultValue="5">
+		<property key="barValueSpacing" type="string" required="true" defaultValue="5">
 			<caption>Bar X Spacing</caption>
 			<category>Settings (Stacked) Bar Chart</category>
 			<description>Spacing between each of the X value sets.</description>
 		</property>
-        <property key="barDatasetSpacing" type="string" required="true" defaultValue="1">
+		<property key="barDatasetSpacing" type="string" required="true" defaultValue="1">
 			<caption>Bar dataset spacing</caption>
 			<category>Settings (Stacked) Bar Chart</category>
 			<description>Spacing between data sets within X values.</description>
 		</property>
-        <property key="relativeBars" type="string" required="true" defaultValue="1">
+		<property key="relativeBars" type="string" required="true" defaultValue="1">
 			<caption>Stacked Bar Relative Bars</caption>
 			<category>Settings (Stacked) Bar Chart</category>
 			<description>Spacing between data sets within X values.</description>

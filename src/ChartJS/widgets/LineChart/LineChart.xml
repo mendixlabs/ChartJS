@@ -146,18 +146,7 @@
 		</property>
         <!-- Behavior -->
 		<property key="onclickmf" type="microflow" required="false">
-			<caption>On click microflow</caption>
-			<category>Behavior</category>
-			<description>.</description>
-			<returnType type="Void"></returnType>
-		</property>
-		<property key="onclickmfcontextentity" type="entity" required="false" allowNonPersistableEntities="true">
-			<caption>Dataview onclick entity</caption>
-			<category>Behavior</category>
-			<description>.</description>
-		</property>
-		<property key="onclickmfcontext" type="microflow" required="false" entityProperty="onclickmfcontextentity">
-			<caption>Dataview onclick microflow</caption>
+			<caption>On Click Microflow</caption>
 			<category>Behavior</category>
 			<description>.</description>
 			<returnType type="Void"></returnType>
@@ -218,7 +207,7 @@
 			<category>Settings</category>
 			<description>Turn the legend on/off.</description>
 		</property>
-        <property key="legendTemplate" type="string" required="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].strokeColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;"> 
+        <property key="legendTemplate" type="string" required="true" multiline="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].strokeColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;"> 
 			<caption>Legend template</caption>
 			<category>Settings</category>
 			<description>A legend template.</description>
