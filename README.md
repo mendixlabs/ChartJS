@@ -8,7 +8,7 @@ The data for this widget is retrieved through a datasource microflow. The assump
 
 We suggest using the following domain model, but you can create your own as long as it matches the widget's datasource requirements.
 
-![Datamodel suggested for use with the widget](/assets/datamodel.png)
+![Datamodel suggested for use with the widget](https://github.com/mendix/ChartJS/blob/master/assets/datamodel.png)
 
 ### 1) Data Source
 
