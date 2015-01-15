@@ -10,8 +10,8 @@ define([
 	'ChartJS/lib/charts'
 
 ], function (declare, _WidgetBase, _Widget, _Templated, domMx, dom, domQuery, domProp, domGeom, domClass, domStyle, domConstruct, dojoArray, win, on, lang, text, _charts) {
-    'use strict';
-    
+	'use strict';
+
 	// Declare widget.
 	return declare([ _WidgetBase, _Widget, _Templated, _charts ], {
 
@@ -28,14 +28,14 @@ define([
 		_activeDatasets : null,
 		_legendNode : null,
 		_mxObj : null,
-        _handle : null,
+		_handle : null,
 
 		startup: function () {
 			this._chartJS = _charts().chartssrc();
-            
-            ///Boolean - Whether the chart is responsive
-            this._chartJS.defaults.global.responsive = this.responsive;
-                
+
+			///Boolean - Whether the chart is responsive
+			this._chartJS.defaults.global.responsive = this.responsive;
+
 			this._chartData = {
 				datasets : []
 			};
@@ -44,15 +44,15 @@ define([
 			domStyle.set(this.domNode, {
 				padding: 0,
 				width : '100%',
-                height: 'auto !important',
+				height: 'auto !important',
 				maxWidth : '100%',
 				maxHeight : '100%',
 				overflow : 'hidden'
 			});
-            domStyle.set(this.canvasNode, {
+			domStyle.set(this.canvasNode, {
 				padding: 0,
 				width : '100%',
-                height: 'auto !important',
+				height: 'auto !important',
 				maxWidth : '100%',
 				maxHeight : '100%',
 				overflow : 'hidden'
@@ -64,77 +64,77 @@ define([
 			this._data = {};
 		},
 
-        datasetAdd : function (dataset, datapoints) {
-            var set = {
-                dataset : dataset,
-                sorting : +(dataset.get(this.datasetsorting))
-            };
-            if (datapoints.length === 1) {
-                set.point = datapoints[0];
-            } else {
-                set.points = datapoints;
-            }
+		datasetAdd : function (dataset, datapoints) {
+			var set = {
+				dataset : dataset,
+				sorting : +(dataset.get(this.datasetsorting))
+			};
+			if (datapoints.length === 1) {
+				set.point = datapoints[0];
+			} else {
+				set.points = datapoints;
+			}
 
-            this._data.datasets.push(set);
+			this._data.datasets.push(set);
 
-            this._datasetCounter--;
-            if (this._datasetCounter === 0){
-                this._processData();
-            }
-        },
-        
+			this._datasetCounter--;
+			if (this._datasetCounter === 0){
+				this._processData();
+			}
+		},
+
 		update : function (obj, callback) {
-            
+
 			this._mxObj = obj;
-            
-            if (this._handle !== null) {
-                mx.data.unsubscribe(this._handle);
-            }
-            this._handle = mx.data.subscribe({
-                guid: this._mxObj.getGuid(),
-                callback: lang.hitch(this, function (obj) {
 
-                    mx.data.get({
-                        guids: [obj],
-                        callback: lang.hitch(this, function (objs) {
+			if (this._handle !== null) {
+				mx.data.unsubscribe(this._handle);
+			}
+			this._handle = mx.data.subscribe({
+				guid: this._mxObj.getGuid(),
+				callback: lang.hitch(this, function (obj) {
 
-                            // Set the object as background.
-                            this._mxObj = objs;
+					mx.data.get({
+						guids: [obj],
+						callback: lang.hitch(this, function (objs) {
 
-                            // Load data again.
-                            this._loadData();
+							// Set the object as background.
+							this._mxObj = objs;
 
-                        })
-                    });
+							// Load data again.
+							this._loadData();
 
-                })
-            });
-            
-            // Load data again.
-            this._loadData();
-            
+						})
+					});
+
+				})
+			});
+
+			// Load data again.
+			this._loadData();
+
 			if(typeof callback !== 'undefined'){
 				callback();
 			}
 		},
-        
-        _loadData : function () {
-            
-            this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
+
+		_loadData : function () {
+
+			this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
 				var obj = objs[0], // Chart object is always only one.
-                    j = null,
-                    dataset = null,
-                    pointguids = null,
-                    func = null;
-                    
+					j = null,
+					dataset = null,
+					pointguids = null,
+					func = null;
+
 				this._data.object = obj;
-                
+
 				// Retrieve datasets
 				mx.data.get({
 					guids : obj.get(this._dataset),
 					callback : lang.hitch(this, function (datasets) {
-                        var set = {};
-                        
+						var set = {};
+
 						this._datasetCounter = datasets.length;
 						this._data.datasets = [];
 
@@ -144,34 +144,34 @@ define([
 							if (typeof pointguids === "string" && pointguids !== '') {
 								pointguids = [pointguids];
 							}
-                            if (typeof pointguids !== "string") {
-                                mx.data.get({
-                                    guids : pointguids,
-                                    callback : lang.hitch(this, this.datasetAdd, dataset)
-                                });
-                            } else {
-                                // No points found
-                                set = {
-                                    dataset : dataset,
-                                    sorting : +(dataset.get(this.datasetsorting)),
-                                    nopoints : true
-                                };
-                                this._data.datasets.push(set);
-                                this._datasetCounter--;
-                            }
+							if (typeof pointguids !== "string") {
+								mx.data.get({
+									guids : pointguids,
+									callback : lang.hitch(this, this.datasetAdd, dataset)
+								});
+							} else {
+								// No points found
+								set = {
+									dataset : dataset,
+									sorting : +(dataset.get(this.datasetsorting)),
+									nopoints : true
+								};
+								this._data.datasets.push(set);
+								this._datasetCounter--;
+							}
 						}
-                        
+
 					})
 				});
 			}), this._mxObj);
-        
-        },
-        
-        uninitialize : function () {
-            if (this._handle !== null) {
-                mx.data.unsubscribe(this._handle);
-            }
-        },
+
+		},
+
+		uninitialize : function () {
+			if (this._handle !== null) {
+				mx.data.unsubscribe(this._handle);
+			}
+		},
 
 		_processData : function () {
 			// STUB
@@ -180,15 +180,30 @@ define([
 
 		_createChart : function (data) {
 			// STUB
-			console.error('_createChart: This is placeholder function that should be overwritten by the implementing widget.');
+			console.error('_createChart: This is placeholder function that should be overwritten by the implementing widget.', data);
 		},
 
 		_onClickChart : function () {
 			if (this.onclickmfcontext && this._mxObj) {
 				this._executeMicroflow(this.onclickmfcontext, null, this._mxObj);
-            } else {
+			} else {
 				this._executeMicroflow(this.onclickmf);
-            }
+			}
+		},
+
+		_createLegend : function () {
+			var listNodes = null;
+			if (this.showLegend) {
+				this._legendNode.innerHTML = this._chart.generateLegend();
+
+				listNodes = domQuery("li", this._legendNode);
+
+				if (listNodes.length > 0) {
+					for (var k = 0; k < listNodes.length; k++) {
+						on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k, false)); /*Use multi series data format*/
+					}
+				}
+			}
 		},
 
 		_onClickLegend : function (idx, isSingleSeries) {
@@ -198,7 +213,7 @@ define([
 					datasets : [],
 					labels : this._chartData.labels
 				},
-                i = null;
+				i = null;
 
 			this._activeDatasets[idx].active = !this._activeDatasets[idx].active;
 
@@ -210,7 +225,7 @@ define([
 				if (activeSet.active) {
 					if (domClass.contains(activeSetLegend, "legend-inactive")) {
 						domClass.remove(activeSetLegend, "legend-inactive");
-                    }
+					}
 
 					newDatasets.datasets.push(activeSet.dataset);
 				} else if (!domClass.contains(activeSetLegend, "legend-inactive")) {
@@ -227,7 +242,7 @@ define([
 		_sortArrayObj : function (values) {
 			return values.sort(lang.hitch(this, function (a,b) {
 				var aa = a.sorting,
-				    bb = b.sorting;
+					bb = b.sorting;
 				if (aa > bb) {
 					return 1;
 				}
@@ -242,7 +257,7 @@ define([
 		_sortArrayMx : function (values, sortAttr) {
 			return values.sort(lang.hitch(this, function (a,b) {
 				var aa = a.get(sortAttr),
-                    bb = b.get(sortAttr);
+					bb = b.get(sortAttr);
 				if (aa > bb) {
 					return 1;
 				}
@@ -255,10 +270,10 @@ define([
 		},
 
 		_hexToRgb : function (hex, alpha) {
-            var regex = null,
-                shorthandRegex = null,
-                result = null;
-                
+			var regex = null,
+				shorthandRegex = null,
+				result = null;
+
 			// From Stackoverflow here: http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 			// Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
 			shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -279,7 +294,7 @@ define([
 		},
 
 		_executeMicroflow : function (mf, callback, obj) {
-            var _params = {
+			var _params = {
 				applyto: 'selection',
 				actionname: mf,
 				guids : []

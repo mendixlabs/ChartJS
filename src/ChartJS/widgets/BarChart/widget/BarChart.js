@@ -2,146 +2,136 @@
 /*global mx, mendix, require, console, define, module, logger, window */
 /*mendix */
 (function () {
-    'use strict';
+	'use strict';
 
-    // Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
-    require([
+	// Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
+	require([
 
-        'dojo/_base/declare', 'dojo/_base/lang', 'dojo/query', 'dojo/on', 'ChartJS/widgets/Core'
+		'dojo/_base/declare', 'dojo/_base/lang', 'dojo/query', 'dojo/on', 'ChartJS/widgets/Core'
 
-    ], function (declare, lang, domQuery, on, _core) {
+	], function (declare, lang, domQuery, on, _core) {
 
-        // Declare widget.
-        return declare('ChartJS.widgets.BarChart.widget.BarChart', [ _core ], {
+		// Declare widget.
+		return declare('ChartJS.widgets.BarChart.widget.BarChart', [ _core ], {
 
-            // Overwrite functions from _core here...
+			// Overwrite functions from _core here...
 
-            _processData : function () {
-                var sets = [],
-                    points = null,
-                    set = {
-                        points : []
-                    },
-                    xlabels = [],
-                    xlabelsSet = false,
-                    color = "",
-                    label = "",
-                    j = null,
-                    i = null,
-                    _set = null,
-                    listNodes = null,
-                    k = null;
+			_processData : function () {
+				var sets = [],
+					points = null,
+					set = {
+						points : []
+					},
+					xlabels = [],
+					xlabelsSet = false,
+					color = "",
+					label = "",
+					j = null,
+					i = null,
+					_set = null;
 
-                sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
+				sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
-                for (j = 0; j < sets.length; j++) {
-                    set = sets[j];
-                    
-                    if (set.nopoints === true) {
-                        // No points found!
-                        console.log(this.id + ' - empty dataset');
-                    } else {
-                        
-                        points = [];
-                        set.points = this._sortArrayMx(set.points, this.sortingxvalue);
-                        color = set.dataset.get(this.seriescolor);
-                        label = set.dataset.get(this.datasetlabel);
+				for (j = 0; j < sets.length; j++) {
+					set = sets[j];
 
-                        for (i = 0; i < set.points.length; i++) {
-                            if (!xlabelsSet) {
-                                xlabels.push(set.points[i].get(this.seriesxlabel));
-                            }
+					if (set.nopoints === true) {
+						// No points found!
+						console.log(this.id + ' - empty dataset');
+					} else {
 
-                            points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
-                        }
+						points = [];
+						set.points = this._sortArrayMx(set.points, this.sortingxvalue);
+						color = set.dataset.get(this.seriescolor);
+						label = set.dataset.get(this.datasetlabel);
 
-                        if (!xlabelsSet) {
-                            xlabelsSet = true;
-                        }
+						for (i = 0; i < set.points.length; i++) {
+							if (!xlabelsSet) {
+								xlabels.push(set.points[i].get(this.seriesxlabel));
+							}
 
-                        _set = {
-                            label : label,
-                            fillColor: this._hexToRgb(color, "0.5"),
-                            strokeColor: this._hexToRgb(color, "0.8"),
-                            pointColor: this._hexToRgb(color, "0.8"),
-                            highlightFill: this._hexToRgb(color, "0.75"),
-                            highlightStroke: this._hexToRgb(color, "1"),
-                            data : points
-                        };
-                        this._chartData.datasets.push(_set);
-                        this._activeDatasets.push({
-                            dataset : _set,
-                            idx : j,
-                            active : true
-                        });
-                    }
-                }
-                this._chartData.labels = xlabels;
+							points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
+						}
 
-                this._createChart(this._chartData);
+						if (!xlabelsSet) {
+							xlabelsSet = true;
+						}
 
-                this._legendNode.innerHTML = this._chart.generateLegend();
+						_set = {
+							label : label,
+							fillColor: this._hexToRgb(color, "0.5"),
+							strokeColor: this._hexToRgb(color, "0.8"),
+							pointColor: this._hexToRgb(color, "0.8"),
+							highlightFill: this._hexToRgb(color, "0.75"),
+							highlightStroke: this._hexToRgb(color, "1"),
+							data : points
+						};
+						this._chartData.datasets.push(_set);
+						this._activeDatasets.push({
+							dataset : _set,
+							idx : j,
+							active : true
+						});
+					}
+				}
+				this._chartData.labels = xlabels;
 
-                listNodes = domQuery("li", this._legendNode);
+				this._createChart(this._chartData);
 
-                if (listNodes.length > 0) {
-                    for (k = 0; k < listNodes.length; k++) {
-                        on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k, false)); /*Use multi series data format*/
-                    }
-                }
-            },
+				this._createLegend();
+			},
 
-            _createChart : function (data) {
-                
-                this._chart = new this._chartJS(this._ctx).Bar(data, {
+			_createChart : function (data) {
 
-                    //Boolean - Whether to show labels on the scale
-                    scaleShowLabels : this.scaleShowLabels,
+				this._chart = new this._chartJS(this._ctx).Bar(data, {
 
-                    //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-                    scaleBeginAtZero : this.scaleBeginAtZero,
+					//Boolean - Whether to show labels on the scale
+					scaleShowLabels : this.scaleShowLabels,
 
-                    //Boolean - Whether grid lines are shown across the chart
-                    scaleShowGridLines : this.scaleShowGridLines,
+					//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+					scaleBeginAtZero : this.scaleBeginAtZero,
 
-                    //String - Colour of the grid lines
-                    scaleGridLineColor : this.scaleGridLineColor,
+					//Boolean - Whether grid lines are shown across the chart
+					scaleShowGridLines : this.scaleShowGridLines,
 
-                    //Number - Width of the grid lines
-                    scaleGridLineWidth : this.scaleGridLineWidth,
+					//String - Colour of the grid lines
+					scaleGridLineColor : this.scaleGridLineColor,
 
-                    //Boolean - Whether to show horizontal lines (except X axis)
-                    scaleShowHorizontalLines: this.scaleShowHorizontalLines,
+					//Number - Width of the grid lines
+					scaleGridLineWidth : this.scaleGridLineWidth,
 
-                    //Boolean - Whether to show vertical lines (except Y axis)
-                    scaleShowVerticalLines: this.scaleShowVerticalLines,
+					//Boolean - Whether to show horizontal lines (except X axis)
+					scaleShowHorizontalLines: this.scaleShowHorizontalLines,
 
-                    //Boolean - If there is a stroke on each bar
-                    barShowStroke : this.barShowStroke,
+					//Boolean - Whether to show vertical lines (except Y axis)
+					scaleShowVerticalLines: this.scaleShowVerticalLines,
 
-                    //Number - Pixel width of the bar stroke
-                    barStrokeWidth : this.barStrokeWidth,
+					//Boolean - If there is a stroke on each bar
+					barShowStroke : this.barShowStroke,
 
-                    //Number - Spacing between each of the X value sets
-                    barValueSpacing : this.barValueSpacing,
+					//Number - Pixel width of the bar stroke
+					barStrokeWidth : this.barStrokeWidth,
 
-                    //Number - Spacing between data sets within X values
-                    barDatasetSpacing : this.barDatasetSpacing,
+					//Number - Spacing between each of the X value sets
+					barValueSpacing : this.barValueSpacing,
 
-                    //String - A legend template
-                    legendTemplate : this.legendTemplate
+					//Number - Spacing between data sets within X values
+					barDatasetSpacing : this.barDatasetSpacing,
 
-                });
-                
-                on(window, 'resize', lang.hitch(this, function () {
-                    this._chart.resize();
-                }));
-                
-                if (this.onclickmf || this.onclickmfcontext) {
-                    on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
-                }
-            }
-        });
-    });
+					//String - A legend template
+					legendTemplate : this.legendTemplate
+
+				});
+
+				on(window, 'resize', lang.hitch(this, function () {
+					this._chart.resize();
+				}));
+
+				if (this.onclickmf || this.onclickmfcontext) {
+					on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
+				}
+			}
+		});
+	});
 
 }());

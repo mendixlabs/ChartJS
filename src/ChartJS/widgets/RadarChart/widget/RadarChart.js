@@ -28,9 +28,7 @@
                     label = "",
                     j = null,
                     i = null,
-                    _set = null,
-                    listNodes = null,
-                    k = null;
+                    _set = null;
 
                 sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
@@ -78,15 +76,7 @@
 
                 this._createChart(this._chartData);
 
-                this._legendNode.innerHTML = this._chart.generateLegend();
-
-                listNodes = domQuery("li", this._legendNode);
-
-                if (listNodes.length > 0) {
-                    for (k = 0; k < listNodes.length; k++) {
-                        on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k, false/*Use multi series data format*/));
-                    }
-                }
+                this._createLegend();
             },
 
             _createChart : function (data) {

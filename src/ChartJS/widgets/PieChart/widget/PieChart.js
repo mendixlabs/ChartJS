@@ -21,8 +21,6 @@
                     set = {
                         points : []
                     },
-                    xlabels = [],
-                    xlabelsSet = false,
                     color = "",
                     point = null,
                     label = "",
@@ -59,15 +57,7 @@
 
                 this._createChart(chartData);
 
-                this._legendNode.innerHTML = this._chart.generateLegend();
-
-                listNodes = domQuery("li", this._legendNode);
-
-                if (listNodes.length > 0) {
-                    for (k = 0; k < listNodes.length; k++) {
-                        on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k, true));
-                    }
-                }
+                this._createLegend();
             },
 
             _createChart : function (data) {
