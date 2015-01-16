@@ -29,24 +29,6 @@
 			<description>.</description>
 			<returnType type="Object" entityProperty="sourceentity"></returnType>
 		</property>
-		<property key="yaxisMinValue" type="attribute" entityProperty="sourceentity">
-			<caption>Minimum value Y Axis</caption>
-			<category>Data Source</category>
-			<description>The minimum value of the Y Axis.</description>
-			<attributeTypes>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-			</attributeTypes>
-		</property>
-		<property key="yaxisMaxValue" type="attribute" entityProperty="sourceentity">
-			<caption>Maximum value Y Axis</caption>
-			<category>Data Source</category>
-			<description>The minimum value of the Y Axis.</description>
-			<attributeTypes>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-			</attributeTypes>
-		</property>
 		<!-- Data Set -->
 		<property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
 			<caption>Data Set Entity</caption>

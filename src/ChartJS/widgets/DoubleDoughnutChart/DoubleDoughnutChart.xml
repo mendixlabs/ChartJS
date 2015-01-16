@@ -28,24 +28,6 @@
 				<description></description>
 				<returnType type="Object" entityProperty="sourceentity"></returnType>
 			</property>
-			<property key="yaxisMinValue" type="attribute" entityProperty="sourceentity">
-				<caption>Minimum value Y Axis</caption>
-				<category>Data Source</category>
-				<description>The minimum value of the Y Axis.</description>
-				<attributeTypes>
-					<attributeType name="Float"/>
-					<attributeType name="Integer"/>
-				</attributeTypes>
-			</property>
-			<property key="yaxisMaxValue" type="attribute" entityProperty="sourceentity">
-				<caption>Maximum value Y Axis</caption>
-				<category>Data Source</category>
-				<description>The minimum value of the Y Axis.</description>
-				<attributeTypes>
-					<attributeType name="Float"/>
-					<attributeType name="Integer"/>
-				</attributeTypes>
-			</property>
 			<!-- Data Set -->
 			<property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
 				<caption>Data Set Entity</caption>
@@ -91,44 +73,9 @@
 					<attributeType name="String"/>
 				</attributeTypes>
 			</property>
-			<!-- Data Point -->
-			<property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="reference">
-				<caption>Data Point Entity</caption>
-				<category>Data Point</category>
-				<description></description>
-			</property>
-			<property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-				<caption>X Value</caption>
-				<category>Data Point</category>
-				<description></description>
-				<attributeTypes>
-					<attributeType name="AutoNumber"/>
-					<attributeType name="Boolean"/>
-					<attributeType name="Currency"/>
-					<attributeType name="DateTime"/>
-					<attributeType name="Enum"/>
-					<attributeType name="Float"/>
-					<attributeType name="Integer"/>
-					<attributeType name="Long"/>
-					<attributeType name="String"/>
-				</attributeTypes>
-			</property>
-			<property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-				<caption>X sorting</caption>
-				<category>Data Point</category>
-				<description></description>
-				<attributeTypes>
-					<attributeType name="AutoNumber"/>
-					<attributeType name="Currency"/>
-					<attributeType name="DateTime"/>
-					<attributeType name="Float"/>
-					<attributeType name="Integer"/>
-					<attributeType name="Long"/>
-				</attributeTypes>
-			</property>
-			<property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-				<caption>Y value</caption>
-				<category>Data Point</category>
+			<property key="seriesylabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+				<caption>Value</caption>
+				<category>Data Set</category>
 				<description></description>
 				<attributeTypes>
 					<attributeType name="AutoNumber"/>

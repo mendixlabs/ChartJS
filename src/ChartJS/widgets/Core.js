@@ -60,7 +60,7 @@ define([
 
 			this._ctx = this.canvasNode.getContext("2d");
 			this._dataset = this.datasetentity.split("/")[0];
-			this._datapoint = this.datapointentity.split("/")[0];
+			this._datapoint = this.datapointentity && this.datapointentity.split("/")[0];
 			this._data = {};
 		},
 

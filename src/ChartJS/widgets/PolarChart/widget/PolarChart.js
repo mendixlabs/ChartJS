@@ -14,49 +14,77 @@
         // Declare widget.
         return declare('ChartJS.widgets.PolarChart.widget.PolarChart', [ _core ], {
 
-            _processData : function () {
-                var sets = [],
-                    chartData = [],
-                    points = null,
-                    set = {
-                        points : []
-                    },
-                    color = "",
-                    point = null,
-                    label = "",
-                    j = null;
+			_processData : function () {
+				var sets = [],
+					chartData = [],
+					points = null,
+					set = {
+						points : []
+					},
+					color = "",
+					point = null,
+					label = "",
+					j = null;
 
-                sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
+				sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
-                for (j = 0; j < sets.length; j++) {
-                    set = sets[j];
-                    if (set.nopoints === true) {
-                        // No points found!
-                        console.log(this.id + ' - empty dataset');
-                    } else {
-                        points = [];
-                        color = set.dataset.get(this.seriescolor);
-                        label = set.dataset.get(this.datasetlabel);
-                        point = {
-                            label : label,
-                            color: this._hexToRgb(color, "0.5"),
-                            highlight: this._hexToRgb(color, "0.75"),
-                            value : +(set.point.get(this.seriesylabel))
-                        };
+				for (j = 0; j < sets.length; j++) {
+					set = sets[j];
 
-                        chartData.push(point);
-                        this._activeDatasets.push({
-                            dataset : point,
-                            idx : j,
-                            active : true
-                        });
-                    }
-                }
+					points = [];
+					color = set.dataset.get(this.seriescolor);
+					label = set.dataset.get(this.datasetlabel);
+					point = {
+						label : label,
+						color: this._hexToRgb(color, "0.5"),
+						highlight: this._hexToRgb(color, "0.75"),
+						value : +(set.dataset.get(this.seriesylabel))
+					};
 
-                this._createChart(chartData);
+					chartData.push(point);
+					this._activeDatasets.push({
+						dataset : point,
+						idx : j,
+						active : true
+					});
+				}
 
-                this._createLegend(true);
-            },
+				this._createChart(chartData);
+
+				this._createLegend(true);
+			},
+
+			_loadData : function () {
+
+				this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
+					var obj = objs[0], // Chart object is always only one.
+						j = null,
+						dataset = null;
+
+					this._data.object = obj;
+
+					// Retrieve datasets
+					mx.data.get({
+						guids : obj.get(this._dataset),
+						callback : lang.hitch(this, function (datasets) {
+							var set = null;
+							this._data.datasets = [];
+
+							for(j = 0;j < datasets.length; j++) {
+								dataset = datasets[j];
+
+								set = {
+									dataset : dataset,
+									sorting : +(dataset.get(this.datasetsorting))
+								};
+								this._data.datasets.push(set);
+							}
+							this._processData();
+						})
+					});
+				}), this._mxObj);
+
+			},
 
             _createChart : function (data) {
 
