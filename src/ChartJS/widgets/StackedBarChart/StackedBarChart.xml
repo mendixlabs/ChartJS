@@ -218,10 +218,10 @@
 			<category>Settings (Stacked) Bar Chart</category>
 			<description>Spacing between data sets within X values.</description>
 		</property>
-		<property key="relativeBars" type="string" required="true" defaultValue="1">
-			<caption>Stacked Bar Relative Bars</caption>
+		<property key="relativeBars" type="boolean" required="true" defaultValue="false">
+			<caption>Relative Bars</caption>
 			<category>Settings (Stacked) Bar Chart</category>
-			<description>Spacing between data sets within X values.</description>
+			<description>Whether bars should be rendered on a percentage base.</description>
 		</property>
 	</properties>
 </widget>
