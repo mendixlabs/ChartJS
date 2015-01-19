@@ -76,7 +76,7 @@
 
 				this._createChart(this._chartData);
 
-				this._createLegend();
+                this._createLegend(false);
 			},
 
 			_createChart : function (data) {

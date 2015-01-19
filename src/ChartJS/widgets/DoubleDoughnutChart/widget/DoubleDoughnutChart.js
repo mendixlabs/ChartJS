@@ -22,49 +22,88 @@
             // Template path
             templatePath: require.toUrl('ChartJS/templates/chartjs_dd.html'),
 
-            _createCtx : function() {
+            _createCtx : function () {
                 this._ctx1 = this.canvasNode.getContext("2d");
                 this._ctx2 = this.canvasNodeDD.getContext("2d");
             },
-            
+
             _processData : function () {
                 var sets = [],
-                    chartData = [],
                     points = null,
                     set = {
                         points : []
                     },
+                    ylabels = [],
+                    ylabelsSet = false,
                     color = "",
-                    point = null,
                     label = "",
-                    j = null;
+                    j = null,
+                    i = null,
+                    _set = null,
+                    point = {};
 
                 sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
                 for (j = 0; j < sets.length; j++) {
                     set = sets[j];
+                    if (set.nopoints === true) {
+                        // No points found!
+                        console.log(this.id + ' - empty dataset');
+                    } else {
+                        point = {};
+                        points = [];
+                        set.points = this._sortArrayMx(set.points, this.sortingxvalue);
+                        for (i = 0; i < set.points.length; i++) {
+                            color = set.points[i].get(this.seriescolor);
+                            label = set.points[i].get(this.seriesylabel);
+                            point = {
+                                label : label,
+                                color: this._hexToRgb(color, "0.5"),
+                                highlight: this._hexToRgb(color, "0.75"),
+                                value : +(set.points[i].get(this.seriesyvalue))
+                            };
+                            points.push(point);
+                        }
 
-                    points = [];
-                    color = set.dataset.get(this.seriescolor);
-                    label = set.dataset.get(this.datasetlabel);
-                    point = {
-                        label : label,
-                        color: this._hexToRgb(color, "0.5"),
-                        highlight: this._hexToRgb(color, "0.75"),
-                        value : +(set.dataset.get(this.seriesylabel))
-                    };
+                        if (!ylabelsSet) {
+                            ylabelsSet = true;
+                        }
 
-                    chartData.push(point);
-                    this._activeDatasets.push({
-                        dataset : point,
-                        idx : j,
-                        active : true
-                    });
+                        _set = {
+                            data : points
+                        };
+                        this._chartData.datasets.push(_set);
+                        this._activeDatasets.push({
+                            dataset : _set,
+                            idx : j,
+                            active : true
+                        });
+                    }
+                }
+                this._chartData.labels = ylabels;
+
+                this._createChart(this._chartData);
+
+                this._createLegend(false);
+            },
+            
+            datasetAdd : function (dataset, datapoints) {
+                var set = {
+                    dataset : dataset,
+                    sorting : +(dataset.get(this.datasetsorting))
+                };
+                if (datapoints.length === 1) {
+                    set.point = datapoints[0];
+                } else {
+                    set.points = datapoints;
                 }
 
-                this._createChart(chartData);
+                this._data.datasets.push(set);
 
-                this._createLegend(true);
+                this._datasetCounter--;
+                if (this._datasetCounter === 0) {
+                    this._processData();
+                }
             },
 
             _loadData : function () {
@@ -72,7 +111,8 @@
                 this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
                     var obj = objs[0], // Chart object is always only one.
                         j = null,
-                        dataset = null;
+                        dataset = null,
+                        pointguids = null;
 
                     this._data.object = obj;
 
@@ -80,19 +120,34 @@
                     mx.data.get({
                         guids : obj.get(this._dataset),
                         callback : lang.hitch(this, function (datasets) {
-                            var set = null;
+                            var set = {};
+
+                            this._datasetCounter = datasets.length;
                             this._data.datasets = [];
 
-                            for(j = 0;j < datasets.length; j++) {
+                            for (j = 0; j < datasets.length; j++) {
                                 dataset = datasets[j];
-
-                                set = {
-                                    dataset : dataset,
-                                    sorting : +(dataset.get(this.datasetsorting))
-                                };
-                                this._data.datasets.push(set);
+                                pointguids = dataset.get(this._datapoint);
+                                if (typeof pointguids === "string" && pointguids !== '') {
+                                    pointguids = [pointguids];
+                                }
+                                if (typeof pointguids !== "string") {
+                                    mx.data.get({
+                                        guids : pointguids,
+                                        callback : lang.hitch(this, this.datasetAdd, dataset)
+                                    });
+                                } else {
+                                    // No points found
+                                    set = {
+                                        dataset : dataset,
+                                        sorting : +(dataset.get(this.datasetsorting)),
+                                        nopoints : true
+                                    };
+                                    this._data.datasets.push(set);
+                                    this._datasetCounter--;
+                                }
                             }
-                            this._processData();
+
                         })
                     });
                 }), this._mxObj);
@@ -102,8 +157,8 @@
             _createChart : function (data) {
 
                 domStyle.set(this.domNode, 'position', 'relative');
-                
-                this._chart = new this._chartJS(this._ctx1).Doughnut(data, {
+
+                this._chart = new this._chartJS(this._ctx1).Doughnut(data.datasets[0].data, {
 
                     //Boolean - Whether we should show a stroke on each segment
                     segmentShowStroke : this.segmentShowStroke,
@@ -133,22 +188,22 @@
                     legendTemplate : this.legendTemplate
 
                 });
-                
+
                 var pos = domGeom.position(this.canvasNode),
                     w = (pos.w / this.percentageInnerCutoutStart),
                     h = (pos.h / this.percentageInnerCutoutStart),
                     l = ((pos.w - w) / 2),
                     t = ((pos.h - h) / 2);
-                
+
                 domStyle.set(this.canvasContainerDD, 'width', w + 'px');
                 domStyle.set(this.canvasContainerDD, 'height', h + 'px');
                 domStyle.set(this.canvasContainerDD, 'position', 'absolute');
                 domStyle.set(this.canvasContainerDD, 'left', l + 'px');
                 domStyle.set(this.canvasContainerDD, 'top', t + 'px');
-                
+
                 console.log(w + ' - ' + h);
-                
-                this._chartDD = new this._chartJS(this._ctx2).Doughnut(data, {
+
+                this._chartDD = new this._chartJS(this._ctx2).Doughnut(data.datasets[1].data, {
 
                     //Boolean - Whether we should show a stroke on each segment
                     segmentShowStroke : this.segmentShowStroke,
