@@ -58,7 +58,7 @@ define([
 				overflow : 'hidden'
 			});
 
-			this._ctx = this.canvasNode.getContext("2d");
+            this._createCtx();
 			this._dataset = this.datasetentity.split("/")[0];
 			this._datapoint = this.datapointentity && this.datapointentity.split("/")[0];
 			this._data = {};
@@ -172,6 +172,10 @@ define([
 			}
 		},
 
+        _createCtx : function() {
+			this._ctx = this.canvasNode.getContext("2d");
+        },
+        
 		_processData : function () {
 			// STUB
 			console.error('_processData: This is placeholder function that should be overwritten by the implementing widget.');
@@ -189,14 +193,16 @@ define([
 		},
 
 		_createLegend : function (isSingleSeries) {
-			var listNodes = null;
+			var listNodes = null,
+                k = null;
+            
 			if (this.showLegend) {
 				this._legendNode.innerHTML = this._chart.generateLegend();
 
 				listNodes = domQuery("li", this._legendNode);
 
 				if (listNodes.length > 0) {
-					for (var k = 0; k < listNodes.length; k++) {
+					for (k = 0; k < listNodes.length; k++) {
 						on(listNodes[k], "click", lang.hitch(this, this._onClickLegend, k, isSingleSeries /*isSingleSeries bool to specify which data format to expect (single or multi series)*/)); 
 					}
 				}
