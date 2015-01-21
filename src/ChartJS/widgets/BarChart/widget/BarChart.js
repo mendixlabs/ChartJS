@@ -25,6 +25,7 @@
                     xlabels = [],
                     xlabelsSet = false,
                     color = "",
+                    highlightcolor = "",
                     label = "",
                     j = null,
                     i = null,
@@ -43,6 +44,7 @@
                         points = [];
                         set.points = this._sortArrayMx(set.points, this.sortingxvalue);
                         color = set.dataset.get(this.seriescolor);
+                        highlightcolor = set.dataset.get(this.serieshighlightcolor);
                         label = set.dataset.get(this.datasetlabel);
 
                         for (i = 0; i < set.points.length; i++) {
@@ -59,11 +61,11 @@
 
                         _set = {
                             label : label,
-                            fillColor: this._hexToRgb(color, "0.5"),
-                            strokeColor: this._hexToRgb(color, "0.8"),
-                            pointColor: this._hexToRgb(color, "0.8"),
-                            highlightFill: this._hexToRgb(color, "0.75"),
-                            highlightStroke: this._hexToRgb(color, "1"),
+                            fillColor: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
+                            strokeColor: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.8") : color,
+                            pointColor: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.8") : color,
+                            highlightFill: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.75") : highlightcolor,
+                            highlightStroke: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "1") : highlightcolor,
                             data : points
                         };
                         this._chartData.datasets.push(_set);
@@ -77,7 +79,7 @@
                 this._chartData.labels = xlabels;
 
                 this._createChart(this._chartData);
-                
+
                 this._createLegend(false);
             },
 
@@ -126,6 +128,9 @@
                 on(window, 'resize', lang.hitch(this, function () {
                     this._chart.resize();
                 }));
+                
+                // Add class to determain chart type
+                this._addChartClass('chartjs-bar-chart');
 
                 if (this.onclickmf) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));

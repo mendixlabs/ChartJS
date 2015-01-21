@@ -22,6 +22,7 @@
 						points : []
 					},
 					color = "",
+                    highlightcolor = "",
 					point = null,
 					label = "",
 					j = null;
@@ -33,11 +34,12 @@
 
 					points = [];
 					color = set.dataset.get(this.seriescolor);
+                    highlightcolor = set.dataset.get(this.serieshighlightcolor);
 					label = set.dataset.get(this.datasetlabel);
 					point = {
 						label : label,
-						color: this._hexToRgb(color, "0.5"),
-						highlight: this._hexToRgb(color, "0.75"),
+                        color: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
+                        highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(highlightcolor, "0.75") : highlightcolor,
 						value : +(set.dataset.get(this.seriesylabel))
 					};
 
@@ -70,7 +72,7 @@
 							var set = null;
 							this._data.datasets = [];
 
-							for(j = 0;j < datasets.length; j++) {
+							for (j = 0; j < datasets.length; j++) {
 								dataset = datasets[j];
 
 								set = {
@@ -137,8 +139,10 @@
                 on(window, 'resize', lang.hitch(this, function () {
                     this._chart.resize();
                 }));
-
-
+                
+                // Add class to determain chart type
+                this._addChartClass('chartjs-polar-chart');
+                
                 if (this.onclickmf) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
                 }

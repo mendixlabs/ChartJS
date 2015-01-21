@@ -7,9 +7,9 @@
     // Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
     require([
 
-        'dojo/_base/declare', 'dojo/_base/lang', 'dojo/query', 'dojo/on', 'dojo/dom-geometry', 'dojo/dom-style', 'ChartJS/widgets/Core'
+        'dojo/_base/declare', 'dojo/_base/lang', 'dojo/query', 'dojo/on', 'dojo/html', 'dojo/dom-geometry', 'dojo/dom-style', 'ChartJS/widgets/Core'
 
-    ], function (declare, lang, domQuery, on, domGeom, domStyle, _core) {
+    ], function (declare, lang, domQuery, on, html, domGeom, domStyle, _core) {
 
         // Declare widget.
         return declare('ChartJS.widgets.DoubleDoughnutChart.widget.DoubleDoughnutChart', [ _core ], {
@@ -36,6 +36,7 @@
                     ylabels = [],
                     ylabelsSet = false,
                     color = "",
+                    highlightcolor = "",
                     label = "",
                     j = null,
                     i = null,
@@ -55,11 +56,12 @@
                         set.points = this._sortArrayMx(set.points, this.sortingxvalue);
                         for (i = 0; i < set.points.length; i++) {
                             color = set.points[i].get(this.seriescolor);
+                            highlightcolor = set.points[i].get(this.serieshighlightcolor);
                             label = set.points[i].get(this.seriesylabel);
                             point = {
                                 label : label,
-                                color: this._hexToRgb(color, "0.5"),
-                                highlight: this._hexToRgb(color, "0.75"),
+                                color: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
+                                highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(highlightcolor, "0.75") : highlightcolor,
                                 value : +(set.points[i].get(this.seriesyvalue))
                             };
                             points.push(point);
@@ -86,7 +88,7 @@
 
                 this._createLegend(false);
             },
-            
+
             datasetAdd : function (dataset, datapoints) {
                 var set = {
                     dataset : dataset,
@@ -235,9 +237,32 @@
                 });
 
                 on(window, 'resize', lang.hitch(this, function () {
-                    this._chart.resize();
-                    this._chartDD.resize();
+                    
+                    this._chart.resize(lang.hitch(this, function () {
+                        
+                        var pos = domGeom.position(this.canvasNode),
+                            w = (pos.w / this.percentageInnerCutoutStart),
+                            h = (pos.h / this.percentageInnerCutoutStart),
+                            l = ((pos.w - w) / 2),
+                            t = ((pos.h - h) / 2);
+
+                        domStyle.set(this.canvasContainerDD, 'width', w + 'px');
+                        domStyle.set(this.canvasContainerDD, 'height', h + 'px');
+                        domStyle.set(this.canvasContainerDD, 'position', 'absolute');
+                        domStyle.set(this.canvasContainerDD, 'left', l + 'px');
+                        domStyle.set(this.canvasContainerDD, 'top', t + 'px');
+
+                    }));
+                    
+                    this._resize();
                 }));
+
+                // Set the con
+                html.set(this._numberNode, this._data.object.get(this.numberInside));
+                this._resize();
+                
+                // Add class to determain chart type
+                this._addChartClass('chartjs-double-doughnut-chart');
 
                 if (this.onclickmf) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));

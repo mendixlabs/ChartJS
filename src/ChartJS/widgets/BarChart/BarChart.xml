@@ -75,6 +75,27 @@
 				<attributeType name="String"/>
 			</attributeTypes>
 		</property>
+        <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+            <caption>Hightlight Color (in Hex)</caption>
+            <category>Data Set</category>
+            <description>Set the colour of the bar or line.</description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Boolean"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Enum"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
+        <property key="seriesColorNoReformat" type="boolean" required="true" defaultValue="false">
+            <caption>Color as it is.</caption>
+            <category>Data Set</category>
+            <description>Do not reformat color attribute content.</description>
+        </property>
 		<!-- Data Point -->
 		<property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
 			<caption>Data Point Entity</caption>

@@ -1,31 +1,26 @@
+.chartjs-node {
+    position: relative;
+}
 .legend-node {
-	width: 100%;
-	padding: 5px;
+    width: 100%;
+    padding: 5px;
 }
 .legend-node li {
-	cursor: pointer;
+    cursor: pointer;
 }
 .pie-legend {
-	text-align	: center;
+    text-align	: center;
 }
 .pie-legend li {
-	clear: none;
-	display: inline-block;
-	margin-right: 20px;
+    clear: none;
+    display: inline-block;
+    margin-right: 20px;
 }
-/*.legend-node ul {
-	padding: 5px 0 5px 15px;
-	margin: 0;
+.number-node {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    text-align: center;
 }
-
-.legend-node ul span {
-	display: inline-block;
-	width: 15px;
-	height: 15px;
-	border-radius: 4px;
-	margin-right: 8px;
-}
-
-.legend-node ul li {
-	list-style-type : none;
-}*/
