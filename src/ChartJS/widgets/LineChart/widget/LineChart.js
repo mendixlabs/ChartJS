@@ -31,6 +31,9 @@
                     i = null,
                     _set = null;
 
+                this._chartData.datasets = [];
+                this._chartData.labels = [];
+                
                 sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
                 for (j = 0; j < sets.length; j++) {
@@ -47,7 +50,7 @@
 
                         for (i = 0; i < set.points.length; i++) {
                             if (!xlabelsSet) {
-                                xlabels.push(set.points[i].get(this.seriesxlabel));
+                                xlabels.push(((this.scaleShowLabelsBottom === true) ? set.points[i].get(this.seriesxlabel) : ''));
                             }
 
                             points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
@@ -58,7 +61,7 @@
                         }
 
                         _set = {
-                            label : label,
+                            label : (this.scaleShowLabelsBottom === true) ? label : '',
                             fillColor: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
                             strokeColor: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.8") : color,
                             pointColor: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.8") : color,
@@ -83,6 +86,10 @@
 
             _createChart : function (data) {
 
+                if (this._chart !== null) {
+                    this._chart.destroy();
+                }
+                
                 this._chart = new this._chartJS(this._ctx).Line(data, {
 
                     //Boolean - Whether to show labels on the scale
@@ -131,13 +138,18 @@
                     datasetFill : this.datasetFill,
 
                     //String - A legend template
-                    legendTemplate : this.legendTemplate
+                    legendTemplate : this.legendTemplate,
+                    
+                    //The scale line width
+                    scaleLineWidth : this.scaleLineWidth,
+                    
+                    //The scale line color
+                    scaleLineColor : this.scaleLineColor,
+                    
+                    // Show tooltips at all
+                    showTooltips : this.showTooltips
 
                 });
-
-                on(window, 'resize', lang.hitch(this, function () {
-                    this._chart.resize();
-                }));
 
                 // Add class to determain chart type
                 this._addChartClass('chartjs-line-chart');

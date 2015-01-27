@@ -17,6 +17,11 @@
                 <category>Appearance</category>
                 <description></description>
             </property>
+            <property key="usePixels" type="boolean" required="true" defaultValue="false">
+                <caption>Use width and height.</caption>
+                <category>Appearance</category>
+                <description>Use width and height as hardcoded pixels.</description>
+            </property>
             <!-- Data Source -->
             <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
                 <caption>Chart Entity</caption>
@@ -36,6 +41,15 @@
                 <attributeTypes>
                     <attributeType name="Integer" />
                     <attributeType name="Float" />
+                </attributeTypes>
+            </property>
+            <property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
+                <caption>Attribute to trigger</caption>
+                <category>Data Set</category>
+                <description>Attribute to trigger the microflow.</description>
+                <attributeTypes>
+                    <attributeType name="Enum"/>
+                    <attributeType name="String"/>
                 </attributeTypes>
             </property>
             <!-- Data Set -->
@@ -177,6 +191,11 @@
                 <caption>Legend Template</caption>
                 <category>Settings</category>
                 <description>A legend template</description>
+            </property>
+            <property key="showTooltips" type="boolean" required="true" defaultValue="false">
+                <caption>Show tooltip</caption>
+                <category>Settings</category>
+                <description>Show the tooltip.</description>
             </property>
             <!-- Settings Doughnut Chart -->
             <property key="percentageInnerCutout" type="string" required="true" defaultValue="50">

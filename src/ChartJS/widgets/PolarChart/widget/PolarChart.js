@@ -132,13 +132,12 @@
                     animateScale : this.animateScale,
 
                     //String - A legend template
-                    legendTemplate : this.legendTemplate
+                    legendTemplate : this.legendTemplate,
+                    
+                    // Show tooltips at all
+                    showTooltips : this.showTooltips
 
                 });
-
-                on(window, 'resize', lang.hitch(this, function () {
-                    this._chart.resize();
-                }));
                 
                 // Add class to determain chart type
                 this._addChartClass('chartjs-polar-chart');

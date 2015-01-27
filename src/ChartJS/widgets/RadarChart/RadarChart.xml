@@ -1,78 +1,92 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <widget id="ChartJS.widgets.RadarChart.widget.RadarChart" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
-	<name>ChartJS - Radar Chart</name>
-	<description>.</description>
+    <name>ChartJS - Radar Chart</name>
+    <description>.</description>
 
-	<icon>iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAA3NCSVQICAjb4U/gAAAAQlBMVEUAAAC3t7dQUFAgICD///+Pj4+Hh4evr68PDw85OTlubm6/v7/f3982NjZhYWEwMDAdHR1FRUWZmZk/Pz+7u7twcHCVQqrsAAAAFnRSTlP/////AP//////////////////////vaz5yAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABV0RVh0Q3JlYXRpb24gVGltZQAxLzE0LzE1ZGtS1wAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAABuSURBVBiVVY9bDoAgEMSqrqIivr3/VRVGIs4H0GaSXbCUzpwehpipWdwnOnA1hOoVD9Nez0E4o4jM1ZJyIKZ2EitiGtO9YTkSI281Z8eWn/DYvxLHhoL7KKpCDGnTojInceb+MHt97li3cfda5wbA6gNGL+SILAAAAABJRU5ErkJggg==</icon>
+    <icon>iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAA3NCSVQICAjb4U/gAAAAQlBMVEUAAAC3t7dQUFAgICD///+Pj4+Hh4evr68PDw85OTlubm6/v7/f3982NjZhYWEwMDAdHR1FRUWZmZk/Pz+7u7twcHCVQqrsAAAAFnRSTlP/////AP//////////////////////vaz5yAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABV0RVh0Q3JlYXRpb24gVGltZQAxLzE0LzE1ZGtS1wAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAABuSURBVBiVVY9bDoAgEMSqrqIivr3/VRVGIs4H0GaSXbCUzpwehpipWdwnOnA1hOoVD9Nez0E4o4jM1ZJyIKZ2EitiGtO9YTkSI281Z8eWn/DYvxLHhoL7KKpCDGnTojInceb+MHt97li3cfda5wbA6gNGL+SILAAAAABJRU5ErkJggg==</icon>
 
-	<properties>
-		<!-- Appearance -->
-		<property key="width" type="integer" required="true" defaultValue="850">
-			<caption>Width</caption>
-			<category>Appearance</category>
-			<description>.</description>
-		</property>
-		<property key="height" type="integer" required="true" defaultValue="450">
-			<caption>Height</caption>
-			<category>Appearance</category>
-			<description>.</description>
-		</property>
-		<!-- Data Source -->
-		<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
-			<caption>Chart Entity</caption>
-			<category>Data Source</category>
-			<description>.</description>
-		</property>
-		<property key="datasourcemf" type="microflow" required="false">
-			<caption>Microflow</caption>
-			<category>Data Source</category>
-			<description>.</description>
-			<returnType type="Object" entityProperty="sourceentity"></returnType>
-		</property>
-		<!-- Data Set -->
-		<property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
-			<caption>Data Set Entity</caption>
-			<category>Data Set</category>
-			<description>.</description>
-		</property>
-		<property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-			<caption>Data Set label</caption>
-			<category>Data Set</category>
-			<description>.</description>
-			<attributeTypes>
-				<attributeType name="Enum"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
-		<property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-			<caption>Sorting</caption>
-			<category>Data Set</category>
-			<description>.</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-			</attributeTypes>
-		</property>
-		<property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-			<caption>Color (in Hex)</caption>
-			<category>Data Set</category>
-			<description>Set the colour of the bar or line.</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Boolean"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Enum"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
+    <properties>
+        <!-- Appearance -->
+        <property key="width" type="integer" required="true" defaultValue="850">
+            <caption>Width</caption>
+            <category>Appearance</category>
+            <description>.</description>
+        </property>
+        <property key="height" type="integer" required="true" defaultValue="450">
+            <caption>Height</caption>
+            <category>Appearance</category>
+            <description>.</description>
+        </property>
+        <property key="usePixels" type="boolean" required="true" defaultValue="false">
+            <caption>Use width and height.</caption>
+            <category>Appearance</category>
+            <description>Use width and height as hardcoded pixels.</description>
+        </property>
+        <!-- Data Source -->
+        <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
+            <caption>Chart Entity</caption>
+            <category>Data Source</category>
+            <description>.</description>
+        </property>
+        <property key="datasourcemf" type="microflow" required="false">
+            <caption>Microflow</caption>
+            <category>Data Source</category>
+            <description>.</description>
+            <returnType type="Object" entityProperty="sourceentity"></returnType>
+        </property>
+        <property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
+            <caption>Attribute to trigger</caption>
+            <category>Data Set</category>
+            <description>Attribute to trigger the microflow.</description>
+            <attributeTypes>
+                <attributeType name="Enum"/>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
+        <!-- Data Set -->
+        <property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
+            <caption>Data Set Entity</caption>
+            <category>Data Set</category>
+            <description>.</description>
+        </property>
+        <property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+            <caption>Data Set label</caption>
+            <category>Data Set</category>
+            <description>.</description>
+            <attributeTypes>
+                <attributeType name="Enum"/>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
+        <property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+            <caption>Sorting</caption>
+            <category>Data Set</category>
+            <description>.</description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+            </attributeTypes>
+        </property>
+        <property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+            <caption>Color (in Hex)</caption>
+            <category>Data Set</category>
+            <description>Set the colour of the bar or line.</description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Boolean"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Enum"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
         <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
             <caption>Hightlight Color (in Hex)</caption>
             <category>Data Set</category>
@@ -94,166 +108,171 @@
             <category>Data Set</category>
             <description>Do not reformat color attribute content.</description>
         </property>
-		<!-- Data Point -->
-		<property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
-			<caption>Data Point Entity</caption>
-			<category>Data Point</category>
-			<description>.</description>
-		</property>
-		<property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>X Value</caption>
-			<category>Data Point</category>
-			<description>.</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Boolean"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Enum"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
-		<property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>X sorting</caption>
-			<category>Data Point</category>
-			<description>.</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-			</attributeTypes>
-		</property>
-		<property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>Y value</caption>
-			<category>Data Point</category>
-			<description>.</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Boolean"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Enum"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
-		<!-- Behavior -->
-		<property key="onclickmf" type="microflow" required="false">
-			<caption>On Click Microflow</caption>
-			<category>Behavior</category>
-			<description>.</description>
-			<returnType type="Void"></returnType>
-		</property>
-		<!-- Settings -->
-		<property key="responsive" type="boolean" required="true" defaultValue="true">
-			<caption>Responsive</caption>
-			<category>Settings</category>
-			<description>Whether the chart is responsive.</description>
-		</property>
-		<property key="scaleBeginAtZero" type="boolean" required="true" defaultValue="true">
-			<caption>Begin at zero</caption>
-			<category>Settings</category>
-			<description>Whether grid lines are shown across the chart.</description>
-		</property>
-		<property key="scaleShowGridLines" type="boolean" required="true" defaultValue="true">
-			<caption>Show grid lines</caption>
-			<category>Settings</category>
-			<description>Whether grid lines are shown across the chart.</description>
-		</property>
-		<property key="scaleGridLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.05)">
-			<caption>Grid line color</caption>
-			<category>Settings</category>
-			<description>Colour of the grid lines.</description>
-		</property>
-		<property key="scaleGridLineWidth" type="string" required="true" defaultValue="1">
-			<caption>Grid line width</caption>
-			<category>Settings</category>
-			<description>Width of the grid lines.</description>
-		</property>
-		<property key="scaleShowHorizontalLines" type="boolean" required="true" defaultValue="true">
-			<caption>Show horizontal lines</caption>
-			<category>Settings</category>
-			<description>Whether to show horizontal lines (except X axis).</description>
-		</property>
-		<property key="scaleShowVerticalLines" type="boolean" required="true" defaultValue="true">
-			<caption>Show vertical lines</caption>
-			<category>Settings</category>
-			<description>Whether to show vertical lines (except Y axis).</description>
-		</property>
-		<property key="datasetStroke" type="boolean" required="true" defaultValue="true">
-			<caption>DataSet stroke</caption>
-			<category>Settings</category>
-			<description>Whether to show a stroke for datasets.</description>
-		</property>
-		<property key="datasetStrokeWidth" type="string" required="true" defaultValue="2">
-			<caption>DataSet stroke width</caption>
-			<category>Settings</category>
-			<description>Pixel width of dataset stroke.</description>
-		</property>
-		<property key="datasetFill" type="boolean" required="true" defaultValue="true">
-			<caption>DataSet fill</caption>
-			<category>Settings</category>
-			<description>Whether to fill the dataset with a colour.</description>
-		</property>
-		<property key="showLegend" type="boolean" required="true" defaultValue="true"> 
-			<caption>Show Legend</caption>
-			<category>Settings</category>
-			<description>Turn the legend on/off.</description>
-		</property>
-		<property key="legendTemplate" type="string" required="true" multiline="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].strokeColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;"> 
-			<caption>Legend template</caption>
-			<category>Settings</category>
-			<description>A legend template.</description>
-		</property>
-		<property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
-			<caption>Radar show labels</caption>
-			<category>Settings</category>
-			<description>Whether to show labels on the scale.</description>
-		</property>
-		<!-- Radar settings -->
-		<property key="pointLabelFontFamily" type="string" required="true" defaultValue="'Arial'">
-			<caption>Point Label Font Family</caption>
-			<category>Settings Radar Chart</category>
-			<description>Point label font declaration.</description>
-		</property>
-		<property key="angleLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.1)">
-			<caption>Angle Line Color</caption>
-			<category>Settings Radar Chart</category>
-			<description>Colour of the angle line.</description>
-		</property>
-		<property key="angleShowLineOut" type="boolean" required="true" defaultValue="true">
-			<caption>Radar show lineout</caption>
-			<category>Settings Radar Chart</category>
-			<description>Whether we show the angle lines out of the radar.</description>
-		</property>
-		<property key="angleLineWidth" type="string" required="true" defaultValue="1">
-			<caption>Angle Line Width</caption>
-			<category>Settings Radar Chart</category>
-			<description>Pixel width of the angle line.</description>
-		</property>
-		<property key="pointLabelFontStyle" type="string" required="true" defaultValue="normal">
-			<caption>Point Label Font Style</caption>
-			<category>Settings Radar Chart</category>
-			<description>Point label font weight.</description>
-		</property>
-		<property key="pointLabelFontSize" type="string" required="true" defaultValue="10">
-			<caption>Point Label Font Size</caption>
-			<category>Settings Radar Chart</category>
-			<description>Point label font size in pixels.</description>
-		</property>
-		<property key="pointLabelFontColor" type="string" required="true" defaultValue="#666">
-			<caption>Point Label Font Color</caption>
-			<category>Settings Radar Chart</category>
-			<description>Point label font colour.</description>
-		</property>
-	</properties>
+        <!-- Data Point -->
+        <property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
+            <caption>Data Point Entity</caption>
+            <category>Data Point</category>
+            <description>.</description>
+        </property>
+        <property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+            <caption>X Value</caption>
+            <category>Data Point</category>
+            <description>.</description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Boolean"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Enum"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
+        <property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+            <caption>X sorting</caption>
+            <category>Data Point</category>
+            <description>.</description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+            </attributeTypes>
+        </property>
+        <property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+            <caption>Y value</caption>
+            <category>Data Point</category>
+            <description>.</description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Boolean"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Enum"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
+        <!-- Behavior -->
+        <property key="onclickmf" type="microflow" required="false">
+            <caption>On Click Microflow</caption>
+            <category>Behavior</category>
+            <description>.</description>
+            <returnType type="Void"></returnType>
+        </property>
+        <!-- Settings -->
+        <property key="responsive" type="boolean" required="true" defaultValue="true">
+            <caption>Responsive</caption>
+            <category>Settings</category>
+            <description>Whether the chart is responsive.</description>
+        </property>
+        <property key="scaleBeginAtZero" type="boolean" required="true" defaultValue="true">
+            <caption>Begin at zero</caption>
+            <category>Settings</category>
+            <description>Whether grid lines are shown across the chart.</description>
+        </property>
+        <property key="scaleShowGridLines" type="boolean" required="true" defaultValue="true">
+            <caption>Show grid lines</caption>
+            <category>Settings</category>
+            <description>Whether grid lines are shown across the chart.</description>
+        </property>
+        <property key="scaleGridLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.05)">
+            <caption>Grid line color</caption>
+            <category>Settings</category>
+            <description>Colour of the grid lines.</description>
+        </property>
+        <property key="scaleGridLineWidth" type="string" required="true" defaultValue="1">
+            <caption>Grid line width</caption>
+            <category>Settings</category>
+            <description>Width of the grid lines.</description>
+        </property>
+        <property key="scaleShowHorizontalLines" type="boolean" required="true" defaultValue="true">
+            <caption>Show horizontal lines</caption>
+            <category>Settings</category>
+            <description>Whether to show horizontal lines (except X axis).</description>
+        </property>
+        <property key="scaleShowVerticalLines" type="boolean" required="true" defaultValue="true">
+            <caption>Show vertical lines</caption>
+            <category>Settings</category>
+            <description>Whether to show vertical lines (except Y axis).</description>
+        </property>
+        <property key="datasetStroke" type="boolean" required="true" defaultValue="true">
+            <caption>DataSet stroke</caption>
+            <category>Settings</category>
+            <description>Whether to show a stroke for datasets.</description>
+        </property>
+        <property key="datasetStrokeWidth" type="string" required="true" defaultValue="2">
+            <caption>DataSet stroke width</caption>
+            <category>Settings</category>
+            <description>Pixel width of dataset stroke.</description>
+        </property>
+        <property key="datasetFill" type="boolean" required="true" defaultValue="true">
+            <caption>DataSet fill</caption>
+            <category>Settings</category>
+            <description>Whether to fill the dataset with a colour.</description>
+        </property>
+        <property key="showLegend" type="boolean" required="true" defaultValue="true"> 
+            <caption>Show Legend</caption>
+            <category>Settings</category>
+            <description>Turn the legend on/off.</description>
+        </property>
+        <property key="legendTemplate" type="string" required="true" multiline="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].strokeColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;"> 
+            <caption>Legend template</caption>
+            <category>Settings</category>
+            <description>A legend template.</description>
+        </property>
+        <property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
+            <caption>Radar show labels</caption>
+            <category>Settings</category>
+            <description>Whether to show labels on the scale.</description>
+        </property>
+        <property key="showTooltips" type="boolean" required="true" defaultValue="false">
+            <caption>Show tooltip</caption>
+            <category>Settings</category>
+            <description>Show the tooltip.</description>
+        </property>
+        <!-- Radar settings -->
+        <property key="pointLabelFontFamily" type="string" required="true" defaultValue="'Arial'">
+            <caption>Point Label Font Family</caption>
+            <category>Settings Radar Chart</category>
+            <description>Point label font declaration.</description>
+        </property>
+        <property key="angleLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.1)">
+            <caption>Angle Line Color</caption>
+            <category>Settings Radar Chart</category>
+            <description>Colour of the angle line.</description>
+        </property>
+        <property key="angleShowLineOut" type="boolean" required="true" defaultValue="true">
+            <caption>Radar show lineout</caption>
+            <category>Settings Radar Chart</category>
+            <description>Whether we show the angle lines out of the radar.</description>
+        </property>
+        <property key="angleLineWidth" type="string" required="true" defaultValue="1">
+            <caption>Angle Line Width</caption>
+            <category>Settings Radar Chart</category>
+            <description>Pixel width of the angle line.</description>
+        </property>
+        <property key="pointLabelFontStyle" type="string" required="true" defaultValue="normal">
+            <caption>Point Label Font Style</caption>
+            <category>Settings Radar Chart</category>
+            <description>Point label font weight.</description>
+        </property>
+        <property key="pointLabelFontSize" type="string" required="true" defaultValue="10">
+            <caption>Point Label Font Size</caption>
+            <category>Settings Radar Chart</category>
+            <description>Point label font size in pixels.</description>
+        </property>
+        <property key="pointLabelFontColor" type="string" required="true" defaultValue="#666">
+            <caption>Point Label Font Color</caption>
+            <category>Settings Radar Chart</category>
+            <description>Point label font colour.</description>
+        </property>
+    </properties>
 </widget>
 

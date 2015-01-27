@@ -6,10 +6,10 @@
 define([
 
     'dojo/_base/declare', 'mxui/widget/_WidgetBase', 'dijit/_Widget', 'dijit/_TemplatedMixin',
-    'mxui/dom', 'dojo/dom', 'dojo/query', 'dojo/dom-prop', 'dojo/dom-geometry', 'dojo/dom-class', 'dojo/dom-style', 'dojo/dom-construct', 'dojo/_base/array', 'dojo/window', 'dojo/on', 'dojo/_base/lang', 'dojo/text',
+    'mxui/dom', 'dojo/dom', 'dojo/query', 'dojo/dom-prop', 'dojo/dom-geometry', 'dojo/dom-class', 'dojo/dom-attr', 'dojo/dom-style', 'dojo/dom-construct', 'dojo/_base/array', 'dojo/window', 'dojo/on', 'dojo/_base/lang', 'dojo/text',
     'ChartJS/lib/charts'
 
-], function (declare, _WidgetBase, _Widget, _Templated, domMx, dom, domQuery, domProp, domGeom, domClass, domStyle, domConstruct, dojoArray, win, on, lang, text, _charts) {
+], function (declare, _WidgetBase, _Widget, _Templated, domMx, dom, domQuery, domProp, domGeom, domClass, domAttr, domStyle, domConstruct, dojoArray, win, on, lang, text, _charts) {
     'use strict';
 
     // Declare widget.
@@ -39,29 +39,18 @@ define([
             this._chartData = {
                 datasets : []
             };
+
             this._activeDatasets = [];
 
-            domStyle.set(this.domNode, {
-                padding: 0,
-                width : '100%',
-                height: 'auto !important',
-                maxWidth : '100%',
-                maxHeight : '100%',
-                overflow : 'hidden'
-            });
-            domStyle.set(this.canvasNode, {
-                padding: 0,
-                width : '100%',
-                height: 'auto !important',
-                maxWidth : '100%',
-                maxHeight : '100%',
-                overflow : 'hidden'
-            });
-
             this._createCtx();
+            
+            domStyle.set(this.domNode, 'max-width' , this.width + 'px');
+            domStyle.set(this.domNode, 'margin' , 'auto');
+            
             this._dataset = this.datasetentity.split("/")[0];
             this._datapoint = this.datapointentity && this.datapointentity.split("/")[0];
             this._data = {};
+
         },
 
         datasetAdd : function (dataset, datapoints) {
@@ -71,6 +60,7 @@ define([
             };
             if (datapoints.length === 1) {
                 set.point = datapoints[0];
+                set.points = datapoints;
             } else {
                 set.points = datapoints;
             }
@@ -92,22 +82,7 @@ define([
             }
             this._handle = mx.data.subscribe({
                 guid: this._mxObj.getGuid(),
-                callback: lang.hitch(this, function (obj) {
-
-                    mx.data.get({
-                        guids: [obj],
-                        callback: lang.hitch(this, function (objs) {
-
-                            // Set the object as background.
-                            this._mxObj = objs;
-
-                            // Load data again.
-                            this._loadData();
-
-                        })
-                    });
-
-                })
+                callback: lang.hitch(this, this._loadData)
             });
 
             // Load data again.
@@ -120,6 +95,12 @@ define([
 
         _loadData : function () {
 
+            this._data = {
+                object : this._mxObj,
+                datasets : []
+            };
+            
+            console.log(this.id + ' - LOAD DATA');
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
                 var obj = objs[0], // Chart object is always only one.
                     j = null,
@@ -127,19 +108,24 @@ define([
                     pointguids = null;
 
                 this._data.object = obj;
+                this._data.datasets = [];
 
+                console.log(this.id + ' - executed: ' + this.datasourcemf + ' - ' + obj);
+                
                 // Retrieve datasets
                 mx.data.get({
                     guids : obj.get(this._dataset),
                     callback : lang.hitch(this, function (datasets) {
                         var set = {};
 
+                        console.log(this.id + ' - length datasets: ' + datasets.length);
                         this._datasetCounter = datasets.length;
                         this._data.datasets = [];
 
                         for(j = 0;j < datasets.length; j++) {
                             dataset = datasets[j];
                             pointguids = dataset.get(this._datapoint);
+                            console.log(this.id + ' - length datasets: ' + pointguids);
                             if (typeof pointguids === "string" && pointguids !== '') {
                                 pointguids = [pointguids];
                             }
@@ -173,6 +159,8 @@ define([
         },
 
         _createCtx : function() {
+            this.canvasNode.width = (this.usePixels) ? this.width : 300;
+            this.canvasNode.height = (this.usePixels) ? this.height : 150;
             this._ctx = this.canvasNode.getContext("2d");
         },
 
@@ -325,6 +313,9 @@ define([
             if (obj && obj.getGuid()) {
                 _params.guids = [obj.getGuid()];
             }
+            
+            console.log(this.id + ' - trying to executed: ' + this.datasourcemf + ' - ' + obj);
+            
             mx.data.action({
                 params : _params,
                 callback: lang.hitch(this, function  (obj) {

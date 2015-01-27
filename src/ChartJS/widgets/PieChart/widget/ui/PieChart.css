@@ -16,11 +16,3 @@
     display: inline-block;
     margin-right: 20px;
 }
-.number-node {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-}

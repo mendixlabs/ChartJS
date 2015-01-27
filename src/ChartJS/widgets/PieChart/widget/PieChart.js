@@ -118,18 +118,19 @@
                     animateScale : this.animateScale,
 
                     //String - A legend template
-                    legendTemplate : this.legendTemplate
+                    legendTemplate : this.legendTemplate,
+                    
+                    // Show tooltips at all
+                    showTooltips : this.showTooltips,
+                    
+                    maintainAspectRatio : true,
+                    
+                    responsive : true
 
                 });
-
-                on(window, 'resize', lang.hitch(this, function () {
-                    this._chart.resize();
-                    this._resize();
-                }));
-
+                
                 // Set the con
                 html.set(this._numberNode, this._data.object.get(this.numberInside));
-                this._resize();
 
                 // Add class to determain chart type
                 this._addChartClass('chartjs-pie-chart');

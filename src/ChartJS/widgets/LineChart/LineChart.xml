@@ -19,6 +19,11 @@
             <category>Appearance</category>
             <description>.</description>
         </property>
+        <property key="usePixels" type="boolean" required="true" defaultValue="false">
+            <caption>Use width and height.</caption>
+            <category>Appearance</category>
+            <description>Use width and height as hardcoded pixels.</description>
+        </property>
         <!-- Data Source -->
         <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
             <caption>Chart Entity</caption>
@@ -30,6 +35,15 @@
             <category>Data Source</category>
             <description>.</description>
             <returnType type="Object" entityProperty="sourceentity"></returnType>
+        </property>
+        <property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
+            <caption>Attribute to trigger</caption>
+            <category>Data Set</category>
+            <description>Attribute to trigger the microflow.</description>
+            <attributeTypes>
+                <attributeType name="Enum"/>
+                <attributeType name="String"/>
+            </attributeTypes>
         </property>
         <!-- Data Set -->
         <property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
@@ -216,9 +230,19 @@
             <description>A legend template.</description>
         </property>
         <property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
-            <caption>Radar show labels</caption>
+            <caption>Show labels left</caption>
             <category>Settings</category>
             <description>Whether to show labels on the scale.</description>
+        </property>
+        <property key="scaleShowLabelsBottom" type="boolean" required="true" defaultValue="true">
+            <caption>Show labels bottom</caption>
+            <category>Settings</category>
+            <description>Whether to show the bottom labels on the scale.</description>
+        </property>
+        <property key="showTooltips" type="boolean" required="true" defaultValue="false">
+            <caption>Show tooltip</caption>
+            <category>Settings</category>
+            <description>Show the tooltip.</description>
         </property>
         <!-- Line settings -->
         <property key="bezierCurve" type="boolean" required="true" defaultValue="true">
@@ -250,6 +274,16 @@
             <caption>Point hit detection radius</caption>
             <category>Settings Line Chart</category>
             <description>amount extra to add to the radius to cater for hit detection outside the drawn point.</description>
+        </property>
+        <property key="scaleLineWidth" type="string" required="true" defaultValue="1.0">
+            <caption>Scale line width</caption>
+            <category>Settings Line Chart</category>
+            <description>The scale line width.</description>
+        </property>
+        <property key="scaleLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.1)">
+            <caption>Scale line color</caption>
+            <category>Settings Line Chart</category>
+            <description>The scale line color.</description>
         </property>
     </properties>
 </widget>

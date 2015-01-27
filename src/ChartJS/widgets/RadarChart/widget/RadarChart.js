@@ -31,6 +31,9 @@
                     i = null,
                     _set = null;
 
+                this._chartData.datasets = [];
+                this._chartData.labels = [];
+                
                 sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
                 for(j = 0; j < sets.length; j++) {
@@ -83,6 +86,10 @@
 
             _createChart : function (data) {
 
+                if (this._chart !== null) {
+                    this._chart.destroy();
+                }
+                
                 this._chart = new this._chartJS(this._ctx).Radar(data, {
                     //Boolean - Whether to show lines for each scale point
                     scaleShowLine : this.scaleShowLine,
@@ -136,13 +143,12 @@
                     datasetFill : this.datasetFill,
 
                     //String - A legend template
-                    legendTemplate : this.legendTemplate
+                    legendTemplate : this.legendTemplate,
+                    
+                    // Show tooltips at all
+                    showTooltips : this.showTooltips
 
                 });
-
-                on(window, 'resize', lang.hitch(this, function () {
-                    this._chart.resize();
-                }));
                 
                 // Add class to determain chart type
                 this._addChartClass('chartjs-radar-chart');
