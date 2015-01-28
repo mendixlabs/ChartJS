@@ -232,8 +232,8 @@ define([
 
         _sortArrayObj : function (values) {
             return values.sort(lang.hitch(this, function (a,b) {
-                var aa = a.sorting,
-                    bb = b.sorting;
+                var aa = +(a.sorting),
+                    bb = +(b.sorting);
                 if (aa > bb) {
                     return 1;
                 }
@@ -247,8 +247,8 @@ define([
 
         _sortArrayMx : function (values, sortAttr) {
             return values.sort(lang.hitch(this, function (a,b) {
-                var aa = a.get(sortAttr),
-                    bb = b.get(sortAttr);
+                var aa = +(a.get(sortAttr)),
+                    bb = +(b.get(sortAttr));
                 if (aa > bb) {
                     return 1;
                 }
