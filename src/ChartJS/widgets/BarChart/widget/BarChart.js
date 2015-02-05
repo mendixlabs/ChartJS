@@ -7,9 +7,9 @@
     // Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
     require([
 
-        'dojo/_base/declare', 'dojo/_base/lang', 'dojo/query', 'dojo/on', 'ChartJS/widgets/Core'
+        'dojo/_base/declare', 'dojo/_base/lang', 'dojo/on', 'ChartJS/widgets/Core'
 
-    ], function (declare, lang, domQuery, on, _core) {
+    ], function (declare, lang, on, _core) {
 
         // Declare widget.
         return declare('ChartJS.widgets.BarChart.widget.BarChart', [ _core ], {
@@ -44,7 +44,9 @@
                         points = [];
                         set.points = this._sortArrayMx(set.points, this.sortingxvalue);
                         color = set.dataset.get(this.seriescolor);
-                        highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                        if (this.seriesColorNoReformat) {
+                            highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                        }
                         label = set.dataset.get(this.datasetlabel);
 
                         for (i = 0; i < set.points.length; i++) {
@@ -122,22 +124,28 @@
 
                     //String - A legend template
                     legendTemplate : this.legendTemplate,
-                    
+
                     //The scale line width
                     scaleLineWidth : this.scaleLineWidth,
-                    
+
                     //The scale line color
                     scaleLineColor : this.scaleLineColor,
-                    
+
+                    // maintainAspectRatio
+                    maintainAspectRatio : this.maintainAspectRatio,
+
                     // Show tooltips at all
-                    showTooltips : this.showTooltips
+                    showTooltips : this.showTooltips,
+
+                    // Custom tooltip?
+                    customTooltips : lang.hitch(this, this.customTooltip)
 
                 });
 
-                on(window, 'resize', lang.hitch(this, function () {
+                this.connect(window, 'resize', lang.hitch(this, function () {
                     this._chart.resize();
                 }));
-                
+
                 // Add class to determain chart type
                 this._addChartClass('chartjs-bar-chart');
 

@@ -87,7 +87,7 @@
                 <attributeType name="String"/>
             </attributeTypes>
         </property>
-        <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+        <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
             <caption>Hightlight Color (in Hex)</caption>
             <category>Data Set</category>
             <description>Set the colour of the bar or line.</description>
@@ -237,6 +237,16 @@
             <category>Settings</category>
             <description>Show the tooltip.</description>
         </property>
+        <property key="tooltipForm" type="form" required="false">
+            <caption>Tooltip form</caption>
+            <category>Settings</category>
+            <description>.</description>
+        </property>
+        <property key="maintainAspectRatio" type="boolean" required="true" defaultValue="true">
+            <caption>Maintain aspect ratio</caption>
+            <category>Settings</category>
+            <description>Maintain the aspect ratio?</description>
+        </property>
         <!-- Radar settings -->
         <property key="pointLabelFontFamily" type="string" required="true" defaultValue="'Arial'">
             <caption>Point Label Font Family</caption>
@@ -272,6 +282,28 @@
             <caption>Point Label Font Color</caption>
             <category>Settings Radar Chart</category>
             <description>Point label font colour.</description>
+        </property>
+        <!-- Zero Data Point -->
+        <property key="zeroValueEntity" type="entity" required="true" allowNonPersistableEntities="true">
+            <caption>Zero Data Point Entity</caption>
+            <category>Zero Data Point</category>
+            <description>.</description>
+        </property>
+        <property key="zeroValueAttr" type="attribute" entityProperty="zeroValueEntity" allowNonPersistableEntities="true" required="true">
+            <caption>Zero value attribute</caption>
+            <category>Zero Data Point</category>
+            <description>.</description>
+            <attributeTypes>
+                <attributeType name="AutoNumber"/>
+                <attributeType name="Boolean"/>
+                <attributeType name="Currency"/>
+                <attributeType name="DateTime"/>
+                <attributeType name="Enum"/>
+                <attributeType name="Float"/>
+                <attributeType name="Integer"/>
+                <attributeType name="Long"/>
+                <attributeType name="String"/>
+            </attributeTypes>
         </property>
     </properties>
 </widget>

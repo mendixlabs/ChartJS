@@ -7,9 +7,18 @@
     // Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
     require([
 
-        'dojo/_base/declare', 'dojo/_base/lang', 'dojo/query', 'dojo/on', 'dojo/html', 'dojo/dom-geometry', 'dojo/dom-style', 'ChartJS/widgets/Core'
+        // Client API and DOJO functions
+        'dojo/_base/declare', 'dojo/_base/lang', 'dojo/query', 'dojo/on', 'dojo/html', 'dojo/dom-geometry', 'dojo/dom-attr', 'dojo/dom-style',
 
-    ], function (declare, lang, domQuery, on, html, domGeom, domStyle, _core) {
+        // External libraries
+        'ChartJS/widgets/Core',
+
+        // Templates
+        'dojo/text!ChartJS/templates/chartjs_dd.html'
+
+    ], function (declare, lang, domQuery, on, html, domGeom, domAttr, domStyle,
+                  _core,
+                  _chartJSDDTemplate) {
 
         // Declare widget.
         return declare('ChartJS.widgets.DoubleDoughnutChart.widget.DoubleDoughnutChart', [ _core ], {
@@ -20,13 +29,15 @@
             _chartDD : null,
 
             // Template path
-            templatePath: require.toUrl('ChartJS/templates/chartjs_dd.html'),
+            templateString: _chartJSDDTemplate,
 
             _createCtx : function () {
-                this.canvasNode.width = (this.usePixels) ? this.width : 300;
-                this.canvasNode.height = (this.usePixels) ? this.height : 150;
-                this.canvasNodeDD.width = (this.usePixels) ? this.width : 300;
-                this.canvasNodeDD.height = (this.usePixels) ? this.height : 150;
+                var position = domGeom.position(this.domNode.parentElement, false);
+                domAttr.set(this.canvasNode, 'id', 'canvasid_' + this.id);
+                this.canvasNode.width = (this.usePixels) ? this.width : position.w;
+                this.canvasNode.height = (this.usePixels) ? this.height : position.h;
+                this.canvasNodeDD.width = (this.usePixels) ? this.width : position.w;
+                this.canvasNodeDD.height = (this.usePixels) ? this.height : position.h;
                 this._ctx1 = this.canvasNode.getContext("2d");
                 this._ctx2 = this.canvasNodeDD.getContext("2d");
             },
@@ -62,12 +73,14 @@
                         set.points = this._sortArrayMx(set.points, this.sortingxvalue);
                         for (i = 0; i < set.points.length; i++) {
                             color = set.points[i].get(this.seriescolor);
-                            highlightcolor = set.points[i].get(this.serieshighlightcolor);
+                            if (this.seriesColorNoReformat) {
+                                highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                            }
                             label = set.points[i].get(this.seriesylabel);
                             point = {
                                 label : label,
                                 color: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
-                                highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(highlightcolor, "0.75") : highlightcolor,
+                                highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.75") : highlightcolor,
                                 value : +(set.points[i].get(this.seriesyvalue))
                             };
                             points.push(point);
@@ -132,7 +145,9 @@
                     var obj = objs[0], // Chart object is always only one.
                         j = null,
                         dataset = null,
-                        pointguids = null;
+                        pointguids = null,
+                        createZeroValueEntity = null,
+                        errorZeroValueEntity = null;
 
                     this._data.object = obj;
                     this._data.datasets = [];
@@ -149,6 +164,25 @@
                             this._datasetCounter = datasets.length;
                             this._data.datasets = [];
 
+                            createZeroValueEntity = function (obj) {
+                                obj.set(this.zeroValueAttr, 1);
+                                obj.set(this.zeroColorAttr, this.zeroColorValueAttr);
+                                set = {
+                                    dataset : dataset,
+                                    sorting : +(dataset.get(this.datasetsorting)),
+                                    point : obj,
+                                    points : [obj]
+                                };
+                                this._data.datasets.push(set);
+                                this._datasetCounter--;
+                                if (this._datasetCounter === 0) {
+                                    this._processData();
+                                }
+                            };
+                            errorZeroValueEntity = function (e) {
+                                console.log("an error occured: " + e);
+                            };
+
                             for (j = 0; j < datasets.length; j++) {
                                 dataset = datasets[j];
                                 pointguids = dataset.get(this._datapoint);
@@ -163,13 +197,11 @@
                                     });
                                 } else {
                                     // No points found
-                                    set = {
-                                        dataset : dataset,
-                                        sorting : +(dataset.get(this.datasetsorting)),
-                                        nopoints : true
-                                    };
-                                    this._data.datasets.push(set);
-                                    this._datasetCounter--;
+                                    mx.data.create({
+                                        entity: this.zeroValueEntity,
+                                        callback: lang.hitch(this, createZeroValueEntity),
+                                        error: errorZeroValueEntity
+                                    });
                                 }
                             }
 
@@ -242,7 +274,10 @@
                     legendTemplate : this.legendTemplate,
 
                     // Show tooltips at all
-                    showTooltips : this.showTooltips
+                    showTooltips : this.showTooltips,
+
+                    // Custom tooltip?
+                    customTooltips : lang.hitch(this, this.customTooltip)
 
                 });
 
@@ -296,7 +331,10 @@
                     legendTemplate : this.legendTemplate,
 
                     // Show tooltips at all
-                    showTooltips : this.showTooltips
+                    showTooltips : this.showTooltips,
+
+                    // Custom tooltip?
+                    customTooltips : lang.hitch(this, this.customTooltip)
 
                 });
 

@@ -33,7 +33,7 @@
 
                 this._chartData.datasets = [];
                 this._chartData.labels = [];
-                
+
                 sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
                 for(j = 0; j < sets.length; j++) {
@@ -45,7 +45,9 @@
                         points = [];
                         set.points = this._sortArrayMx(set.points, this.sortingxvalue);
                         color = set.dataset.get(this.seriescolor);
-                        highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                        if (this.seriesColorNoReformat) {
+                            highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                        }
                         label = set.dataset.get(this.datasetlabel);
 
                         for(i = 0;i < set.points.length; i++) {
@@ -89,7 +91,7 @@
                 if (this._chart !== null) {
                     this._chart.destroy();
                 }
-                
+
                 this._chart = new this._chartJS(this._ctx).Radar(data, {
                     //Boolean - Whether to show lines for each scale point
                     scaleShowLine : this.scaleShowLine,
@@ -144,12 +146,18 @@
 
                     //String - A legend template
                     legendTemplate : this.legendTemplate,
-                    
+
                     // Show tooltips at all
-                    showTooltips : this.showTooltips
+                    showTooltips : this.showTooltips,
+
+                    // maintainAspectRatio
+                    maintainAspectRatio : this.maintainAspectRatio,
+
+                    // Custom tooltip?
+                    customTooltips : lang.hitch(this, this.customTooltip)
 
                 });
-                
+
                 // Add class to determain chart type
                 this._addChartClass('chartjs-radar-chart');
 

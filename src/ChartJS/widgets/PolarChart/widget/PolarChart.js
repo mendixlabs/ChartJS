@@ -34,12 +34,14 @@
 
 					points = [];
 					color = set.dataset.get(this.seriescolor);
-                    highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                    if (this.seriesColorNoReformat) {
+                        highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                    }
 					label = set.dataset.get(this.datasetlabel);
 					point = {
 						label : label,
                         color: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
-                        highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(highlightcolor, "0.75") : highlightcolor,
+                        highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.75") : highlightcolor,
 						value : +(set.dataset.get(this.seriesylabel))
 					};
 
@@ -135,7 +137,10 @@
                     legendTemplate : this.legendTemplate,
                     
                     // Show tooltips at all
-                    showTooltips : this.showTooltips
+                    showTooltips : this.showTooltips,
+                    
+                    // Custom tooltip?
+                    customTooltips : lang.hitch(this, this.customTooltip)
 
                 });
                 

@@ -33,7 +33,7 @@
 
                 this._chartData.datasets = [];
                 this._chartData.labels = [];
-                
+
                 sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
                 for(j = 0; j < sets.length; j++) {
@@ -45,7 +45,9 @@
                         points = [];
                         set.points = this._sortArrayMx(set.points, this.sortingxvalue);
                         color = set.dataset.get(this.seriescolor);
-                        highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                        if (this.seriesColorNoReformat) {
+                            highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                        }
                         label = set.dataset.get(this.datasetlabel);
 
                         for(i = 0;i < set.points.length; i++) {
@@ -89,7 +91,7 @@
                 if (this._chart !== null) {
                     this._chart.destroy();
                 }
-                
+
                 this._chart = new this._chartJS(this._ctx).StackedBar(data, {
 
                     //Boolean - Whether to show labels on the scale
@@ -124,21 +126,27 @@
 
                     //String - A legend template
                     legendTemplate : this.legendTemplate,
-                    
+
                     //The scale line width
                     scaleLineWidth : this.scaleLineWidth,
-                    
+
                     //The scale line color
                     scaleLineColor : this.scaleLineColor,
-                    
+
                     // Show tooltips at all
-                    showTooltips : this.showTooltips
+                    showTooltips : this.showTooltips,
+
+                    // maintainAspectRatio
+                    maintainAspectRatio : this.maintainAspectRatio,
+
+                    // Custom tooltip?
+                    customTooltips : lang.hitch(this, this.customTooltip)
 
                 });
-                
+
                 // Add class to determain chart type
                 this._addChartClass('chartjs-stacked-bar-chart');
-                
+
                 if (this.onclickmf) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
                 }

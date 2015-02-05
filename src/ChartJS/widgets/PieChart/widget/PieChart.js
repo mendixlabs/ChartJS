@@ -35,12 +35,14 @@
 
                     points = [];
                     color = set.dataset.get(this.seriescolor);
-                    highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                    if (this.seriesColorNoReformat) {
+                        highlightcolor = set.dataset.get(this.serieshighlightcolor);
+                    }
                     label = set.dataset.get(this.datasetlabel);
                     point = {
                         label : label,
                         color: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
-                        highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(highlightcolor, "0.75") : highlightcolor,
+                        highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.75") : highlightcolor,
                         value : +(set.dataset.get(this.seriesylabel))
                     };
 
@@ -119,22 +121,24 @@
 
                     //String - A legend template
                     legendTemplate : this.legendTemplate,
-                    
+
                     // Show tooltips at all
                     showTooltips : this.showTooltips,
-                    
-                    maintainAspectRatio : true,
-                    
-                    responsive : true
+
+                    // maintainAspectRatio
+                    maintainAspectRatio : this.maintainAspectRatio,
+
+                    // Custom tooltip?
+                    customTooltips : lang.hitch(this, this.customTooltip)
 
                 });
-                
+
                 // Set the con
                 html.set(this._numberNode, this._data.object.get(this.numberInside));
 
                 // Add class to determain chart type
                 this._addChartClass('chartjs-pie-chart');
-                
+
                 if (this.onclickmf) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
                 }
