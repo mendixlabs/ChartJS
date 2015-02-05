@@ -9,13 +9,14 @@ define([
     'dojo/_base/declare', 'mxui/widget/_WidgetBase', 'dijit/_TemplatedMixin',
     
     // Client API and DOJO functions
-    'mxui/dom', 'dojo/query', 'dojo/dom-prop', 'dojo/dom-geometry', 'dojo/dom-class', 'dojo/dom-attr', 'dojo/dom-style', 'dojo/dom-construct', 'dojo/_base/array', 'dojo/_base/lang', 'dojo/html', 'dojo/ready',
+    'mxui/dom', 'dojo/dom', 'dojo/query', 'dojo/dom-prop', 'dojo/dom-geometry', 'dojo/dom-class', 'dojo/dom-attr', 'dojo/dom-style', 'dojo/_base/window', 'dojo/dom-construct', 'dojo/_base/array', 'dojo/_base/lang', 'dojo/html', 'dojo/ready',
     
     // External libraries
     'ChartJS/lib/charts',
 
     // Templates
-    'dojo/text!ChartJS/templates/chartjs.html'
+    'dojo/text!ChartJS/templates/chartjs.html',
+    'dojo/text!ChartJS/templates/tooltip.html'
 
 ], function (
        
@@ -23,13 +24,14 @@ define([
         declare, _WidgetBase, _TemplatedMixin, 
 
         // Client API and DOJO functions
-        dom, domQuery, domProp, domGeom, domClass, domAttr, domStyle, domConstruct, dojoArray, lang, html, ready, 
+        dom, dojoDom, domQuery, domProp, domGeom, domClass, domAttr, domStyle, win, domConstruct, dojoArray, lang, html, ready, 
 
         // External libraries 
         _charts,
 
         // Templates
-        _chartJSTemplate) {
+        _chartJSTemplate,
+        _chartJSTooltipTemplate) {
     
     'use strict';
 
@@ -53,9 +55,12 @@ define([
         _handle : null,
 
         _currentContext : null,
+        _addedToBody : false,
 
         startup: function () {
 
+            var domNode = null;
+            
             // Activate chartJS.
             this._chartJS = _charts().chartssrc();
 
@@ -63,7 +68,7 @@ define([
             this._chartJS.defaults.global.responsive = this.responsive;
 
             // Hack to fix the tooltip event, also added "mouseover"
-            this._chartJS.defaults.global.tooltipEvents = ['mouseover', 'mousemove', 'touchstart', 'touchmove', 'mouseout'];
+            this._chartJS.defaults.global.tooltipEvents = ['mousemove', 'touchstart', 'touchmove', 'mouseout'];
             this._chartJS.defaults.global.tooltipXOffset = 0;
 
             // Set object , dataset and datapoint.
@@ -80,6 +85,11 @@ define([
             };
 
             this._activeDatasets = [];
+            
+            if (!dojoDom.byId('chartjsTooltip')) {
+                domNode = domConstruct.toDom(_chartJSTooltipTemplate);
+                domConstruct.place(domNode, win.body());
+            }
 
         },
 
@@ -211,8 +221,8 @@ define([
         customTooltip : function (tooltip) {
 
             // Tooltip Element
-            var tooltipEl = this._customTooltip,
-                tooltipElContent = this._customTooltipContent,
+            var tooltipEl = domQuery('#chartjsTooltip')[0],
+                tooltipElContent = domQuery('#chartjsTooltip .content')[0],
                 top = null,
                 contextObj = null;
 

@@ -17,8 +17,8 @@
         'dojo/text!ChartJS/templates/chartjs_dd.html'
 
     ], function (declare, lang, domQuery, on, html, domGeom, domAttr, domStyle,
-                  _core,
-                  _chartJSDDTemplate) {
+                    _core,
+                    _chartJSDDTemplate) {
 
         // Declare widget.
         return declare('ChartJS.widgets.DoubleDoughnutChart.widget.DoubleDoughnutChart', [ _core ], {
