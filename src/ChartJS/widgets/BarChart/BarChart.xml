@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <widget id="ChartJS.widgets.BarChart.widget.BarChart" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
     <name>ChartJS - Bar Chart</name>
-    <description>.</description>
-
+    <description>ChartJS Library wrapper</description>
     <icon>
         iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAFRklEQVR42u3csUqtVxSF0QNK7A56q1uIgljFVKmtU6Y5ksoq75LHy+OEVCHRi31g4tXFmmPARNu9/fdXejgAAAAAAAAAAAAAAAAAAPA/np+fz0+n09emvZ75s+8dRnh4ePjx5ce/TXs7MyAAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAgDFBACKCQAUEwAoJgBQTACgmABAMQGAYgIAxQQAigkAFBMAKCYAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAgDFBACKCQAUEwAoJgBQTACgmABAMQGAYgIAxQQAigkAFBMAKCYAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAsAKV1dXPx2Px99adnl5+ct73JsAsML5+fkfhwEf10ft7Ozsz/e4NwFgBQHICAArCEBGAFhBADICwAoCkBEAVhCAjACwggBkBIAVBCAjAKwgABkBYAUByAgAKwhARgBYQQAyAsAKApARAFYQgIwAsIIAZASAFQQgIwCsIAAZAWAFAcgIACsIQEYAWEEAMgLACgKQEQBWEICMALCCAGQEgBUEICMArCAAGQFgBQHICAArCEBGAFhBADICwAoCkBEAVhCAjACwggBkBIAVBCAjAKwgABkBYAUByAgAKwhARgBYQQAyAsAKApARAFYQgIwAsIIAZASAFQQgIwCsIAAZAWAFAcgIACsIQEYAWEEAMgLACgKQEQBWEICMALCCAGQEgBUEICMArCAAGQFgBQHICAArCEBGAFhBADICwAoCkBGA3M3Nza/X19e/t+z29vbn97i370IAMgKQe/sbfPp5Pmpvb2wmAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGCQ+/v7L3d3d/cte3H9Hvf2+Pj4w2ef5aP3euZ3+uauP/ssH/zNffncVw4AAAAAAAAAAAAAAAAAAAB8d8fj8a+Li4u/zaxrr2//8PLLP4cB/+rIzD52396+AJh1TgDMiicAZsUTALPiCYBZ8QTArHgCYFY8ATArngCYFU8AzIonAGbFEwCz4gmAWfEEwKx4AmBWPAEwK54AmBVPAMyKJwBmxRMAs+IJgFnxBMCseAJgVjwBMCueAJgVTwDMivft7T89PX09nU5mVrbXt38AAAAAAAAAAAAAAAAAAIb7D5VqMu+N+RwAAAAAAElFTkSuQmCC
     </icon>
-
     <properties>
         <!-- Appearance -->
-        <property key="width" type="integer" required="true" defaultValue="850">
+        <property key="width" type="integer" required="true" defaultValue="500">
             <caption>Width</caption>
             <category>Appearance</category>
-            <description>.</description>
+            <description>Initial width of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
         </property>
-        <property key="height" type="integer" required="true" defaultValue="450">
+        <property key="height" type="integer" required="true" defaultValue="250">
             <caption>Height</caption>
             <category>Appearance</category>
-            <description>.</description>
-        </property>
-        <property key="usePixels" type="boolean" required="true" defaultValue="false">
-            <caption>Use width and height.</caption>
-            <category>Appearance</category>
-            <description>Use width and height as hardcoded pixels.</description>
+			<description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
         </property>
         <!-- Data Source -->
         <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
             <caption>Chart Entity</caption>
             <category>Data Source</category>
-            <description>.</description>
+            <description>Container entity referencing DataSet entity objects.</description>
         </property>
         <property key="datasourcemf" type="microflow" required="false">
             <caption>Microflow</caption>
             <category>Data Source</category>
-            <description>.</description>
+            <description>Microflow returning a 'Chart Entity' object.</description>
             <returnType type="Object" entityProperty="sourceentity"></returnType>
         </property>
-        <property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
+		<!--Placeholder-->
+		<!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
             <caption>Attribute to trigger</caption>
             <category>Data Set</category>
             <description>Attribute to trigger the microflow.</description>
@@ -44,17 +38,17 @@
                 <attributeType name="Enum"/>
                 <attributeType name="String"/>
             </attributeTypes>
-        </property>
+        </property>-->
         <!-- Data Set -->
         <property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
             <caption>Data Set Entity</caption>
             <category>Data Set</category>
-            <description>.</description>
+            <description>Entity referencing Datapoint entity objects.</description>
         </property>
         <property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
             <caption>Data Set label</caption>
             <category>Data Set</category>
-            <description>.</description>
+            <description>Label displayed in the legend</description>
             <attributeTypes>
                 <attributeType name="Enum"/>
                 <attributeType name="String"/>
@@ -63,7 +57,7 @@
         <property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
             <caption>Sorting</caption>
             <category>Data Set</category>
-            <description>.</description>
+            <description>Attribute used for sorting dataset objects</description>
             <attributeTypes>
                 <attributeType name="AutoNumber"/>
                 <attributeType name="Currency"/>
@@ -74,9 +68,9 @@
             </attributeTypes>
         </property>
         <property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-            <caption>Color (in Hex)</caption>
+            <caption>Bar color (in Hex)</caption>
             <category>Data Set</category>
-            <description>Set the colour of the bar or line.</description>
+            <description>Initial bar color</description>
             <attributeTypes>
                 <attributeType name="AutoNumber"/>
                 <attributeType name="Boolean"/>
@@ -92,7 +86,7 @@
         <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
             <caption>Hightlight Color (in Hex)</caption>
             <category>Data Set</category>
-            <description>Set the colour of the bar or line.</description>
+            <description>Color while hovering over bar.</description>
             <attributeTypes>
                 <attributeType name="AutoNumber"/>
                 <attributeType name="Boolean"/>
@@ -105,21 +99,21 @@
                 <attributeType name="String"/>
             </attributeTypes>
         </property>
-        <property key="seriesColorNoReformat" type="boolean" required="true" defaultValue="false">
-            <caption>Color as it is.</caption>
+        <property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="false">
+            <caption>Reduce opacity</caption>
             <category>Data Set</category>
-            <description>Do not reformat color attribute content.</description>
+            <description>Reduces the opacity: fill color(0.5) and highlight color(0.75)</description>
         </property>
         <!-- Data Point -->
         <property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
             <caption>Data Point Entity</caption>
             <category>Data Point</category>
-            <description>.</description>
+            <description>Entity of which containing X-axis and Y-axis values</description>
         </property>
         <property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
             <caption>X Value</caption>
             <category>Data Point</category>
-            <description>.</description>
+            <description>X-axis value</description>
             <attributeTypes>
                 <attributeType name="AutoNumber"/>
                 <attributeType name="Boolean"/>
@@ -135,7 +129,7 @@
         <property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
             <caption>X sorting</caption>
             <category>Data Point</category>
-            <description>.</description>
+            <description>Attribute value is used for sorting datapoint on X-Axis </description>
             <attributeTypes>
                 <attributeType name="AutoNumber"/>
                 <attributeType name="Currency"/>
@@ -148,7 +142,7 @@
         <property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
             <caption>Y value</caption>
             <category>Data Point</category>
-            <description>.</description>
+            <description>Y-Axis value</description>
             <attributeTypes>
                 <attributeType name="AutoNumber"/>
                 <attributeType name="Boolean"/>
@@ -165,19 +159,19 @@
         <property key="onclickmf" type="microflow" required="false">
             <caption>On Click Microflow</caption>
             <category>Behavior</category>
-            <description>.</description>
+            <description>Microflow to invoke when chart canvas is clicked</description>
             <returnType type="Void"></returnType>
         </property>
         <!-- Settings -->
         <property key="responsive" type="boolean" required="true" defaultValue="true">
             <caption>Responsive</caption>
             <category>Settings</category>
-            <description>Whether the chart is responsive.</description>
+            <description>Chart canvas dimensions respond to changes in layout</description>
         </property>
         <property key="scaleBeginAtZero" type="boolean" required="true" defaultValue="true">
             <caption>Begin at zero</caption>
             <category>Settings</category>
-            <description>Whether grid lines are shown across the chart.</description>
+			<description>Whether the scale should start at zero, or an order of magnitude down from the lowest value</description>
         </property>
         <property key="scaleShowGridLines" type="boolean" required="true" defaultValue="true">
             <caption>Show grid lines</caption>
@@ -187,7 +181,7 @@
         <property key="scaleGridLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.05)">
             <caption>Grid line color</caption>
             <category>Settings</category>
-            <description>Colour of the grid lines.</description>
+            <description>Color of the grid lines(rgba).</description>
         </property>
         <property key="scaleGridLineWidth" type="string" required="true" defaultValue="1">
             <caption>Grid line width</caption>
@@ -197,12 +191,12 @@
         <property key="scaleShowHorizontalLines" type="boolean" required="true" defaultValue="true">
             <caption>Show horizontal lines</caption>
             <category>Settings</category>
-            <description>Whether to show horizontal lines (except X axis).</description>
+            <description>Whether to show horizontal lines (Does not affect X-axis).</description>
         </property>
         <property key="scaleShowVerticalLines" type="boolean" required="true" defaultValue="true">
             <caption>Show vertical lines</caption>
             <category>Settings</category>
-            <description>Whether to show vertical lines (except Y axis).</description>
+            <description>Whether to show vertical grid lines (Does not effect Y-axis).</description>
         </property>
         <property key="datasetStroke" type="boolean" required="true" defaultValue="true">
             <caption>DataSet stroke</caption>
@@ -217,52 +211,52 @@
         <property key="datasetFill" type="boolean" required="true" defaultValue="true">
             <caption>DataSet fill</caption>
             <category>Settings</category>
-            <description>Whether to fill the dataset with a colour.</description>
+            <description>Whether to fill the dataset with a color.</description>
         </property>
         <property key="showLegend" type="boolean" required="true" defaultValue="true"> 
             <caption>Show Legend</caption>
             <category>Settings</category>
-            <description>Turn the legend on/off.</description>
+            <description>Displays a legend when set to yes</description>
         </property>
         <property key="legendTemplate" type="string" required="true" multiline="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].fillColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;"> 
             <caption>Legend template</caption>
             <category>Settings</category>
-            <description>A legend template.</description>
-        </property>
-        <property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
-            <caption>Show labels</caption>
-            <category>Settings</category>
-            <description>Whether to show labels on the scale.</description>
+            <description>HTML template used for rendering legend</description>
         </property>
         <property key="scaleShowLabelsBottom" type="boolean" required="true" defaultValue="true">
-            <caption>Show labels bottom</caption>
+            <caption>Show labels X-axis</caption>
             <category>Settings</category>
-            <description>Whether to show the bottom labels on the scale.</description>
+            <description>Whether to show the labels on the X-axis scale.</description>
         </property>
+		<property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
+			<caption>Show labels Y-axis</caption>
+			<category>Settings</category>
+			<description>Whether to show labels on the y-axis scale.</description>
+		</property>
         <property key="showTooltips" type="boolean" required="true" defaultValue="false">
             <caption>Show tooltip</caption>
             <category>Settings</category>
-            <description>Show the tooltip.</description>
+			<description>Determines whether to draw tooltips on the canvas or not.</description>
         </property>
-        <property key="tooltipForm" type="form" required="false">
+        <!--<property key="tooltipForm" type="form" required="false">
             <caption>Tooltip form</caption>
             <category>Settings</category>
             <description>.</description>
-        </property>
+        </property>-->
         <property key="maintainAspectRatio" type="boolean" required="true" defaultValue="true">
             <caption>Maintain aspect ratio</caption>
             <category>Settings</category>
-            <description>Maintain the aspect ratio?</description>
+			<description>whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container</description>
         </property>
         <!-- Bar chart settings -->
         <property key="barShowStroke" type="boolean" required="true" defaultValue="true">
-            <caption>Bar show stroke</caption>
-            <category>Settings (Stacked) Bar Chart</category>
+            <caption>Show stroke</caption>
+            <category>Settings Bar Chart</category>
             <description>If there is a stroke on each bar.</description>
         </property>
         <property key="barStrokeWidth" type="string" required="true" defaultValue="2">
             <caption>Bar stroke width</caption>
-            <category>Settings (Stacked) Bar Chart</category>
+            <category>Settings Bar Chart</category>
             <description>Pixel width of the bar stroke.</description>
         </property>
         <property key="barValueSpacing" type="string" required="true" defaultValue="5">

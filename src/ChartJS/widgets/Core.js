@@ -275,9 +275,24 @@ define([
         _createCtx : function() {
             var position = domGeom.position(this.domNode.parentElement, false);
             domAttr.set(this.canvasNode, 'id', 'canvasid_' + this.id);
-            this.canvasNode.width = (this.usePixels) ? this.width : position.w;
-            this.canvasNode.height = (this.usePixels) ? this.height : position.h;
-            this._ctx = this.canvasNode.getContext("2d");
+
+			if(position.w>0 && this.responsive) {
+            	this.canvasNode.width =  position.w;
+			}
+			else {
+				this.canvasNode.width = this.width; 
+			}
+			
+			if(position.h > 0 && this.responsive)
+			{
+				this.canvasNode.height = position.h;
+			}
+			else {
+				this.canvasNode.width = this.width; 
+			}
+            
+			this._ctx = this.canvasNode.getContext("2d");
+			
         },
 
         _processData : function () {

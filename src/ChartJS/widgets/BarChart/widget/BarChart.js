@@ -44,9 +44,8 @@
                         points = [];
                         set.points = this._sortArrayMx(set.points, this.sortingxvalue);
                         color = set.dataset.get(this.seriescolor);
-                        if (this.seriesColorNoReformat) {
-                            highlightcolor = set.dataset.get(this.serieshighlightcolor);
-                        }
+                        highlightcolor = set.dataset.get(this.serieshighlightcolor);
+
                         label = set.dataset.get(this.datasetlabel);
 
                         for (i = 0; i < set.points.length; i++) {
@@ -62,12 +61,12 @@
                         }
 
                         _set = {
-                            label : (this.scaleShowLabelsBottom === true) ? label : '',
-                            fillColor: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
-                            strokeColor: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.8") : color,
-                            pointColor: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.8") : color,
-                            highlightFill: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.75") : highlightcolor,
-                            highlightStroke: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "1") : highlightcolor,
+                            label : label,
+                            fillColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
+							strokeColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
+							pointColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
+							highlightFill: (this.seriesColorReduceOpacity) ? this._hexToRgb(highlightcolor, "0.75") : highlightcolor,
+							highlightStroke: (this.seriesColorReduceOpacity) ? this._hexToRgb(highlightcolor, "1") : highlightcolor,
                             data : points
                         };
                         this._chartData.datasets.push(_set);
@@ -143,7 +142,10 @@
                 });
 
                 this.connect(window, 'resize', lang.hitch(this, function () {
-                    this._chart.resize();
+					//Only resize when chart is set to resonsive
+					if(this._chart && this.responsive){
+                    	this._chart.resize();
+					}
                 }));
 
                 // Add class to determain chart type
@@ -152,7 +154,15 @@
                 if (this.onclickmf) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
                 }
-            }
+            },
+
+//			Works correctlyfor all containers from 5.14 and up
+//			resize: function (box) {
+//				if(this._chart && this.responsive){
+//					
+//					this._chart.resize();
+//				}
+//			}			
         });
     });
 
