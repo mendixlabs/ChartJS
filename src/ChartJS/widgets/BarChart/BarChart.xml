@@ -21,7 +21,7 @@
         <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
             <caption>Chart Entity</caption>
             <category>Data Source</category>
-            <description>Container entity referencing DataSet entity objects.</description>
+            <description>Container entity, referencing DataSet entity objects.</description>
         </property>
         <property key="datasourcemf" type="microflow" required="false">
             <caption>Microflow</caption>
@@ -43,12 +43,12 @@
         <property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
             <caption>Data Set Entity</caption>
             <category>Data Set</category>
-            <description>Entity referencing Datapoint entity objects.</description>
+            <description>Entity, referencing Datapoint entity objects.</description>
         </property>
         <property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
             <caption>Data Set label</caption>
             <category>Data Set</category>
-            <description>Label displayed in the legend</description>
+            <description>Label, displayed in legend</description>
             <attributeTypes>
                 <attributeType name="Enum"/>
                 <attributeType name="String"/>
@@ -72,15 +72,8 @@
             <category>Data Set</category>
             <description>Initial bar color</description>
             <attributeTypes>
-                <attributeType name="AutoNumber"/>
-                <attributeType name="Boolean"/>
-                <attributeType name="Currency"/>
-                <attributeType name="DateTime"/>
-                <attributeType name="Enum"/>
-                <attributeType name="Float"/>
-                <attributeType name="Integer"/>
-                <attributeType name="Long"/>
-                <attributeType name="String"/>
+				<attributeType name="Enum"/>
+				<attributeType name="String"/>
             </attributeTypes>
         </property>
         <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
@@ -88,18 +81,11 @@
             <category>Data Set</category>
             <description>Color while hovering over bar.</description>
             <attributeTypes>
-                <attributeType name="AutoNumber"/>
-                <attributeType name="Boolean"/>
-                <attributeType name="Currency"/>
-                <attributeType name="DateTime"/>
-                <attributeType name="Enum"/>
-                <attributeType name="Float"/>
-                <attributeType name="Integer"/>
-                <attributeType name="Long"/>
-                <attributeType name="String"/>
+				<attributeType name="Enum"/>
+				<attributeType name="String"/>
             </attributeTypes>
         </property>
-        <property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="false">
+        <property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
             <caption>Reduce opacity</caption>
             <category>Data Set</category>
             <description>Reduces the opacity: fill color(0.5) and highlight color(0.75)</description>
@@ -108,7 +94,7 @@
         <property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
             <caption>Data Point Entity</caption>
             <category>Data Point</category>
-            <description>Entity of which containing X-axis and Y-axis values</description>
+            <description>Entity containing X-axis and Y-axis values</description>
         </property>
         <property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
             <caption>X Value</caption>
@@ -233,7 +219,7 @@
 			<category>Settings</category>
 			<description>Whether to show labels on the y-axis scale.</description>
 		</property>
-        <property key="showTooltips" type="boolean" required="true" defaultValue="false">
+        <property key="showTooltips" type="boolean" required="true" defaultValue="true">
             <caption>Show tooltip</caption>
             <category>Settings</category>
 			<description>Determines whether to draw tooltips on the canvas or not.</description>
@@ -246,7 +232,7 @@
         <property key="maintainAspectRatio" type="boolean" required="true" defaultValue="true">
             <caption>Maintain aspect ratio</caption>
             <category>Settings</category>
-			<description>whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container</description>
+			<description>Whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container</description>
         </property>
         <!-- Bar chart settings -->
         <property key="barShowStroke" type="boolean" required="true" defaultValue="true">
@@ -283,28 +269,6 @@
             <caption>Scale line color</caption>
             <category>Settings (Stacked) Bar Chart</category>
             <description>The scale line color.</description>
-        </property>
-        <!-- Zero Data Point -->
-        <property key="zeroValueEntity" type="entity" required="true" allowNonPersistableEntities="true">
-            <caption>Zero Data Point Entity</caption>
-            <category>Zero Data Point</category>
-            <description>.</description>
-        </property>
-        <property key="zeroValueAttr" type="attribute" entityProperty="zeroValueEntity" allowNonPersistableEntities="true" required="true">
-            <caption>Zero value attribute</caption>
-            <category>Zero Data Point</category>
-            <description>.</description>
-            <attributeTypes>
-                <attributeType name="AutoNumber"/>
-                <attributeType name="Boolean"/>
-                <attributeType name="Currency"/>
-                <attributeType name="DateTime"/>
-                <attributeType name="Enum"/>
-                <attributeType name="Float"/>
-                <attributeType name="Integer"/>
-                <attributeType name="Long"/>
-                <attributeType name="String"/>
-            </attributeTypes>
         </property>
     </properties>
 </widget>

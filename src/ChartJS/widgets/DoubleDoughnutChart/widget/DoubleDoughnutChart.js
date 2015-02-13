@@ -32,12 +32,29 @@
             templateString: _chartJSDDTemplate,
 
             _createCtx : function () {
-                var position = domGeom.position(this.domNode.parentElement, false);
-                domAttr.set(this.canvasNode, 'id', 'canvasid_' + this.id);
-                this.canvasNode.width = (this.usePixels) ? this.width : position.w;
-                this.canvasNode.height = (this.usePixels) ? this.height : position.h;
-                this.canvasNodeDD.width = (this.usePixels) ? this.width : position.w;
-                this.canvasNodeDD.height = (this.usePixels) ? this.height : position.h;
+				
+				var position = domGeom.position(this.domNode.parentElement, false);
+				domAttr.set(this.canvasNode, 'id', 'canvasid_' + this.id);
+
+				if(position.w>0 && this.responsive) {
+					this.canvasNode.width =  position.w;
+					this.canvasNodeDD.width = position.w;
+				}
+				else {
+					this.canvasNode.width = this.width;
+					this.canvasNodeDD.width = this.width;
+				}
+
+				if(position.h > 0 && this.responsive)
+				{
+					this.canvasNode.height = position.h;
+					this.canvasNodeDD.height = position.h;
+				}
+				else {
+					this.canvasNode.height = this.height; 
+					this.canvasNodeDD.height = this.height;
+				}
+
                 this._ctx1 = this.canvasNode.getContext("2d");
                 this._ctx2 = this.canvasNodeDD.getContext("2d");
             },
@@ -55,51 +72,61 @@
                     label = "",
                     j = null,
                     i = null,
-                    _set = null,
-                    point = {};
+					k = null,
+					_set = null,
+					point = {},
+					maxpoints= 0;
 
                 this._chartData.datasets = [];
                 this._chartData.labels = [];
                 sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
+				for (j = 0; j < sets.length; j++) {
+					set = sets[j];
+					if(set.points.length > maxpoints) {
+						maxpoints = set.points.length;
+					}
+				}
+				
                 for (j = 0; j < sets.length; j++) {
                     set = sets[j];
-                    if (set.nopoints === true) {
-                        // No points found!
-                        console.log(this.id + ' - empty dataset');
-                    } else {
-                        point = {};
-                        points = [];
-                        set.points = this._sortArrayMx(set.points, this.sortingxvalue);
-                        for (i = 0; i < set.points.length; i++) {
-                            color = set.points[i].get(this.seriescolor);
-                            if (this.seriesColorNoReformat) {
-                                highlightcolor = set.dataset.get(this.serieshighlightcolor);
-                            }
-                            label = set.points[i].get(this.seriesylabel);
-                            point = {
-                                label : label,
-                                color: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
-                                highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.75") : highlightcolor,
-                                value : +(set.points[i].get(this.seriesyvalue))
-                            };
-                            points.push(point);
-                        }
+					
+					point = {};
+					points = [];
+					if (set.points.length === 0) {
+						for(k=0; k < maxpoints; k++) {
+							points.push(0);
+						}
+						console.log(this.id + ' - empty dataset');
+					} 
+					set.points = this._sortArrayMx(set.points, this.sortingxvalue);
+					for (i = 0; i < set.points.length; i++) {
+						color = set.points[i].get(this.seriescolor);
+						highlightcolor = set.dataset.get(this.serieshighlightcolor);
 
-                        if (!ylabelsSet) {
-                            ylabelsSet = true;
-                        }
+						label = set.points[i].get(this.seriesylabel);
+						point = {
+							label : label,
+							color: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
+							highlight: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
+							value : +(set.points[i].get(this.seriesyvalue))
+						};
+						points.push(point);
+					}
 
-                        _set = {
-                            data : points
-                        };
-                        this._chartData.datasets.push(_set);
-                        this._activeDatasets.push({
-                            dataset : _set,
-                            idx : j,
-                            active : true
-                        });
-                    }
+					if (!ylabelsSet) {
+						ylabelsSet = true;
+					}
+
+					_set = {
+						data : points
+					};
+					this._chartData.datasets.push(_set);
+					this._activeDatasets.push({
+						dataset : _set,
+						idx : j,
+						active : true
+					});
                 }
                 this._chartData.labels = ylabels;
 
@@ -164,25 +191,6 @@
                             this._datasetCounter = datasets.length;
                             this._data.datasets = [];
 
-                            createZeroValueEntity = function (obj) {
-                                obj.set(this.zeroValueAttr, 1);
-                                obj.set(this.zeroColorAttr, this.zeroColorValueAttr);
-                                set = {
-                                    dataset : dataset,
-                                    sorting : +(dataset.get(this.datasetsorting)),
-                                    point : obj,
-                                    points : [obj]
-                                };
-                                this._data.datasets.push(set);
-                                this._datasetCounter--;
-                                if (this._datasetCounter === 0) {
-                                    this._processData();
-                                }
-                            };
-                            errorZeroValueEntity = function (e) {
-                                console.log("an error occured: " + e);
-                            };
-
                             for (j = 0; j < datasets.length; j++) {
                                 dataset = datasets[j];
                                 pointguids = dataset.get(this._datapoint);
@@ -197,11 +205,7 @@
                                     });
                                 } else {
                                     // No points found
-                                    mx.data.create({
-                                        entity: this.zeroValueEntity,
-                                        callback: lang.hitch(this, createZeroValueEntity),
-                                        error: errorZeroValueEntity
-                                    });
+									this.datasetAdd(dataset,[]);
                                 }
                             }
 
@@ -277,7 +281,7 @@
                     showTooltips : this.showTooltips,
 
                     // Custom tooltip?
-                    customTooltips : lang.hitch(this, this.customTooltip)
+                    customTooltips : false // lang.hitch(this, this.customTooltip)
 
                 });
 
@@ -334,7 +338,7 @@
                     showTooltips : this.showTooltips,
 
                     // Custom tooltip?
-                    customTooltips : lang.hitch(this, this.customTooltip)
+                    customTooltips : false //lang.hitch(this, this.customTooltip)
 
                 });
 

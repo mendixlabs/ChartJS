@@ -29,53 +29,64 @@
                     label = "",
                     j = null,
                     i = null,
-                    _set = null;
+					k = null,
+                    _set = null,
+					maxpoints= 0;
 
                 sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
-
+				
+				for (j = 0; j < sets.length; j++) {
+					set = sets[j];
+					if(set.points.length > maxpoints) {
+						maxpoints = set.points.length;
+					}
+				}
+				
                 for (j = 0; j < sets.length; j++) {
                     set = sets[j];
 
-                    if (set.nopoints === true) {
-                        // No points found!
+					points = [];
+                    if (set.points.length === 0) {
+                        for(k=0; k < maxpoints; k++) {
+							points.push(0);
+						}
                         console.log(this.id + ' - empty dataset');
-                    } else {
+                    } 
 
-                        points = [];
-                        set.points = this._sortArrayMx(set.points, this.sortingxvalue);
-                        color = set.dataset.get(this.seriescolor);
-                        highlightcolor = set.dataset.get(this.serieshighlightcolor);
+					set.points = this._sortArrayMx(set.points, this.sortingxvalue);
+					color = set.dataset.get(this.seriescolor);
+					highlightcolor = set.dataset.get(this.serieshighlightcolor);
 
-                        label = set.dataset.get(this.datasetlabel);
+					label = set.dataset.get(this.datasetlabel);
 
-                        for (i = 0; i < set.points.length; i++) {
-                            if (!xlabelsSet) {
-                                xlabels.push(((this.scaleShowLabelsBottom === true) ? set.points[i].get(this.seriesxlabel) : ''));
-                            }
+					for (i = 0; i < set.points.length; i++) {
+						if (!xlabelsSet) {
+							xlabels.push(((this.scaleShowLabelsBottom === true) ? set.points[i].get(this.seriesxlabel) : ''));
+						}
 
-                            points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
-                        }
+						points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
+					}
 
-                        if (!xlabelsSet) {
-                            xlabelsSet = true;
-                        }
+					if (!xlabelsSet) {
+						xlabelsSet = true;
+					}
 
-                        _set = {
-                            label : label,
-                            fillColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
-							strokeColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
-							pointColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
-							highlightFill: (this.seriesColorReduceOpacity) ? this._hexToRgb(highlightcolor, "0.75") : highlightcolor,
-							highlightStroke: (this.seriesColorReduceOpacity) ? this._hexToRgb(highlightcolor, "1") : highlightcolor,
-                            data : points
-                        };
-                        this._chartData.datasets.push(_set);
-                        this._activeDatasets.push({
-                            dataset : _set,
-                            idx : j,
-                            active : true
-                        });
-                    }
+					_set = {
+						label : label,
+						fillColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
+						strokeColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
+						pointColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
+						highlightFill: (this.seriesColorReduceOpacity) ? this._hexToRgb(highlightcolor, "0.75") : highlightcolor,
+						highlightStroke: (this.seriesColorReduceOpacity) ? this._hexToRgb(highlightcolor, "1") : highlightcolor,
+						data : points
+					};
+					this._chartData.datasets.push(_set);
+					this._activeDatasets.push({
+						dataset : _set,
+						idx : j,
+						active : true
+					});
+
                 }
                 this._chartData.labels = xlabels;
 
@@ -137,15 +148,12 @@
                     showTooltips : this.showTooltips,
 
                     // Custom tooltip?
-                    customTooltips : lang.hitch(this, this.customTooltip)
+                    customTooltips : false
 
                 });
 
                 this.connect(window, 'resize', lang.hitch(this, function () {
-					//Only resize when chart is set to resonsive
-					if(this._chart && this.responsive){
-                    	this._chart.resize();
-					}
+					this._resize();
                 }));
 
                 // Add class to determain chart type

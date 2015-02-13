@@ -156,38 +156,16 @@ define([
                 mx.data.get({
                     guids : obj.get(this._dataset),
                     callback : lang.hitch(this, function (datasets) {
-                        var set = {},
-                            pointObj = null,
-                            createZeroValueEntity = null,
-                            errorZeroValueEntity = null;
+                        var set = {};
 
                         console.log(this.id + ' - length datasets: ' + datasets.length);
                         this._datasetCounter = datasets.length;
                         this._data.datasets = [];
 
-                        createZeroValueEntity = function(obj) {
-                            obj.set(this.zeroValueAttr, 0);
-                            obj.set(this.zeroColorAttr, this.zeroColorValueAttr);
-                            set = {
-                                dataset : dataset,
-                                sorting : +(dataset.get(this.datasetsorting)),
-                                point : obj,
-                                points : [obj]
-                            };
-                            this._data.datasets.push(set);
-                            this._datasetCounter--;
-                            if (this._datasetCounter === 0){
-                                this._processData();
-                            }
-                        };  
-                        errorZeroValueEntity = function (e) {
-                            console.log("an error occured: " + e);
-                        };
-
                         for(j = 0;j < datasets.length; j++) {
                             dataset = datasets[j];
                             pointguids = dataset.get(this._datapoint);
-                            console.log(this.id + ' - length datasets: ' + pointguids);
+                            console.log(this.id + ' - length datapoints: ' + pointguids);
                             if (typeof pointguids === "string" && pointguids !== '') {
                                 pointguids = [pointguids];
                             }
@@ -197,12 +175,7 @@ define([
                                     callback : lang.hitch(this, this.datasetAdd, dataset)
                                 });
                             } else {
-                                // No points found
-                                mx.data.create({
-                                    entity: this.zeroValueEntity,
-                                    callback: lang.hitch(this, createZeroValueEntity), 
-                                    error: errorZeroValueEntity
-                                });
+								this.datasetAdd(dataset,[]);
                             }
                         }
 
@@ -288,7 +261,7 @@ define([
 				this.canvasNode.height = position.h;
 			}
 			else {
-				this.canvasNode.width = this.width; 
+				this.canvasNode.height = this.height; 
 			}
             
 			this._ctx = this.canvasNode.getContext("2d");
@@ -408,6 +381,13 @@ define([
 
             domStyle.set(this._numberNode, 'left', posX + 'px');
             domStyle.set(this._numberNode, 'top', posY + 'px');
+			
+			var position = domGeom.position(this.domNode.parentElement, false);
+
+			//Only resize when chart is set to responsive and width and height of parent element > 0
+			if(this._chart && this.responsive && position.w > 0 && position.h > 0 ){
+				this._chart.resize();
+			}
         },
 
         _hexToRgb : function (hex, alpha) {

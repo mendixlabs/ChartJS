@@ -35,14 +35,13 @@
 
                     points = [];
                     color = set.dataset.get(this.seriescolor);
-                    if (this.seriesColorNoReformat) {
-                        highlightcolor = set.dataset.get(this.serieshighlightcolor);
-                    }
+                    highlightcolor = set.dataset.get(this.serieshighlightcolor);
+
                     label = set.dataset.get(this.datasetlabel);
                     point = {
                         label : label,
-                        color: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
-                        highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.75") : highlightcolor,
+						color: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
+						highlight: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
                         value : +(set.dataset.get(this.seriesylabel))
                     };
 
@@ -129,10 +128,14 @@
                     maintainAspectRatio : this.maintainAspectRatio,
 
                     // Custom tooltip?
-                    customTooltips : lang.hitch(this, this.customTooltip)
+                    customTooltips : false //lang.hitch(this, this.customTooltip)
 
                 });
 
+				this.connect(window, 'resize', lang.hitch(this, function () {
+					this._resize();
+				}));
+				
                 // Set the con
                 html.set(this._numberNode, this._data.object.get(this.numberInside));
 

@@ -40,8 +40,8 @@
 					label = set.dataset.get(this.datasetlabel);
 					point = {
 						label : label,
-                        color: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.5") : color,
-                        highlight: (this.seriesColorNoReformat === false) ? this._hexToRgb(color, "0.75") : highlightcolor,
+						color: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
+						highlight: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
 						value : +(set.dataset.get(this.seriesylabel))
 					};
 
@@ -140,10 +140,14 @@
                     showTooltips : this.showTooltips,
                     
                     // Custom tooltip?
-                    customTooltips : lang.hitch(this, this.customTooltip)
+                    customTooltips : false //lang.hitch(this, this.customTooltip)
 
                 });
-                
+				
+				this.connect(window, 'resize', lang.hitch(this, function () {
+					this._resize();
+				}));
+				
                 // Add class to determain chart type
                 this._addChartClass('chartjs-polar-chart');
                 

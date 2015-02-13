@@ -7,61 +7,57 @@
 
         <properties>
             <!-- Appearance -->
-            <property key="width" type="integer" required="true" defaultValue="850">
-                <caption>Width</caption>
-                <category>Appearance</category>
-                <description></description>
-            </property>
-            <property key="height" type="integer" required="true" defaultValue="450">
-                <caption>Height</caption>
-                <category>Appearance</category>
-                <description></description>
-            </property>
-            <property key="usePixels" type="boolean" required="true" defaultValue="false">
-                <caption>Use width and height.</caption>
-                <category>Appearance</category>
-                <description>Use width and height as hardcoded pixels.</description>
-            </property>
-            <!-- Data Source -->
-            <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
-                <caption>Chart Entity</caption>
-                <category>Data Source</category>
-                <description></description>
-            </property>
-            <property key="datasourcemf" type="microflow" required="false">
-                <caption>Microflow</caption>
-                <category>Data Source</category>
-                <description></description>
-                <returnType type="Object" entityProperty="sourceentity"></returnType>
-            </property>
-            <property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
-                <caption>Attribute to trigger</caption>
-                <category>Data Set</category>
-                <description>Attribute to trigger the microflow.</description>
-                <attributeTypes>
-                    <attributeType name="Enum"/>
-                    <attributeType name="String"/>
-                </attributeTypes>
-            </property>
+			<property key="width" type="integer" required="true" defaultValue="500">
+				<caption>Width</caption>
+				<category>Appearance</category>
+				<description>Initial width of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
+			</property>
+			<property key="height" type="integer" required="true" defaultValue="250">
+				<caption>Height</caption>
+				<category>Appearance</category>
+				<description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
+			</property>
+			<!-- Data Source -->
+			<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
+				<caption>Chart Entity</caption>
+				<category>Data Source</category>
+				<description>Container entity, referencing DataSet entity objects.</description>
+			</property>
+			<property key="datasourcemf" type="microflow" required="false">
+				<caption>Microflow</caption>
+				<category>Data Source</category>
+				<description>Microflow returning a 'Chart Entity' object.</description>
+				<returnType type="Object" entityProperty="sourceentity"></returnType>
+			</property>
+			<!--Placeholder-->
+			<!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
+			<caption>Attribute to trigger</caption>
+			<category>Data Set</category>
+			<description>Attribute to trigger the microflow.</description>
+			<attributeTypes>
+				<attributeType name="Enum"/>
+				<attributeType name="String"/>
+			</attributeTypes>
+			</property>-->
             <!-- Data Set -->
             <property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
                 <caption>Data Set Entity</caption>
                 <category>Data Set</category>
-                <description></description>
-            </property>
-            <property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-                <caption>Data Set label</caption>
-                <category>Data Set</category>
-                <description></description>
-                <attributeTypes>
-                    <attributeType name="Enum"/>
-                    <attributeType name="String"/>
-                </attributeTypes>
-            </property>
+				<description>Entity, referencing Datapoint entity objects.</description>
+			</property>
+			<property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+				<caption>Data Set label</caption>
+				<category>Data Set</category>
+				<description>Label, displayed in legend</description>
+				<attributeTypes>
+					<attributeType name="Enum"/>
+					<attributeType name="String"/>
+				</attributeTypes>
+			</property>
             <property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
                 <caption>Sorting</caption>
                 <category>Data Set</category>
-                <description></description>
+				<description>Attribute used for sorting dataset objects</description>
                 <attributeTypes>
                     <attributeType name="AutoNumber"/>
                     <attributeType name="Currency"/>
@@ -74,7 +70,7 @@
             <property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
                 <caption>Color (in Hex)</caption>
                 <category>Data Set</category>
-                <description>Set the colour of the bar or line.</description>
+                <description>Set the color of the polar area.</description>
                 <attributeTypes>
                     <attributeType name="AutoNumber"/>
                     <attributeType name="Boolean"/>
@@ -90,28 +86,21 @@
             <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
                 <caption>Hightlight Color (in Hex)</caption>
                 <category>Data Set</category>
-                <description>Set the colour of the bar or line.</description>
+                <description>Set the highlight color of the polar area.</description>
                 <attributeTypes>
-                    <attributeType name="AutoNumber"/>
-                    <attributeType name="Boolean"/>
-                    <attributeType name="Currency"/>
-                    <attributeType name="DateTime"/>
-                    <attributeType name="Enum"/>
-                    <attributeType name="Float"/>
-                    <attributeType name="Integer"/>
-                    <attributeType name="Long"/>
-                    <attributeType name="String"/>
+					<attributeType name="Enum"/>
+					<attributeType name="String"/>
                 </attributeTypes>
             </property>
-            <property key="seriesColorNoReformat" type="boolean" required="true" defaultValue="false">
-                <caption>Color as it is.</caption>
-                <category>Data Set</category>
-                <description>Do not reformat color attribute content.</description>
-            </property>
+			<property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
+				<caption>Reduce opacity</caption>
+				<category>Data Set</category>
+				<description>Reduces the opacity: fill color(0.5) and highlight color(0.75)</description>
+			</property>
             <property key="seriesylabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
                 <caption>Value</caption>
                 <category>Data Set</category>
-                <description></description>
+                <description>Polar value</description>
                 <attributeTypes>
                     <attributeType name="AutoNumber"/>
                     <attributeType name="Boolean"/>
@@ -135,7 +124,7 @@
             <property key="responsive" type="boolean" required="true" defaultValue="true">
                 <caption>Responsive</caption>
                 <category>Settings</category>
-                <description>Whether the chart is responsive.</description>
+				<description>Chart canvas dimensions respond to changes in layout</description>
             </property>
             <property key="segmentShowStroke" type="boolean" required="true" defaultValue="true">
                 <caption>Segment Show Stroke</caption>
@@ -180,18 +169,18 @@
             <property key="legendTemplate" type="string" required="true" multiline="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;segments.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=segments[i].fillColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(segments[i].label){%&gt;&lt;%=segments[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;">
                 <caption>Legend Template</caption>
                 <category>Settings</category>
-                <description>A legend template</description>
+				<description>Displays a legend when set to yes</description>
             </property>
             <property key="showTooltips" type="boolean" required="true" defaultValue="false">
                 <caption>Show tooltip</caption>
                 <category>Settings</category>
-                <description>Show the tooltip.</description>
+				<description>HTML template used for rendering legend</description>
             </property>
-            <property key="tooltipForm" type="form" required="false">
+            <!--<property key="tooltipForm" type="form" required="false">
                 <caption>Tooltip form</caption>
                 <category>Settings</category>
                 <description>.</description>
-            </property>
+            </property>-->
             <!-- Settings Polar Chart -->
             <property key="polarScaleShowLabelBackdrop" type="boolean" required="true" defaultValue="true">
                 <caption>Polar Scale Show Label Backdrop</caption>
@@ -223,48 +212,5 @@
                 <category>Settings Polar Chart</category>
                 <description>Show line for each value in the scale.</description>
             </property>
-            <!-- Zero Data Point -->
-            <property key="zeroValueEntity" type="entity" required="true" allowNonPersistableEntities="true">
-                <caption>Zero Data Point Entity</caption>
-                <category>Zero Data Point</category>
-                <description>.</description>
-            </property>
-            <property key="zeroValueAttr" type="attribute" entityProperty="zeroValueEntity" allowNonPersistableEntities="true" required="true">
-                <caption>Zero value attribute</caption>
-                <category>Zero Data Point</category>
-                <description>.</description>
-                <attributeTypes>
-                    <attributeType name="AutoNumber"/>
-                    <attributeType name="Boolean"/>
-                    <attributeType name="Currency"/>
-                    <attributeType name="DateTime"/>
-                    <attributeType name="Enum"/>
-                    <attributeType name="Float"/>
-                    <attributeType name="Integer"/>
-                    <attributeType name="Long"/>
-                    <attributeType name="String"/>
-                </attributeTypes>
-            </property>
-            <property key="zeroColorAttr" type="attribute" entityProperty="zeroValueEntity" allowNonPersistableEntities="true" required="true">
-                <caption>Zero Color attr</caption>
-                <category>Zero Data Point</category>
-                <description>Set the colour of the doughnut piece.</description>
-                <attributeTypes>
-                    <attributeType name="AutoNumber"/>
-                    <attributeType name="Boolean"/>
-                    <attributeType name="Currency"/>
-                    <attributeType name="DateTime"/>
-                    <attributeType name="Enum"/>
-                    <attributeType name="Float"/>
-                    <attributeType name="Integer"/>
-                    <attributeType name="Long"/>
-                    <attributeType name="String"/>
-                </attributeTypes>
-            </property>
-            <property key="zeroColorValueAttr" type="string" defaultValue="rgba(255,0,0,0.1)" required="true">
-                <caption>Zero Color</caption>
-                <category>Zero Data Point</category>
-                <description>Set the colour of the doughnut piece.</description>
-            </property>
         </properties>
-        </widget>
+</widget>
