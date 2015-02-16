@@ -9,7 +9,8 @@
             <widgetFile path="ChartJS/widgets/PieChart/PieChart.xml"/>
             <widgetFile path="ChartJS/widgets/PolarChart/PolarChart.xml"/>
             <widgetFile path="ChartJS/widgets/DoughnutChart/DoughnutChart.xml"/>
-            <widgetFile path="ChartJS/widgets/DoubleDoughnutChart/DoubleDoughnutChart.xml"/>
+			<!-- Not stable enough to include -->
+            <!--<widgetFile path="ChartJS/widgets/DoubleDoughnutChart/DoubleDoughnutChart.xml"/>-->
         </widgetFiles>
         <files>
             <file path="ChartJS/widgets/BarChart/widget/"/>
@@ -19,7 +20,7 @@
             <file path="ChartJS/widgets/PieChart/widget/"/>
             <file path="ChartJS/widgets/PolarChart/widget/"/>
             <file path="ChartJS/widgets/DoughnutChart/widget/"/>
-            <file path="ChartJS/widgets/DoubleDoughnutChart/widget/"/>
+            <!--<file path="ChartJS/widgets/DoubleDoughnutChart/widget/"/>-->
         </files>
     </clientModule>
 </package>

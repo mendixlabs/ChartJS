@@ -370,17 +370,6 @@ define([
         },
 
         _resize : function () {
-            var includeScroll = false,
-                numberNodePosition = domGeom.position(this._numberNode, includeScroll),
-                chartPosition = domGeom.position(this.canvasNode, includeScroll),
-                posX = ((chartPosition.w / 2) - (numberNodePosition.w / 2)),
-                posY = ((chartPosition.h / 2) - (numberNodePosition.h / 2));
-
-            console.log('width: ' + (chartPosition.w) + '/' + (chartPosition.w / 2) + ' - ' + (numberNodePosition.w) + '/' + (numberNodePosition.w / 2));
-            console.log('height: ' + (chartPosition.h) + '/' + (chartPosition.h / 2) + ' - ' + (numberNodePosition.h) + '/' + (numberNodePosition.h / 2));
-
-            domStyle.set(this._numberNode, 'left', posX + 'px');
-            domStyle.set(this._numberNode, 'top', posY + 'px');
 			
 			var position = domGeom.position(this.domNode.parentElement, false);
 
