@@ -1,12 +1,20 @@
 # Mendix ChartJS widget
 
-This widget is a wrapper for the [ChartJS library](http://www.chartjs.org/).
+This widget is a wrapper for the [ChartJS library](http://www.chartjs.org/) and you can use it to visualize your aggregated data.
+
+##### Available charts
+| Multi Series | Single Serie|
+|-----|-----|
+| Bar | Pie |
+|Stacked Bar | Doughnut |
+| Line | Polar |
+| Radar | |
 
 ## Configuration
 
 The data for this widget is retrieved through a datasource microflow. The assumption here is that all aggregation of data is done in the microflow and non-persistent objects are sent back to the widget.
 
-We suggest using the following domain model, but you can create your own as long as it matches the widget's datasource requirements.
+We suggest using the following domain model, but you can create your own implementation as long as it matches the widget's datasource requirements.
 
 ![Datamodel suggested for use with the widget](https://github.com/mendix/ChartJS/blob/master/assets/datamodel.png)
 
