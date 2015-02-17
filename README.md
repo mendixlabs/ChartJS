@@ -30,7 +30,7 @@ We suggest using one the following domain models, depending on which chart(s) yo
 ![Single Serie Datamodel suggested for use with the widget](https://github.com/mendix/ChartJS/blob/master/assets/singleserie_datamodel.png)
 
 
-![Multi Series Datamodel suggested for use with the widget](https://github.com/mendix/ChartJS/blob/master/assets/singleserie_datamodel.png)
+![Multi Series Datamodel suggested for use with the widget](https://github.com/mendix/ChartJS/blob/master/assets/multiseries_datamodel.png)
 
 Considering a line chart, one dataset object represents one line. A line is drawn up out of of several datapoint objects.
 
