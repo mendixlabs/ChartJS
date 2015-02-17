@@ -68,9 +68,9 @@
                 </attributeTypes>
             </property>
             <property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-                <caption>Color (in Hex)</caption>
+                <caption>Fill color (in Hex)</caption>
                 <category>Data Set</category>
-                <description>Set the color of the polar area.</description>
+                <description>Sets the color of the polar area.</description>
                 <attributeTypes>
                     <attributeType name="AutoNumber"/>
                     <attributeType name="Boolean"/>
@@ -84,9 +84,9 @@
                 </attributeTypes>
             </property>
             <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
-                <caption>Hightlight Color (in Hex)</caption>
+                <caption>Highlight color (in Hex)</caption>
                 <category>Data Set</category>
-                <description>Set the highlight color of the polar area.</description>
+                <description>Sets the highlight color of the polar area.</description>
                 <attributeTypes>
 					<attributeType name="Enum"/>
 					<attributeType name="String"/>
@@ -95,7 +95,7 @@
 			<property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
 				<caption>Reduce opacity</caption>
 				<category>Data Set</category>
-				<description>Reduces the opacity: fill color(0.5) and highlight color(0.75)</description>
+				<description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
 			</property>
             <property key="seriesylabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
                 <caption>Value</caption>

@@ -128,7 +128,7 @@
 				</attributeTypes>
 			</property>
             <property key="seriescolor" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-                <caption>Color (in Hex)</caption>
+                <caption>Fill Color (in Hex)</caption>
                 <category>Data Point</category>
                 <description>Set the color of the doughnut piece.</description>
                 <attributeTypes>
@@ -162,7 +162,7 @@
 			<property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
 				<caption>Reduce opacity</caption>
 				<category>Data Set</category>
-				<description>Reduces the opacity: fill color(0.5) and highlight color(0.75)</description>
+				<description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
 			</property>
             <!-- Behaviour -->
 			<property key="onclickmf" type="microflow" required="false">

@@ -102,7 +102,7 @@
 					set.points = this._sortArrayMx(set.points, this.sortingxvalue);
 					for (i = 0; i < set.points.length; i++) {
 						color = set.points[i].get(this.seriescolor);
-						highlightcolor = set.dataset.get(this.serieshighlightcolor);
+						highlightcolor = this.serieshighlightcolor ? set.dataset.get(this.serieshighlightcolor) : color;
 
 						label = set.points[i].get(this.seriesylabel);
 						point = {

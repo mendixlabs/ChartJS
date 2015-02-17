@@ -35,7 +35,7 @@
 
                     points = [];
                     color = set.dataset.get(this.seriescolor);
-                    highlightcolor = set.dataset.get(this.serieshighlightcolor);
+					highlightcolor = this.serieshighlightcolor ? set.dataset.get(this.serieshighlightcolor) : color;
 
                     label = set.dataset.get(this.datasetlabel);
                     point = {

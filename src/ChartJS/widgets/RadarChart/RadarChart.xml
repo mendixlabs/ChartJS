@@ -67,18 +67,18 @@
             </attributeTypes>
         </property>
         <property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-            <caption>Color (in Hex)</caption>
+            <caption>Fill color (in Hex)</caption>
             <category>Data Set</category>
-            <description>Set the color of the radar.</description>
+            <description>Sets the color of the radar.</description>
             <attributeTypes>
                 <attributeType name="Enum"/>
                 <attributeType name="String"/>
             </attributeTypes>
         </property>
         <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
-            <caption>Hightlight Color (in Hex)</caption>
+            <caption>Highlight color (in Hex)</caption>
             <category>Data Set</category>
-            <description>Set the colour of the bar or line.</description>
+            <description>Sets the colour of the bar or line.</description>
             <attributeTypes>
                 <attributeType name="Enum"/>
                 <attributeType name="String"/>
@@ -87,7 +87,7 @@
 		<property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
 			<caption>Reduce opacity</caption>
 			<category>Data Set</category>
-			<description>Reduces the opacity: fill color(0.5) and highlight color(0.75)</description>
+			<description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
 		</property>
         <!-- Data Point -->
         <property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
