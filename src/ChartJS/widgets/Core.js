@@ -68,7 +68,7 @@ define([
             this._chartJS.defaults.global.responsive = this.responsive;
 
             // Hack to fix the tooltip event, also added "mouseover"
-            this._chartJS.defaults.global.tooltipEvents = ['mousemove', 'touchstart', 'touchmove', 'mouseout'];
+            this._chartJS.defaults.global.tooltipEvents = ['mouseover','mouseup','mousedown','mousemove', 'touchstart', 'touchmove', 'mouseout'];
             this._chartJS.defaults.global.tooltipXOffset = 0;
 
             // Set object , dataset and datapoint.
