@@ -353,6 +353,9 @@ define([
             return values.sort(lang.hitch(this, function (a,b) {
                 var aa = +(a.get(sortAttr)),
                     bb = +(b.get(sortAttr));
+                    //if the attribute is numeric
+                    aa = a.isNumber(sortAttr) ? parseFloat(aa) : aa;
+                    bb = b.isNumber(sortAttr) ? parseFloat(bb) : bb;
                 if (aa > bb) {
                     return 1;
                 }
