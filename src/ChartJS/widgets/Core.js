@@ -140,7 +140,6 @@ define([
                 datasets : []
             };
 
-            console.log(this.id + ' - LOAD DATA');
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
                 var obj = objs[0], // Chart object is always only one.
                     j = null,
@@ -150,22 +149,18 @@ define([
                 this._data.object = obj;
                 this._data.datasets = [];
 
-                console.log(this.id + ' - executed: ' + this.datasourcemf + ' - ' + obj);
-
                 // Retrieve datasets
                 mx.data.get({
                     guids : obj.get(this._dataset),
                     callback : lang.hitch(this, function (datasets) {
                         var set = {};
 
-                        console.log(this.id + ' - length datasets: ' + datasets.length);
                         this._datasetCounter = datasets.length;
                         this._data.datasets = [];
 
                         for(j = 0;j < datasets.length; j++) {
                             dataset = datasets[j];
                             pointguids = dataset.get(this._datapoint);
-                            console.log(this.id + ' - length datapoints: ' + pointguids);
                             if (typeof pointguids === "string" && pointguids !== '') {
                                 pointguids = [pointguids];
                             }
@@ -416,8 +411,6 @@ define([
             if (obj && obj.getGuid()) {
                 _params.guids = [obj.getGuid()];
             }
-
-            console.log(this.id + ' - trying to executed: ' + this.datasourcemf + ' - ' + obj);
 
             mx.data.action({
                 params : _params,
