@@ -32,7 +32,9 @@
 					k = null,
                     _set = null,
 					maxpoints= 0;
-
+				
+                this._chartData.datasets = [];
+                this._chartData.labels = [];
                 sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 				
 				for (j = 0; j < sets.length; j++) {
