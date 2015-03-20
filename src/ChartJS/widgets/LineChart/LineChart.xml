@@ -236,6 +236,22 @@
             <category>Settings</category>
 			<description>whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container</description>
         </property>
+        <!-- tooltip -->
+	<property key="showTooltips" type="boolean" required="true" defaultValue="true">
+		<caption>Show tooltips</caption>
+		<category>Tooltips</category>
+		<description>Determines whether to draw tooltips on the canvas or not.</description>
+	</property>
+	<property key="tooltipTemplate" type="string" required="true" multiline="true" defaultValue="&lt;%if (label){%&gt;&lt;%=label%&gt;: &lt;%}%&gt;&lt;%= value.toLocaleString() %&gt;"> 
+		<caption>Tooltip Template</caption>
+		<category>Tooltips</category>
+		<description>A tooltip Template. You can use an Locale as parameter in  the toLocaleString (example: 'nl-NL')</description>
+	</property>
+	<property key="multiTooltipTemplate" type="string" required="true" multiline="true" defaultValue="&lt;%= value.toLocaleString() %&gt;"> 
+		<caption>multiTooltipTemplate</caption>
+		<category>Tooltips</category>
+		<description>A multiTooltip Template. You can use an Locale as parameter in  the toLocaleString (example: 'nl-NL')</description>
+	</property>
         <!-- Line settings -->
         <property key="bezierCurve" type="boolean" required="true" defaultValue="true">
             <caption>Bezier curve</caption>
