@@ -1,162 +1,160 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
 /*global mx, mendix, require, console, define, module, logger, window */
 /*mendix */
-(function () {
-	'use strict';
+require([
 
-	// Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
-	require([
+    "dojo/_base/declare", "dojo/_base/lang", "dojo/query", "dojo/on", "ChartJS/widgets/Core"
 
-		'dojo/_base/declare', 'dojo/_base/lang', 'dojo/query', 'dojo/on', 'ChartJS/widgets/Core'
+], function (declare, lang, domQuery, on, _core) {
+    "use strict";
+    
+    // Declare widget.
+    return declare("ChartJS.widgets.PolarChart.widget.PolarChart", [ _core ], {
 
-	], function (declare, lang, domQuery, on, _core) {
+        _processData : function () {
+            var sets = [],
+                chartData = [],
+                points = null,
+                set = {
+                    points : []
+                },
+                color = "",
+                highlightcolor = "",
+                point = null,
+                label = "",
+                j = null;
 
-		// Declare widget.
-		return declare('ChartJS.widgets.PolarChart.widget.PolarChart', [ _core ], {
+            this._chartData.datasets = [];
+            this._chartData.labels = [];
+            sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
-			_processData : function () {
-				var sets = [],
-					chartData = [],
-					points = null,
-					set = {
-						points : []
-					},
-					color = "",
-					highlightcolor = "",
-					point = null,
-					label = "",
-					j = null;
+            for (j = 0; j < sets.length; j++) {
+                set = sets[j];
 
-				this._chartData.datasets = [];
-				this._chartData.labels = [];
-				sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
+                points = [];
+                color = set.dataset.get(this.seriescolor);
+                highlightcolor = this.serieshighlightcolor ? set.dataset.get(this.serieshighlightcolor) : color;
 
-				for (j = 0; j < sets.length; j++) {
-					set = sets[j];
+                label = set.dataset.get(this.datasetlabel);
+                point = {
+                    label : label,
+                    color: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
+                    highlight: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
+                    value : +(set.dataset.get(this.seriesylabel))
+                };
 
-					points = [];
-					color = set.dataset.get(this.seriescolor);
-					highlightcolor = this.serieshighlightcolor ? set.dataset.get(this.serieshighlightcolor) : color;
+                chartData.push(point);
+                this._activeDatasets.push({
+                    dataset : point,
+                    idx : j,
+                    active : true
+                });
+            }
 
-					label = set.dataset.get(this.datasetlabel);
-					point = {
-						label : label,
-						color: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
-						highlight: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
-						value : +(set.dataset.get(this.seriesylabel))
-					};
+            this._createChart(chartData);
 
-					chartData.push(point);
-					this._activeDatasets.push({
-						dataset : point,
-						idx : j,
-						active : true
-					});
-				}
+            this._createLegend(true);
+        },
 
-				this._createChart(chartData);
+        _loadData : function () {
 
-				this._createLegend(true);
-			},
+            this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
+                var obj = objs[0], // Chart object is always only one.
+                    j = null,
+                    dataset = null;
 
-			_loadData : function () {
+                this._data.object = obj;
 
-				this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
-					var obj = objs[0], // Chart object is always only one.
-						j = null,
-						dataset = null;
+                // Retrieve datasets
+                mx.data.get({
+                    guids : obj.get(this._dataset),
+                    callback : lang.hitch(this, function (datasets) {
+                        var set = null;
+                        this._data.datasets = [];
 
-					this._data.object = obj;
+                        for (j = 0; j < datasets.length; j++) {
+                            dataset = datasets[j];
 
-					// Retrieve datasets
-					mx.data.get({
-						guids : obj.get(this._dataset),
-						callback : lang.hitch(this, function (datasets) {
-							var set = null;
-							this._data.datasets = [];
+                            set = {
+                                dataset : dataset,
+                                sorting : +(dataset.get(this.datasetsorting))
+                            };
+                            this._data.datasets.push(set);
+                        }
+                        this._processData();
+                    })
+                });
+            }), this._mxObj);
 
-							for (j = 0; j < datasets.length; j++) {
-								dataset = datasets[j];
+        },
 
-								set = {
-									dataset : dataset,
-									sorting : +(dataset.get(this.datasetsorting))
-								};
-								this._data.datasets.push(set);
-							}
-							this._processData();
-						})
-					});
-				}), this._mxObj);
+        _createChart : function (data) {
 
-			},
+            this._chart = new this._chartJS(this._ctx).PolarArea(data, {
 
-			_createChart : function (data) {
+                //Boolean - Show a backdrop to the scale label
+                scaleShowLabelBackdrop : this.polarScaleShowLabelBackdrop,
 
-				this._chart = new this._chartJS(this._ctx).PolarArea(data, {
+                //String - The colour of the label backdrop
+                scaleBackdropColor : this.polarScaleBackdropColor,
 
-					//Boolean - Show a backdrop to the scale label
-					scaleShowLabelBackdrop : this.polarScaleShowLabelBackdrop,
+                // Boolean - Whether the scale should begin at zero
+                scaleBeginAtZero : this.polarScaleBeginAtZero,
 
-					//String - The colour of the label backdrop
-					scaleBackdropColor : this.polarScaleBackdropColor,
+                //Number - The backdrop padding above & below the label in pixels
+                scaleBackdropPaddingY : this.polarScaleBackdropPaddingY,
 
-					// Boolean - Whether the scale should begin at zero
-					scaleBeginAtZero : this.polarScaleBeginAtZero,
+                //Number - The backdrop padding to the side of the label in pixels
+                scaleBackdropPaddingX : this.polarScaleBackdropPaddingX,
 
-					//Number - The backdrop padding above & below the label in pixels
-					scaleBackdropPaddingY : this.polarScaleBackdropPaddingY,
+                //Boolean - Show line for each value in the scale
+                scaleShowLine : this.polarScaleShowLine,
 
-					//Number - The backdrop padding to the side of the label in pixels
-					scaleBackdropPaddingX : this.polarScaleBackdropPaddingX,
+                //Boolean - Stroke a line around each segment in the chart
+                segmentShowStroke : this.segmentShowStroke,
 
-					//Boolean - Show line for each value in the scale
-					scaleShowLine : this.polarScaleShowLine,
+                //String - The colour of the stroke on each segement.
+                segmentStrokeColor : this.segmentStrokeColor,
 
-					//Boolean - Stroke a line around each segment in the chart
-					segmentShowStroke : this.segmentShowStroke,
+                //Number - The width of the stroke value in pixels
+                segmentStrokeWidth : this.segmentStrokeWidth,
 
-					//String - The colour of the stroke on each segement.
-					segmentStrokeColor : this.segmentStrokeColor,
+                //Number - Amount of animation steps
+                animationSteps : this.animationSteps,
 
-					//Number - The width of the stroke value in pixels
-					segmentStrokeWidth : this.segmentStrokeWidth,
+                //String - Animation easing effect.
+                animationEasing : this.animationEasing,
 
-					//Number - Amount of animation steps
-					animationSteps : this.animationSteps,
+                //Boolean - Whether to animate the rotation of the chart
+                animateRotate : this.animateRotate,
 
-					//String - Animation easing effect.
-					animationEasing : this.animationEasing,
+                //Boolean - Whether to animate scaling the chart from the centre
+                animateScale : this.animateScale,
 
-					//Boolean - Whether to animate the rotation of the chart
-					animateRotate : this.animateRotate,
+                //String - A legend template
+                legendTemplate : this.legendTemplate,
 
-					//Boolean - Whether to animate scaling the chart from the centre
-					animateScale : this.animateScale,
+                // Show tooltips at all
+                showTooltips : this.showTooltips,
 
-					//String - A legend template
-					legendTemplate : this.legendTemplate,
+                // Custom tooltip?
+                customTooltips : false //lang.hitch(this, this.customTooltip)
 
-					// Show tooltips at all
-					showTooltips : this.showTooltips,
+            });
 
-					// Custom tooltip?
-					customTooltips : false //lang.hitch(this, this.customTooltip)
+            this.connect(window, "resize", lang.hitch(this, function () {
+                this._resize();
+            }));
 
-				});
+            // Add class to determain chart type
+            this._addChartClass("chartjs-polar-chart");
 
-				this.connect(window, 'resize', lang.hitch(this, function () {
-					this._resize();
-				}));
-
-				// Add class to determain chart type
-				this._addChartClass('chartjs-polar-chart');
-
-				if (this.onclickmf) {
-					on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
-				}
-			}
-		});
-	});
-
-}());
+            if (this.onclickmf) {
+                on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
+            }
+        }
+    });
+});
+require(["ChartJS/widgets/PolarChart/widget/PolarChart"], function () {
+    "use strict";
+});

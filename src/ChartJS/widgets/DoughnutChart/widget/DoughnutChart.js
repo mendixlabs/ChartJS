@@ -1,160 +1,158 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
 /*global mx, mendix, require, console, define, module, logger, window */
 /*mendix */
-(function () {
-	'use strict';
+define([
 
-	// Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
-	require([
+    "dojo/_base/declare", "dojo/_base/lang", "dojo/query", "dojo/on", "dojo/html", "ChartJS/widgets/Core"
 
-		'dojo/_base/declare', 'dojo/_base/lang', 'dojo/query', 'dojo/on', 'dojo/html', 'ChartJS/widgets/Core'
+], function (declare, lang, domQuery, on, html, _core) {
+    "use strict";
+    
+    // Declare widget.
+    return declare("ChartJS.widgets.DoughnutChart.widget.DoughnutChart", [ _core ], {
+        
+        _processData : function () {
+            var sets = [],
+                chartData = [],
+                points = null,
+                set = {
+                    points : []
+                },
+                color = "",
+                highlightcolor = "",
+                point = null,
+                label = "",
+                j = null;
 
-	], function (declare, lang, domQuery, on, html, _core) {
+            this._activeDatasets = [];
+            this._chartData.datasets = [];
+            this._chartData.labels = [];
+            sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
 
-		// Declare widget.
-		return declare('ChartJS.widgets.DoughnutChart.widget.DoughnutChart', [ _core ], {
+            for (j = 0; j < sets.length; j++) {
+                set = sets[j];
 
-			_processData : function () {
-				var sets = [],
-					chartData = [],
-					points = null,
-					set = {
-						points : []
-					},
-					color = "",
-					highlightcolor = "",
-					point = null,
-					label = "",
-					j = null;
+                points = [];
+                color = set.dataset.get(this.seriescolor);
+                highlightcolor = this.serieshighlightcolor ? set.dataset.get(this.serieshighlightcolor) : color;
 
-				this._activeDatasets = [];
-				this._chartData.datasets = [];
-				this._chartData.labels = [];
-				sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
+                label = set.dataset.get(this.datasetlabel);
+                point = {
+                    label : label,
+                    color: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
+                    highlight: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
+                    value : +(set.dataset.get(this.seriesylabel))
+                };
 
-				for (j = 0; j < sets.length; j++) {
-					set = sets[j];
+                chartData.push(point);
+                this._activeDatasets.push({
+                    dataset : point,
+                    idx : j,
+                    active : true
+                });
+            }
 
-					points = [];
-					color = set.dataset.get(this.seriescolor);
-					highlightcolor = this.serieshighlightcolor ? set.dataset.get(this.serieshighlightcolor) : color;
+            this._createChart(chartData);
 
-					label = set.dataset.get(this.datasetlabel);
-					point = {
-						label : label,
-						color: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
-						highlight: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
-						value : +(set.dataset.get(this.seriesylabel))
-					};
+            this._createLegend(true);
+        },
 
-					chartData.push(point);
-					this._activeDatasets.push({
-						dataset : point,
-						idx : j,
-						active : true
-					});
-				}
+        _loadData : function () {
 
-				this._createChart(chartData);
+            this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
+                var obj = objs[0], // Chart object is always only one.
+                    j = null,
+                    dataset = null;
 
-				this._createLegend(true);
-			},
+                this._data.object = obj;
 
-			_loadData : function () {
+                // Retrieve datasets
+                mx.data.get({
+                    guids : obj.get(this._dataset),
+                    callback : lang.hitch(this, function (datasets) {
+                        var set = null;
+                        this._data.datasets = [];
 
-				this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
-					var obj = objs[0], // Chart object is always only one.
-						j = null,
-						dataset = null;
+                        for (j = 0; j < datasets.length; j++) {
+                            dataset = datasets[j];
 
-					this._data.object = obj;
+                            set = {
+                                dataset : dataset,
+                                sorting : +(dataset.get(this.datasetsorting))
+                            };
+                            this._data.datasets.push(set);
+                        }
+                        this._processData();
+                    })
+                });
+            }), this._mxObj);
 
-					// Retrieve datasets
-					mx.data.get({
-						guids : obj.get(this._dataset),
-						callback : lang.hitch(this, function (datasets) {
-							var set = null;
-							this._data.datasets = [];
+        },
 
-							for (j = 0; j < datasets.length; j++) {
-								dataset = datasets[j];
+        _createChart : function (data) {
 
-								set = {
-									dataset : dataset,
-									sorting : +(dataset.get(this.datasetsorting))
-								};
-								this._data.datasets.push(set);
-							}
-							this._processData();
-						})
-					});
-				}), this._mxObj);
+            if (this._chart !== null) {
+                this._chart.datasets = data.datasets;
+                this._chart.update();
+            } else {
 
-			},
+                this._chart = new this._chartJS(this._ctx).Doughnut(data, {
 
-			_createChart : function (data) {
+                    //Boolean - Whether we should show a stroke on each segment
+                    segmentShowStroke : this.segmentShowStroke,
 
-				if (this._chart !== null) {
-					this._chart.datasets = data.datasets;
-					this._chart.update();
-				} else {
+                    //String - The colour of each segment stroke
+                    segmentStrokeColor : this.segmentStrokeColor,
 
-					this._chart = new this._chartJS(this._ctx).Doughnut(data, {
+                    //Number - The width of each segment stroke
+                    segmentStrokeWidth : this.segmentStrokeWidth,
 
-						//Boolean - Whether we should show a stroke on each segment
-						segmentShowStroke : this.segmentShowStroke,
+                    //Number - The percentage of the chart that we cut out of the middle
+                    percentageInnerCutout : this.percentageInnerCutout, // This is 0 for Pie charts
 
-						//String - The colour of each segment stroke
-						segmentStrokeColor : this.segmentStrokeColor,
+                    //Number - Amount of animation steps
+                    animationSteps : this.animationSteps,
 
-						//Number - The width of each segment stroke
-						segmentStrokeWidth : this.segmentStrokeWidth,
+                    //String - Animation easing effect
+                    animationEasing : this.animationEasing,
 
-						//Number - The percentage of the chart that we cut out of the middle
-						percentageInnerCutout : this.percentageInnerCutout, // This is 0 for Pie charts
+                    //Boolean - Whether we animate the rotation of the Doughnut
+                    animateRotate : this.animateRotate,
 
-						//Number - Amount of animation steps
-						animationSteps : this.animationSteps,
+                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                    animateScale : this.animateScale,
 
-						//String - Animation easing effect
-						animationEasing : this.animationEasing,
+                    //String - A legend template
+                    legendTemplate : this.legendTemplate,
 
-						//Boolean - Whether we animate the rotation of the Doughnut
-						animateRotate : this.animateRotate,
+                    // Show tooltips at all
+                    showTooltips : this.showTooltips,
 
-						//Boolean - Whether we animate scaling the Doughnut from the centre
-						animateScale : this.animateScale,
+                    // maintainAspectRatio
+                    maintainAspectRatio : this.maintainAspectRatio,
 
-						//String - A legend template
-						legendTemplate : this.legendTemplate,
+                    // Custom tooltip?
+                    customTooltips : false //lang.hitch(this, this.customTooltip)
 
-						// Show tooltips at all
-						showTooltips : this.showTooltips,
+                });
 
-						// maintainAspectRatio
-						maintainAspectRatio : this.maintainAspectRatio,
+                this.connect(window, "resize", lang.hitch(this, function () {
+                    this._resize();
+                }));
 
-						// Custom tooltip?
-						customTooltips : false //lang.hitch(this, this.customTooltip)
+                // Set the con
+                html.set(this._numberNode, this._data.object.get(this.numberInside));
 
-					});
+                // Add class to determain chart type
+                this._addChartClass("chartjs-doughnut-chart");
 
-					this.connect(window, 'resize', lang.hitch(this, function () {
-						this._resize();
-					}));
-
-					// Set the con
-					html.set(this._numberNode, this._data.object.get(this.numberInside));
-
-					// Add class to determain chart type
-					this._addChartClass('chartjs-doughnut-chart');
-
-					if (this.onclickmf) {
-						on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
-					}
-				}
-			}
-		});
-	});
-
-}());
+                if (this.onclickmf) {
+                    on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
+                }
+            }
+        }
+    });
+});
+require(["ChartJS/widgets/DoughnutChart/widget/DoughnutChart"], function () {
+    "use strict";
+});
