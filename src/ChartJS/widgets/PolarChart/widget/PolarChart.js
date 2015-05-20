@@ -1,7 +1,7 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
 /*global mx, mendix, require, console, define, module, logger, window */
 /*mendix */
-require([
+define([
 
     "dojo/_base/declare", "dojo/_base/lang", "dojo/query", "dojo/on", "ChartJS/widgets/Core"
 
