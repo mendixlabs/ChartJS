@@ -11,12 +11,13 @@ define([], function() {
                 /*!
                  * Chart.js
                  * http://chartjs.org/
-                 * Version: 1.0.1
+                 * Version: 1.0.2
                  *
                  * Copyright 2015 Nick Downie
                  * Released under the MIT license
                  * https://github.com/nnnick/Chart.js/blob/master/LICENSE.md
                  */
+
 
                 (function(){
 
@@ -34,10 +35,28 @@ define([], function() {
                         this.ctx = context;
 
                         //Variables global to the chart
+                        var computeDimension = function(element,dimension)
+                        {
+                            if (element['offset'+dimension])
+                            {
+                                return element['offset'+dimension];
+                            }
+                            else
+                            {
+                                return document.defaultView.getComputedStyle(element).getPropertyValue(dimension);
+                            }
+                        }
+
+                        var width = this.width = computeDimension(context.canvas,'Width');
+                        var height = this.height = computeDimension(context.canvas,'Height');
+
+                        // Firefox requires this to work correctly
+                        context.canvas.width  = width;
+                        context.canvas.height = height;
+
                         var width = this.width = context.canvas.width;
                         var height = this.height = context.canvas.height;
                         this.aspectRatio = this.width / this.height;
-                        
                         //High pixel density displays - multiply the size of the canvas height/width by the device pixel ratio, then scale.
                         helpers.retinaScale(this);
 
@@ -101,9 +120,6 @@ define([], function() {
 
                             // Boolean - whether or not the chart should be responsive and resize when the browser does.
                             responsive: false,
-                            
-                            // Boolean - whether to calculate the aspectratio from the height instead of the width!
-                            aspectRatioFromHeight: false,
 
                             // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
                             maintainAspectRatio: true,
@@ -838,7 +854,7 @@ define([], function() {
                         },
                         stop : function(){
                             // Stops any current animation loop occuring
-                            helpers.cancelAnimFrame.call(root, this.animationFrame);
+                            cancelAnimFrame(this.animationFrame);
                             return this;
                         },
                         resize : function(callback){
@@ -847,13 +863,6 @@ define([], function() {
                                 newWidth = getMaximumWidth(this.chart.canvas),
                                 newHeight = this.options.maintainAspectRatio ? newWidth / this.chart.aspectRatio : getMaximumHeight(this.chart.canvas);
 
-                            // MENDIX CODE ADJUSTMENT BEGIN!
-                            /*if (this.options.aspectRatioFromHeight) {
-                                newHeight = getMaximumHeight(this.chart.canvas);
-                                newWidth = this.options.maintainAspectRatio ? newHeight / this.chart.aspectRatio : getMaximumWidth(this.chart.canvas)
-                            }*/
-                            // MENDIX CODE ADJUSTMENT END!
-                            
                             canvas.width = this.chart.width = newWidth;
                             canvas.height = this.chart.height = newHeight;
 
@@ -1388,7 +1397,6 @@ define([], function() {
                             var halfHeight = this.height/2;
 
                             //Check to ensure the height will fit on the canvas
-                            //The three is to buffer form the very
                             if (this.y - halfHeight < 0 ){
                                 this.y = halfHeight;
                             } else if (this.y + halfHeight > this.chart.height){
@@ -1595,7 +1603,7 @@ define([], function() {
                             var isRotated = (this.xLabelRotation > 0),
                                 // innerWidth = (this.offsetGridLines) ? this.width - offsetLeft - this.padding : this.width - (offsetLeft + halfLabelWidth * 2) - this.padding,
                                 innerWidth = this.width - (this.xScalePaddingLeft + this.xScalePaddingRight),
-                                valueWidth = innerWidth/(this.valuesCount - ((this.offsetGridLines) ? 0 : 1)),
+                                valueWidth = innerWidth/Math.max((this.valuesCount - ((this.offsetGridLines) ? 0 : 1)), 1),
                                 valueOffset = (valueWidth * index) + this.xScalePaddingLeft;
 
                             if (this.offsetGridLines){
@@ -2436,12 +2444,12 @@ define([], function() {
                             }
                         },
                         calculateCircumference : function(value){
-                            return (Math.PI*2)*(value / this.total);
+                            return (Math.PI*2)*(Math.abs(value) / this.total);
                         },
                         calculateTotal : function(data){
                             this.total = 0;
                             helpers.each(data,function(segment){
-                                this.total += segment.value;
+                                this.total += Math.abs(segment.value);
                             },this);
                         },
                         update : function(){
@@ -3081,6 +3089,8 @@ define([], function() {
                             helpers.each(this.segments,function(segment){
                                 segment.save();
                             });
+
+                            this.reflow();
                             this.render();
                         },
                         reflow : function(){
@@ -3470,8 +3480,12 @@ define([], function() {
 
                     });
 
+
+
+
+
                 }).call(this);
-                
+
                 /*
                 StackedBar chart extension on ChartJS by Christian Stuff (Github: Regaddi).
 
@@ -3480,9 +3494,9 @@ define([], function() {
                 Published under the MIT License.
                 */
                 (function(){var k=this.Chart,c=k.helpers;k.Type.extend({name:"StackedBar",defaults:{scaleBeginAtZero:!0,scaleShowGridLines:!0,scaleGridLineColor:"rgba(0,0,0,.05)",scaleGridLineWidth:1,barShowStroke:!0,barStrokeWidth:2,barValueSpacing:5,relativeBars:!1,legendTemplate:'<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'},initialize:function(b){var d=
-                this.options;this.ScaleClass=k.Scale.extend({offsetGridLines:!0,calculateBarX:function(a){return this.calculateX(a)},calculateBarY:function(a,f,b,c){for(var e=0,g=0,h=0;h<a.length;h++)g+=a[h].bars[b].value;for(h=f;h<a.length;h++)e=h===f&&c?e+c:e+a[h].bars[b].value;d.relativeBars&&(e=e/g*100);return this.calculateY(e)},calculateBaseWidth:function(){return this.calculateX(1)-this.calculateX(0)-2*d.barValueSpacing},calculateBaseHeight:function(){return this.calculateY(1)-this.calculateY(0)},calculateBarWidth:function(a){return this.calculateBaseWidth()},
-                calculateBarHeight:function(a,f,b,c){for(var e=0,g=0;g<a.length;g++)e+=a[g].bars[b].value;c||(c=a[f].bars[b].value);d.relativeBars&&(c=c/e*100);return this.calculateY(c)}});this.datasets=[];this.options.showTooltips&&c.bindEvents(this,this.options.tooltipEvents,function(a){a="mouseout"!==a.type?this.getBarsAtEvent(a):[];this.eachBars(function(a){a.restore(["fillColor","strokeColor"])});c.each(a,function(a){a.fillColor=a.highlightFill;a.strokeColor=a.highlightStroke});this.showTooltip(a)});this.BarClass=
-                k.Rectangle.extend({strokeWidth:this.options.barStrokeWidth,showStroke:this.options.barShowStroke,ctx:this.chart.ctx});c.each(b.datasets,function(a,f){var d={label:a.label||null,fillColor:a.fillColor,strokeColor:a.strokeColor,bars:[]};this.datasets.push(d);c.each(a.data,function(f,e){c.isNumber(f)&&d.bars.push(new this.BarClass({value:f,label:b.labels[e],datasetLabel:a.label,strokeColor:a.strokeColor,fillColor:a.fillColor,highlightFill:a.highlightFill||a.fillColor,highlightStroke:a.highlightStroke||
+                    this.options;this.ScaleClass=k.Scale.extend({offsetGridLines:!0,calculateBarX:function(a){return this.calculateX(a)},calculateBarY:function(a,f,b,c){for(var e=0,g=0,h=0;h<a.length;h++)g+=a[h].bars[b].value;for(h=f;h<a.length;h++)e=h===f&&c?e+c:e+a[h].bars[b].value;d.relativeBars&&(e=e/g*100);return this.calculateY(e)},calculateBaseWidth:function(){return this.calculateX(1)-this.calculateX(0)-2*d.barValueSpacing},calculateBaseHeight:function(){return this.calculateY(1)-this.calculateY(0)},calculateBarWidth:function(a){return this.calculateBaseWidth()},
+                                                                 calculateBarHeight:function(a,f,b,c){for(var e=0,g=0;g<a.length;g++)e+=a[g].bars[b].value;c||(c=a[f].bars[b].value);d.relativeBars&&(c=c/e*100);return this.calculateY(c)}});this.datasets=[];this.options.showTooltips&&c.bindEvents(this,this.options.tooltipEvents,function(a){a="mouseout"!==a.type?this.getBarsAtEvent(a):[];this.eachBars(function(a){a.restore(["fillColor","strokeColor"])});c.each(a,function(a){a.fillColor=a.highlightFill;a.strokeColor=a.highlightStroke});this.showTooltip(a)});this.BarClass=
+                        k.Rectangle.extend({strokeWidth:this.options.barStrokeWidth,showStroke:this.options.barShowStroke,ctx:this.chart.ctx});c.each(b.datasets,function(a,f){var d={label:a.label||null,fillColor:a.fillColor,strokeColor:a.strokeColor,bars:[]};this.datasets.push(d);c.each(a.data,function(f,e){c.isNumber(f)&&d.bars.push(new this.BarClass({value:f,label:b.labels[e],datasetLabel:a.label,strokeColor:a.strokeColor,fillColor:a.fillColor,highlightFill:a.highlightFill||a.fillColor,highlightStroke:a.highlightStroke||
                 a.strokeColor}))},this)},this);this.buildScale(b.labels);this.eachBars(function(a,b,d){c.extend(a,{base:this.scale.endPoint,height:0,width:this.scale.calculateBarWidth(this.datasets.length),x:this.scale.calculateBarX(b),y:this.scale.endPoint});a.save()},this);this.render()},update:function(){this.scale.update();c.each(this.activeElements,function(b){b.restore(["fillColor","strokeColor"])});this.eachBars(function(b){b.save()});this.render()},eachBars:function(b){c.each(this.datasets,function(d,a){c.each(d.bars,
                 b,this,a)},this)},getBarsAtEvent:function(b){var d=[];b=c.getRelativePosition(b);for(var a=function(a){d.push(a.bars[f])},f,l=0;l<this.datasets.length;l++)for(f=0;f<this.datasets[l].bars.length;f++)if(this.datasets[l].bars[f].inRange(b.x,b.y))return c.each(this.datasets,a),d;return d},buildScale:function(b){var d=this,a=function(){var a=[];c.each(d.datasets,function(b){c.each(b.bars,function(b,c){a[c]||(a[c]=0);a[c]=d.options.relativeBars?100:a[c]+b.value})});return a};b={templateString:this.options.scaleLabel,
                 height:this.chart.height,width:this.chart.width,ctx:this.chart.ctx,textColor:this.options.scaleFontColor,fontSize:this.options.scaleFontSize,fontStyle:this.options.scaleFontStyle,fontFamily:this.options.scaleFontFamily,valuesCount:b.length,beginAtZero:this.options.scaleBeginAtZero,integersOnly:this.options.scaleIntegersOnly,calculateYRange:function(b){b=c.calculateScaleRange(a(),b,this.fontSize,this.beginAtZero,this.integersOnly);c.extend(this,b)},xLabels:this.options.xLabels||b,font:c.fontString(this.options.scaleFontSize,
