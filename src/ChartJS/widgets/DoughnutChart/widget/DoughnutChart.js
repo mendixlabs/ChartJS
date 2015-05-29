@@ -24,7 +24,6 @@ define([
                 label = "",
                 j = null;
 
-            this._activeDatasets = [];
             this._chartData.datasets = [];
             this._chartData.labels = [];
             sets = this._data.datasets = this._sortArrayObj(this._data.datasets);
@@ -58,6 +57,12 @@ define([
         },
 
         _loadData : function () {
+            
+            this._data = {
+                object: this._mxObj,
+                datasets: []
+            };
+
 
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
                 var obj = objs[0], // Chart object is always only one.
@@ -65,6 +70,8 @@ define([
                     dataset = null;
 
                 this._data.object = obj;
+                this._data.datasets = [];
+                this._activeDatasets = [];
 
                 // Retrieve datasets
                 mx.data.get({
@@ -92,64 +99,63 @@ define([
         _createChart : function (data) {
 
             if (this._chart !== null) {
-                this._chart.datasets = data.datasets;
-                this._chart.update();
-            } else {
-
-                this._chart = new this._chartJS(this._ctx).Doughnut(data, {
-
-                    //Boolean - Whether we should show a stroke on each segment
-                    segmentShowStroke : this.segmentShowStroke,
-
-                    //String - The colour of each segment stroke
-                    segmentStrokeColor : this.segmentStrokeColor,
-
-                    //Number - The width of each segment stroke
-                    segmentStrokeWidth : this.segmentStrokeWidth,
-
-                    //Number - The percentage of the chart that we cut out of the middle
-                    percentageInnerCutout : this.percentageInnerCutout, // This is 0 for Pie charts
-
-                    //Number - Amount of animation steps
-                    animationSteps : this.animationSteps,
-
-                    //String - Animation easing effect
-                    animationEasing : this.animationEasing,
-
-                    //Boolean - Whether we animate the rotation of the Doughnut
-                    animateRotate : this.animateRotate,
-
-                    //Boolean - Whether we animate scaling the Doughnut from the centre
-                    animateScale : this.animateScale,
-
-                    //String - A legend template
-                    legendTemplate : this.legendTemplate,
-
-                    // Show tooltips at all
-                    showTooltips : this.showTooltips,
-
-                    // maintainAspectRatio
-                    maintainAspectRatio : this.maintainAspectRatio,
-
-                    // Custom tooltip?
-                    customTooltips : false //lang.hitch(this, this.customTooltip)
-
-                });
-
-                this.connect(window, "resize", lang.hitch(this, function () {
-                    this._resize();
-                }));
-
-                // Set the con
-                html.set(this._numberNode, this._data.object.get(this.numberInside));
-
-                // Add class to determain chart type
-                this._addChartClass("chartjs-doughnut-chart");
-
-                if (this.onclickmf) {
-                    on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
-                }
+                this._chart.destroy();
             }
+
+            this._chart = new this._chartJS(this._ctx).Doughnut(data, {
+
+                //Boolean - Whether we should show a stroke on each segment
+                segmentShowStroke : this.segmentShowStroke,
+
+                //String - The colour of each segment stroke
+                segmentStrokeColor : this.segmentStrokeColor,
+
+                //Number - The width of each segment stroke
+                segmentStrokeWidth : this.segmentStrokeWidth,
+
+                //Number - The percentage of the chart that we cut out of the middle
+                percentageInnerCutout : this.percentageInnerCutout, // This is 0 for Pie charts
+
+                //Number - Amount of animation steps
+                animationSteps : this.animationSteps,
+
+                //String - Animation easing effect
+                animationEasing : this.animationEasing,
+
+                //Boolean - Whether we animate the rotation of the Doughnut
+                animateRotate : this.animateRotate,
+
+                //Boolean - Whether we animate scaling the Doughnut from the centre
+                animateScale : this.animateScale,
+
+                //String - A legend template
+                legendTemplate : this.legendTemplate,
+
+                // Show tooltips at all
+                showTooltips : this.showTooltips,
+
+                // maintainAspectRatio
+                maintainAspectRatio : this.maintainAspectRatio,
+
+                // Custom tooltip?
+                customTooltips : false //lang.hitch(this, this.customTooltip)
+
+            });
+
+            this.connect(window, "resize", lang.hitch(this, function () {
+                this._resize();
+            }));
+
+            // Set the con
+            html.set(this._numberNode, this._data.object.get(this.numberInside));
+
+            // Add class to determain chart type
+            this._addChartClass("chartjs-doughnut-chart");
+
+            if (this.onclickmf) {
+                on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
+            }
+            
         }
     });
 });
