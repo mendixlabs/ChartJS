@@ -89,6 +89,10 @@ define([
         },
 
         _createChart : function (data) {
+            
+            if (this._chart !== null) {
+                this._chart.destroy();
+            }
 
             this._chart = new this._chartJS(this._ctx).PolarArea(data, {
 
