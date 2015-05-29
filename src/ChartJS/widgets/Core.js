@@ -148,6 +148,7 @@ define([
 
                 this._data.object = obj;
                 this._data.datasets = [];
+                this._activeDatasets = [];
 
                 // Retrieve datasets
                 mx.data.get({

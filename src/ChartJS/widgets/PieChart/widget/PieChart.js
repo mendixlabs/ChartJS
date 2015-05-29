@@ -57,6 +57,12 @@ define([
         },
 
         _loadData : function () {
+            
+            this._data = {
+                object: this._mxObj,
+                datasets: []
+            };
+
 
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
                 var obj = objs[0], // Chart object is always only one.
@@ -64,6 +70,8 @@ define([
                     dataset = null;
 
                 this._data.object = obj;
+                this._data.datasets = [];
+                this._activeDatasets = [];
 
                 // Retrieve datasets
                 mx.data.get({
@@ -89,6 +97,10 @@ define([
         },
 
         _createChart : function (data) {
+            
+            if (this._chart !== null) {
+                this._chart.destroy();
+            }
 
             this._chart = new this._chartJS(this._ctx).Pie(data, {
 
