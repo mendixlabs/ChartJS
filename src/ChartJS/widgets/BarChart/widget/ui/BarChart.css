@@ -26,8 +26,8 @@
 }
 .chartjs-custom-tooltip {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -50px;
+    left: -40px;
     opacity: 0;
 }
 .chartjs-custom-tooltip .triangle {
