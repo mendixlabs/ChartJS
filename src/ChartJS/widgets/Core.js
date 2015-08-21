@@ -406,7 +406,11 @@ define([
                 actionname: mf,
                 guids: []
             };
-
+            
+			if (obj == null) {
+				obj = this._data.object;
+			}
+			
             if (obj && obj.getGuid()) {
                 _params.guids = [obj.getGuid()];
             }
