@@ -109,6 +109,7 @@
                 <attributeType name="Integer"/>
                 <attributeType name="Long"/>
                 <attributeType name="String"/>
+                <attributeType name="Decimal"/>
             </attributeTypes>
         </property>
         <property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
@@ -138,6 +139,7 @@
                 <attributeType name="Integer"/>
                 <attributeType name="Long"/>
                 <attributeType name="String"/>
+                <attributeType name="Decimal"/>
             </attributeTypes>
         </property>
         <!-- Behavior -->
