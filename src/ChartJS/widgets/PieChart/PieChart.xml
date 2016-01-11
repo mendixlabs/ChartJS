@@ -129,7 +129,7 @@
         <!-- Settings -->
         <property key="responsive" type="boolean" required="true" defaultValue="true">
             <caption>Responsive</caption>
-            <category>Settings</category>
+            <category>Appearance</category>
 			<description>Chart canvas dimensions respond to changes in layout</description>
         </property>
         <property key="segmentShowStroke" type="boolean" required="true" defaultValue="true">
@@ -167,7 +167,7 @@
             <category>Settings</category>
             <description>Whether to animate scaling the chart from the centre.</description>
         </property>
-        <property key="showLegend" type="boolean" required="true" defaultValue="true"> 
+        <property key="showLegend" type="boolean" required="true" defaultValue="true">
             <caption>Show Legend</caption>
             <category>Settings</category>
 			<description>Displays a legend when set to yes</description>

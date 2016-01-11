@@ -155,7 +155,7 @@
         <!-- Settings -->
         <property key="responsive" type="boolean" required="true" defaultValue="true">
             <caption>Responsive</caption>
-            <category>Settings</category>
+            <category>Appearance</category>
 			<description>Chart canvas dimensions respond to changes in layout</description>
         </property>
         <property key="scaleBeginAtZero" type="boolean" required="true" defaultValue="true">
@@ -203,12 +203,12 @@
             <category>Settings</category>
             <description>Whether to fill the dataset with a color.</description>
         </property>
-        <property key="showLegend" type="boolean" required="true" defaultValue="true"> 
+        <property key="showLegend" type="boolean" required="true" defaultValue="true">
             <caption>Show Legend</caption>
             <category>Settings</category>
 			<description>Displays a legend when set to yes</description>
         </property>
-        <property key="legendTemplate" type="string" required="true" multiline="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].strokeColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;"> 
+        <property key="legendTemplate" type="string" required="true" multiline="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].strokeColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;">
             <caption>Legend template</caption>
             <category>Settings</category>
 			<description>HTML template used for rendering legend</description>
@@ -281,4 +281,3 @@
         </property>
     </properties>
 </widget>
-
