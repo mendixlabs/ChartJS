@@ -7,13 +7,14 @@ define([
 
 ], function (declare, lang, domQuery, on, _core) {
     "use strict";
-    
+
     // Declare widget.
     return declare("ChartJS.widgets.RadarChart.widget.RadarChart", [ _core ], {
 
         // Overwrite functions from _core here...
 
         _processData : function () {
+            logger.debug(this.id + "._processData");
             var sets = [],
                 points = null,
                 set = {
@@ -52,7 +53,7 @@ define([
                         points.push(0);
                     }
                     console.log(this.id + " - empty dataset");
-                } 
+                }
 
                 set.points = this._sortArrayMx(set.points, this.sortingxvalue);
                 color = set.dataset.get(this.seriescolor);
@@ -68,7 +69,7 @@ define([
                     points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
                 }
 
-                if (!xlabelsSet) { 
+                if (!xlabelsSet) {
                     xlabelsSet = true;
                 }
 
@@ -96,6 +97,7 @@ define([
         },
 
         _createChart : function (data) {
+            logger.debug(this.id + "._createChart");
 
             if (this._chart !== null) {
                 this._chart.destroy();

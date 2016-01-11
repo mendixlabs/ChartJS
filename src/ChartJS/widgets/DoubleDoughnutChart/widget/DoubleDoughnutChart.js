@@ -31,7 +31,7 @@ define([
         templateString: _chartJSDDTemplate,
 
         _createCtx : function () {
-
+            logger.debug(this.id + "._createCtx");
             var position = domGeom.position(this.domNode.parentElement, false);
             domAttr.set(this.canvasNode, "id", "canvasid_" + this.id);
 
@@ -56,6 +56,7 @@ define([
         },
 
         _processData : function () {
+            logger.debug(this.id + "._processData");
             var sets = [],
                 points = null,
                 set = {
@@ -93,7 +94,7 @@ define([
                     for (k = 0; k < maxpoints; k++) {
                         points.push(0);
                     }
-                    console.log(this.id + " - empty dataset");
+                    logger.debug(this.id + " - empty dataset");
                 }
                 set.points = this._sortArrayMx(set.points, this.sortingxvalue);
                 for (i = 0; i < set.points.length; i++) {
@@ -126,9 +127,8 @@ define([
             }
             this._chartData.labels = ylabels;
 
-            console.log(" CHART DATA - " + this.id);
-            console.log(this._chartData);
-            console.log(JSON.stringify(this._chartData));
+            logger.debug(" CHART DATA - " + this.id);
+            logger.debug(this.id + " --- " + JSON.stringify(this._chartData));
 
             this._createChart(this._chartData);
 
@@ -136,6 +136,7 @@ define([
         },
 
         datasetAdd : function (dataset, datapoints) {
+            logger.debug(this.id + ".datasetAdd");
             var set = {
                 dataset : dataset,
                 sorting : +(dataset.get(this.datasetsorting))
@@ -156,14 +157,13 @@ define([
         },
 
         _loadData : function () {
-
+            logger.debug(this.id + "._loadData");
             this._datasetCounter = 0;
             this._data = {
                 object : this._mxObj,
                 datasets : []
             };
 
-            console.log(this.id + " - LOAD DATA");
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
                 var obj = objs[0], // Chart object is always only one.
                     j = null,
@@ -175,7 +175,7 @@ define([
                 this._data.object = obj;
                 this._data.datasets = [];
 
-                console.log(this.id + " - executed: " + this.datasourcemf + " - " + obj);
+                logger.debug(this.id + " - executed: " + this.datasourcemf + " - " + obj);
 
                 // Retrieve datasets
                 mx.data.get({
@@ -183,14 +183,14 @@ define([
                     callback : lang.hitch(this, function (datasets) {
                         var set = {};
 
-                        console.log(this.id + " - length datasets: " + datasets.length);
+                        logger.debug(this.id + " - length datasets: " + datasets.length);
                         this._datasetCounter = datasets.length;
                         this._data.datasets = [];
 
                         for (j = 0; j < datasets.length; j++) {
                             dataset = datasets[j];
                             pointguids = dataset.get(this._datapoint);
-                            console.log(this.id + " - length datasets: " + pointguids);
+                            logger.debug(this.id + " - length datasets: " + pointguids);
                             if (typeof pointguids === "string" && pointguids !== "") {
                                 pointguids = [pointguids];
                             }
@@ -212,6 +212,7 @@ define([
         },
 
         _resizeDoubleChart : function () {
+            logger.debug(this.id + "._resizeDoubleChart");
             this._chart.resize(lang.hitch(this, function () {
 
                 var pos = domGeom.position(this.canvasNode),
@@ -230,6 +231,7 @@ define([
         },
 
         _createChart : function (data) {
+            logger.debug(this.id + "._createChart");
 
             domStyle.set(this.domNode, "position", "relative");
 
@@ -293,7 +295,7 @@ define([
             domStyle.set(this.canvasContainerDD, "left", l + "px");
             domStyle.set(this.canvasContainerDD, "top", t + "px");
 
-            console.log(w + " - " + h);
+            logger.debug(this.id + " --- " + w + " - " + h);
 
             this._chartDD = new this._chartJS(this._ctx2).Doughnut(data.datasets[1].data, {
 

@@ -26,7 +26,7 @@ define([
         // Client API and DOJO functions
         dom, dojoDom, domQuery, domProp, domGeom, domClass, domAttr, domStyle, win, domConstruct, dojoArray, lang, html, ready,
 
-        // External libraries 
+        // External libraries
         _charts,
 
         // Templates
@@ -58,6 +58,9 @@ define([
         _addedToBody: false,
 
         startup: function () {
+            // Uncomment line to start debugging
+            //logger.level(logger.DEBUG);
+            logger.debug(this.id + ".startup");
 
             var domNode = null;
 
@@ -94,6 +97,7 @@ define([
         },
 
         datasetAdd: function (dataset, datapoints) {
+            logger.debug(this.id + ".datasetAdd");
             var set = {
                 dataset: dataset,
                 sorting: +(dataset.get(this.datasetsorting))
@@ -114,7 +118,7 @@ define([
         },
 
         update: function (obj, callback) {
-
+            logger.debug(this.id + ".update");
             this._mxObj = obj;
 
             if (this._handle !== null) {
@@ -134,7 +138,7 @@ define([
         },
 
         _loadData: function () {
-
+            logger.debug(this.id + "._loadData");
             this._data = {
                 object: this._mxObj,
                 datasets: []
@@ -181,13 +185,14 @@ define([
         },
 
         uninitialize: function () {
+            logger.debug(this.id + ".uninitialize");
             if (this._handle !== null) {
                 mx.data.unsubscribe(this._handle);
             }
         },
 
         customTooltip: function (tooltip) {
-
+            logger.debug(this.id + ".customTooltip");
             // Tooltip Element
             var tooltipEl = domQuery("#chartjsTooltip")[0],
                 tooltipElContent = domQuery("#chartjsTooltip .content")[0],
@@ -243,6 +248,7 @@ define([
         },
 
         _createCtx: function () {
+            logger.debug(this.id + "._createCtx");
             var position = domGeom.position(this.domNode.parentElement, false);
             domAttr.set(this.canvasNode, "id", "canvasid_" + this.id);
 
@@ -273,12 +279,14 @@ define([
         },
 
         _onClickChart: function () {
+            logger.debug(this.id + "._onClickChart");
             if (this.onclickmf) {
                 this._executeMicroflow(this.onclickmf);
             }
         },
 
         _createLegend: function (isSingleSeries) {
+            logger.debug(this.id + "._createLegend");
             var listNodes = null,
                 k = null;
 
@@ -296,6 +304,7 @@ define([
         },
 
         _onClickLegend: function (idx, isSingleSeries) {
+            logger.debug(this.id + "._onClickLegend");
             var activeSet = null,
                 activeSetLegend = null,
                 newDatasets = {
@@ -329,6 +338,7 @@ define([
         },
 
         _sortArrayObj: function (values) {
+            logger.debug(this.id + "._sortArrayObj");
             return values.sort(lang.hitch(this, function (a, b) {
                 var aa = +(a.sorting),
                     bb = +(b.sorting);
@@ -344,6 +354,7 @@ define([
         },
 
         _sortArrayMx: function (values, sortAttr) {
+            logger.debug(this.id + "._sortArrayMx");
             return values.sort(lang.hitch(this, function (a, b) {
                 var aa = +(a.get(sortAttr)),
                     bb = +(b.get(sortAttr));
@@ -362,12 +373,13 @@ define([
         },
 
         _addChartClass: function (className) {
+            logger.debug(this.id + "._addChartClass");
             domClass.remove(this.domNode, className);
             domClass.add(this.domNode, className);
         },
 
         _resize: function () {
-
+            logger.debug(this.id + "._resize");
             var position = domGeom.position(this.domNode.parentElement, false);
 
             //Only resize when chart is set to responsive and width and height of parent element > 0
@@ -377,6 +389,7 @@ define([
         },
 
         _hexToRgb: function (hex, alpha) {
+            logger.debug(this.id + "._hexToRgb");
             var regex = null,
                 shorthandRegex = null,
                 result = null;
@@ -401,16 +414,17 @@ define([
         },
 
         _executeMicroflow: function (mf, callback, obj) {
+            logger.debug(this.id + "._executeMicroflow");
             var _params = {
                 applyto: "selection",
                 actionname: mf,
                 guids: []
             };
-            
+
 			if (obj == null) {
 				obj = this._data.object;
 			}
-			
+
             if (obj && obj.getGuid()) {
                 _params.guids = [obj.getGuid()];
             }

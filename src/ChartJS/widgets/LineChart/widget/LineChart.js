@@ -7,13 +7,14 @@ define([
 
 ], function (declare, lang, domQuery, on, _core) {
     "use strict";
-    
+
     // Declare widget.
     return declare("ChartJS.widgets.LineChart.widget.LineChart", [ _core ], {
 
         // Overwrite functions from _core here...
 
         _processData : function () {
+            logger.debug(this.id + "._processData");
             var sets = [],
                 points = null,
                 set = {
@@ -49,7 +50,7 @@ define([
                     for (k = 0; k < maxpoints; k++) {
                         points.push(0);
                     }
-                    console.log(this.id + " - empty dataset");
+                    logger.debug(this.id + " - empty dataset");
                 }
 
                 set.points = this._sortArrayMx(set.points, this.sortingxvalue);
@@ -88,8 +89,8 @@ define([
             }
             this._chartData.labels = xlabels;
 
-            console.log("Created LineChart data");
-            console.log(this._chartData);
+            logger.debug(this.id + " Created LineChart data");
+            logger.debug(this.id + "  " + JSON.stringify(this._chartData));
 
             this._createChart(this._chartData);
 
@@ -97,7 +98,7 @@ define([
         },
 
         _createChart : function (data) {
-
+            logger.debug(this.id + "._createChart");
             if (this._chart !== null) {
                 this._chart.destroy();
             }

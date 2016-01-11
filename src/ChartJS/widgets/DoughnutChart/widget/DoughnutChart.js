@@ -7,11 +7,12 @@ define([
 
 ], function (declare, lang, domQuery, on, html, _core) {
     "use strict";
-    
+
     // Declare widget.
     return declare("ChartJS.widgets.DoughnutChart.widget.DoughnutChart", [ _core ], {
-        
+
         _processData : function () {
+            logger.debug(this.id + "._processData");
             var sets = [],
                 chartData = [],
                 points = null,
@@ -58,7 +59,7 @@ define([
         },
 
         _loadData : function () {
-
+            logger.debug(this.id + "._loadData");
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
                 var obj = objs[0], // Chart object is always only one.
                     j = null,
@@ -90,7 +91,7 @@ define([
         },
 
         _createChart : function (data) {
-
+            logger.debug(this.id + "._createChart");
             if (this._chart !== null) {
                 this._chart.datasets = data.datasets;
                 this._chart.update();

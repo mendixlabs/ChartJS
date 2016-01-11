@@ -7,11 +7,12 @@ define([
 
 ], function (declare, lang, domQuery, on, _core) {
     "use strict";
-    
+
     // Declare widget.
     return declare("ChartJS.widgets.PolarChart.widget.PolarChart", [ _core ], {
 
         _processData : function () {
+            logger.debug(this.id + "._processData");
             var sets = [],
                 chartData = [],
                 points = null,
@@ -57,6 +58,7 @@ define([
         },
 
         _loadData : function () {
+            logger.debug(this.id + "._loadData");
 
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
                 var obj = objs[0], // Chart object is always only one.
@@ -89,6 +91,7 @@ define([
         },
 
         _createChart : function (data) {
+            logger.debug(this.id + "._createChart");
 
             this._chart = new this._chartJS(this._ctx).PolarArea(data, {
 

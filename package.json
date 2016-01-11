@@ -26,7 +26,7 @@
   "generatorVersion": "1.3.0",
   "paths": {
     "testProjectFolder": "./test/",
-    "testProjectFileName": "Test.mpr"
+    "testProjectFileName": "[Test] ChartJS.mpr"
   },
   "scripts": {
     "test": "grunt test"

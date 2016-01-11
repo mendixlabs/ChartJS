@@ -7,11 +7,12 @@ define([
 
 ], function (declare, lang, domQuery, on, html, domStyle, _core) {
     "use strict";
-    
+
     // Declare widget.
     return declare("ChartJS.widgets.PieChart.widget.PieChart", [ _core ], {
 
         _processData : function () {
+            logger.debug(this.id + "._processData");
             var sets = [],
                 chartData = [],
                 points = null,
@@ -57,7 +58,7 @@ define([
         },
 
         _loadData : function () {
-
+            logger.debug(this.id + "._loadData");
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
                 var obj = objs[0], // Chart object is always only one.
                     j = null,
@@ -89,7 +90,7 @@ define([
         },
 
         _createChart : function (data) {
-
+            logger.debug(this.id + "._createChart");
             this._chart = new this._chartJS(this._ctx).Pie(data, {
 
                 //Boolean - Whether we should show a stroke on each segment
