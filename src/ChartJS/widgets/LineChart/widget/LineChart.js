@@ -101,90 +101,96 @@ define([
 
         _createChart : function (data) {
             logger.debug(this.id + "._createChart");
-            if (this._chart !== null) {
-                this._chart.destroy();
-            }
 
-            this._chart = new this._chartJS(this._ctx, {
-                type: "line",
-                data: data,
-                options: {
+            if (this._chart) {
+                this._chart.stop();
+                this._chart.data.datasets = data.datasets;
+                this._chart.data.labels = data.labels;
+                this._chart.update();
+                this._chart.bindEvents(); // tooltips otherwise won't work
+			} else {
 
-                    //Boolean - Whether to show labels on the scale
-                    scaleShowLabels : this.scaleShowLabels,
+                this._chart = new this._chartJS(this._ctx, {
+                    type: "line",
+                    data: data,
+                    options: {
 
-                    ///Boolean - Whether grid lines are shown across the chart
-                    scaleShowGridLines : this.scaleShowGridLines,
+                        //Boolean - Whether to show labels on the scale
+                        scaleShowLabels : this.scaleShowLabels,
 
-                    //String - Colour of the grid lines
-                    scaleGridLineColor : this.scaleGridLineColor,
+                        ///Boolean - Whether grid lines are shown across the chart
+                        scaleShowGridLines : this.scaleShowGridLines,
 
-                    //Number - Width of the grid lines
-                    scaleGridLineWidth : this.scaleGridLineWidth,
+                        //String - Colour of the grid lines
+                        scaleGridLineColor : this.scaleGridLineColor,
 
-                    //Boolean - Whether to show horizontal lines (except X axis)
-                    scaleShowHorizontalLines : this.scaleShowHorizontalLines,
+                        //Number - Width of the grid lines
+                        scaleGridLineWidth : this.scaleGridLineWidth,
 
-                    //Boolean - Whether to show vertical lines (except Y axis)
-                    scaleShowVerticalLines : this.scaleShowVerticalLines,
+                        //Boolean - Whether to show horizontal lines (except X axis)
+                        scaleShowHorizontalLines : this.scaleShowHorizontalLines,
 
-                    //Boolean - Whether the line is curved between points
-                    bezierCurve : this.bezierCurve,
+                        //Boolean - Whether to show vertical lines (except Y axis)
+                        scaleShowVerticalLines : this.scaleShowVerticalLines,
 
-                    //Number - Tension of the bezier curve between points
-                    bezierCurveTension : this.bezierCurveTension,
+                        //Boolean - Whether the line is curved between points
+                        bezierCurve : this.bezierCurve,
 
-                    //Boolean - Whether to show a dot for each point
-                    pointDot : this.pointDot,
+                        //Number - Tension of the bezier curve between points
+                        bezierCurveTension : this.bezierCurveTension,
 
-                    //Number - Radius of each point dot in pixels
-                    pointDotRadius : this.pointDotRadius,
+                        //Boolean - Whether to show a dot for each point
+                        pointDot : this.pointDot,
 
-                    //Number - Pixel width of point dot stroke
-                    pointDotStrokeWidth : this.pointDotStrokeWidth,
+                        //Number - Radius of each point dot in pixels
+                        pointDotRadius : this.pointDotRadius,
 
-                    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-                    pointHitDetectionRadius : this.pointHitDetectionRadius,
+                        //Number - Pixel width of point dot stroke
+                        pointDotStrokeWidth : this.pointDotStrokeWidth,
 
-                    //Boolean - Whether to show a stroke for datasets
-                    datasetStroke : this.datasetStroke,
+                        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                        pointHitDetectionRadius : this.pointHitDetectionRadius,
 
-                    //Number - Pixel width of dataset stroke
-                    datasetStrokeWidth : this.datasetStrokeWidth,
+                        //Boolean - Whether to show a stroke for datasets
+                        datasetStroke : this.datasetStroke,
 
-                    //Boolean - Whether to fill the dataset with a colour
-                    datasetFill : this.datasetFill,
+                        //Number - Pixel width of dataset stroke
+                        datasetStrokeWidth : this.datasetStrokeWidth,
 
-                    //String - A legend template
-                    legendTemplate : this.legendTemplate,
+                        //Boolean - Whether to fill the dataset with a colour
+                        datasetFill : this.datasetFill,
 
-                    //The scale line width
-                    scaleLineWidth : this.scaleLineWidth,
+                        //String - A legend template
+                        legendTemplate : this.legendTemplate,
 
-                    //The scale line color
-                    scaleLineColor : this.scaleLineColor,
+                        //The scale line width
+                        scaleLineWidth : this.scaleLineWidth,
 
-                    // Show tooltips at all
-                    showTooltips : this.showTooltips,
+                        //The scale line color
+                        scaleLineColor : this.scaleLineColor,
 
-                    // maintainAspectRatio
-                    maintainAspectRatio : this.maintainAspectRatio,
+                        // Show tooltips at all
+                        showTooltips : this.showTooltips,
 
-                    // Custom tooltip?
-                    customTooltips : false //lang.hitch(this, this.customTooltip)
+                        // maintainAspectRatio
+                        maintainAspectRatio : this.maintainAspectRatio,
 
+                        // Custom tooltip?
+                        customTooltips : false //lang.hitch(this, this.customTooltip)
+
+                    }
+                });
+
+                this.connect(window, "resize", lang.hitch(this, function () {
+                    this._resize();
+                }));
+
+                // Add class to determain chart type
+                this._addChartClass("chartjs-line-chart");
+
+                if (this.onclickmf) {
+                    on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
                 }
-            });
-
-            this.connect(window, "resize", lang.hitch(this, function () {
-                this._resize();
-            }));
-
-            // Add class to determain chart type
-            this._addChartClass("chartjs-line-chart");
-
-            if (this.onclickmf) {
-                on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
             }
         }
 
