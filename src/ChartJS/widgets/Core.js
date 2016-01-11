@@ -304,7 +304,7 @@ define([
         },
 
         _onClickLegend: function (idx, isSingleSeries) {
-            logger.debug(this.id + "._onClickLegend");
+            logger.debug(this.id + "._onClickLegend", idx, isSingleSeries);
             var activeSet = null,
                 activeSetLegend = null,
                 newDatasets = {
