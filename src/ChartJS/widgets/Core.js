@@ -96,6 +96,10 @@ define([
                 domConstruct.place(domNode, win.body());
             }
 
+            this.connect(this.mxform, "resize", lang.hitch(this, function () {
+                this._resize();
+            }));
+
         },
 
         datasetAdd: function (dataset, datapoints) {
