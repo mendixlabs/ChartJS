@@ -61,7 +61,7 @@ define([
 
         startup: function () {
             // Uncomment line to start debugging
-            logger.level(logger.DEBUG);
+            //logger.level(logger.DEBUG);
             logger.debug(this.id + ".startup");
 
             var domNode = null;
@@ -388,8 +388,8 @@ define([
                 var aa = +(a.get(sortAttr)),
                     bb = +(b.get(sortAttr));
                 //if the attribute is numeric
-                aa = a.isNumber(sortAttr) ? parseFloat(aa) : aa;
-                bb = b.isNumber(sortAttr) ? parseFloat(bb) : bb;
+                aa = a.isNumeric(sortAttr) ? parseFloat(aa) : aa;
+                bb = b.isNumeric(sortAttr) ? parseFloat(bb) : bb;
                 if (aa > bb) {
                     return 1;
                 }
@@ -467,6 +467,9 @@ define([
 
             mx.data.action({
                 params: _params,
+                store: {
+                    caller: this.mxform
+                },
                 callback: lang.hitch(this, function (obj) {
                     if (typeof callback !== "undefined") {
                         callback(obj);
