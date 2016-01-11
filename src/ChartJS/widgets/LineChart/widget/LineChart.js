@@ -73,12 +73,14 @@ define([
 
                 _set = {
                     label : (this.scaleShowLabelsBottom === true) ? label : "",
-                    fillColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
-                    strokeColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
+                    backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.2") : this._hexToRgb(color, "0.2"),
+                    borderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
                     pointColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
-                    highlightFill: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
-                    highlightStroke: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "1") : highlightcolor,
-                    data : points
+                    pointBorderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
+                    pointHoverBackgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
+                    pointHoverBorderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(highlightcolor, "1") : highlightcolor,
+                    data : points,
+                    fill: false
                 };
                 this._chartData.datasets.push(_set);
                 this._activeDatasets.push({
