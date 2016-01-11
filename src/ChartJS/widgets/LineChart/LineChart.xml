@@ -87,6 +87,11 @@
 				<attributeType name="String"/>
             </attributeTypes>
         </property>
+        <property key="seriescolorfilled" type="boolean" required="true" defaultValue="true">
+            <caption>Filled</caption>
+            <category>Appearance</category>
+            <description>Fill the space below the line</description>
+        </property>
 		<property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
 			<caption>Reduce opacity</caption>
 			<category>Data Set</category>

@@ -80,7 +80,7 @@ define([
                     pointHoverBackgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
                     pointHoverBorderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(highlightcolor, "1") : highlightcolor,
                     data : points,
-                    fill: false
+                    fill: this.seriescolorfilled
                 };
                 this._chartData.datasets.push(_set);
                 this._activeDatasets.push({

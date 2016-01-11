@@ -417,26 +417,30 @@ define([
         },
 
         _hexToRgb: function (hex, alpha) {
-            logger.debug(this.id + "._hexToRgb");
-            var regex = null,
-                shorthandRegex = null,
-                result = null;
+            logger.debug(this.id + "._hexToRgb", hex, alpha);
+            if (hex !== null) {
+                var regex = null,
+                    shorthandRegex = null,
+                    result = null;
 
-            // From Stackoverflow here: http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-            shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-            hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-                return r + r + g + g + b + b;
-            });
+                // From Stackoverflow here: http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+                // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+                shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+                hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+                    return r + r + g + g + b + b;
+                });
 
-            regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            if (regex) {
-                result = {
-                    r: parseInt(regex[1], 16),
-                    g: parseInt(regex[2], 16),
-                    b: parseInt(regex[3], 16)
-                };
-                return "rgba(" + result.r + "," + result.g + "," + result.b + "," + alpha + ")";
+                regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                if (regex) {
+                    result = {
+                        r: parseInt(regex[1], 16),
+                        g: parseInt(regex[2], 16),
+                        b: parseInt(regex[3], 16)
+                    };
+                    return "rgba(" + result.r + "," + result.g + "," + result.b + "," + alpha + ")";
+                }
+            } else {
+                logger.warn('Empty hex color!');
             }
             return "rgba(220,220,220," + alpha + ")";
         },
