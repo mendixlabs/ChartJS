@@ -81,6 +81,7 @@
                     <attributeType name="Integer"/>
                     <attributeType name="Long"/>
                     <attributeType name="String"/>
+                    <attributeType name="Decimal"/>
                 </attributeTypes>
             </property>
             <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
@@ -111,6 +112,7 @@
                     <attributeType name="Integer"/>
                     <attributeType name="Long"/>
                     <attributeType name="String"/>
+                    <attributeType name="Decimal"/>
                 </attributeTypes>
             </property>
             <!-- Behavior -->

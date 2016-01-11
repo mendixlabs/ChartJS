@@ -114,6 +114,7 @@
                     <attributeType name="Integer"/>
                     <attributeType name="Long"/>
                     <attributeType name="String"/>
+                    <attributeType name="Decimal"/>
                 </attributeTypes>
             </property>
             <!-- Behaviour -->
