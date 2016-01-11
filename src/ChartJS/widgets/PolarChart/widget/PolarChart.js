@@ -39,8 +39,8 @@ define([
                 label = set.dataset.get(this.datasetlabel);
                 point = {
                     label : label,
-                    color: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
-                    highlight: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
+                    backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
+                    hoverBackgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
                     value : +(set.dataset.get(this.seriesylabel))
                 };
 
@@ -94,8 +94,8 @@ define([
             logger.debug(this.id + "._createChart");
 
             this._chart = new this._chartJS(this._ctx, {
-                type: "polar",
-                data: data,
+                type: "polarArea",
+                data: this._createDataSets(data),
                 options: {
 
                     //Boolean - Show a backdrop to the scale label

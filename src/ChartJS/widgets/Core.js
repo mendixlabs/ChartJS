@@ -54,6 +54,8 @@ define([
         _mxObj: null,
         _handle: null,
 
+        _resizeTimer: null,
+
         _currentContext: null,
         _addedToBody: false,
 
@@ -337,6 +339,29 @@ define([
             }
         },
 
+        _createDataSets: function (data) {
+            logger.debug(this.id + "._createDataSets", data);
+            var _chartData = {
+                labels: [],
+                datasets: [
+                    {
+                        data: [],
+                        backgroundColor: [],
+                        hoverBackgroundColor: []
+                    }
+                ]
+            }
+
+            for (var j = 0; j < data.length; j++) {
+                _chartData.labels.push(data[j].label);
+                _chartData.datasets[0].data.push(data[j].value);
+                _chartData.datasets[0].backgroundColor.push(data[j].backgroundColor);
+                _chartData.datasets[0].hoverBackgroundColor.push(data[j].hoverBackgroundColor);
+            }
+
+            return _chartData;
+        },
+
         _sortArrayObj: function (values) {
             logger.debug(this.id + "._sortArrayObj");
             return values.sort(lang.hitch(this, function (a, b) {
@@ -382,10 +407,13 @@ define([
             logger.debug(this.id + "._resize");
             var position = domGeom.position(this.domNode.parentElement, false);
 
-            //Only resize when chart is set to responsive and width and height of parent element > 0
-            if (this._chart && this.responsive && position.w > 0 && position.h > 0) {
-                this._chart.resize();
-            }
+            clearTimeout(this._resizeTimer);
+            this._resizeTimer = setTimeout(lang.hitch(this, function (){
+                //Only resize when chart is set to responsive and width and height of parent element > 0
+                if (this._chart && this.responsive && position.w > 0 && position.h > 0) {
+                    this._chart.resize();
+                }
+            }), 50);
         },
 
         _hexToRgb: function (hex, alpha) {

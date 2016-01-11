@@ -89,29 +89,6 @@ define([
 
         },
 
-        _createDataSets: function (data) {
-            logger.debug(this.id + "._createDataSets", data);
-            var _chartData = {
-                labels: [],
-                datasets: [
-                    {
-                        data: [],
-                        backgroundColor: [],
-                        hoverBackgroundColor: []
-                    }
-                ]
-            }
-
-            for (var j = 0; j < data.length; j++) {
-                _chartData.labels.push(data[j].label);
-                _chartData.datasets[0].data.push(data[j].value);
-                _chartData.datasets[0].backgroundColor.push(data[j].backgroundColor);
-                _chartData.datasets[0].hoverBackgroundColor.push(data[j].hoverBackgroundColor);
-            }
-
-            return _chartData;
-        },
-
         _createChart : function (data) {
             logger.debug(this.id + "._createChart");
             this._chart = new this._chartJS(this._ctx, {
