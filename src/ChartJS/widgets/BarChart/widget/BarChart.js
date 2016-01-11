@@ -101,59 +101,62 @@ define([
 				this._chart.destroy();
 			}
 
-            this._chart = new this._chartJS(this._ctx).Bar(data, {
+            this._chart = new this._chartJS(this._ctx, {
+                type: 'bar',
+                data: data,
+                options: {
 
-                //Boolean - Whether to show labels on the scale
-                scaleShowLabels : this.scaleShowLabels,
+                    //Boolean - Whether to show labels on the scale
+                    scaleShowLabels : this.scaleShowLabels,
 
-                //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-                scaleBeginAtZero : this.scaleBeginAtZero,
+                    //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                    scaleBeginAtZero : this.scaleBeginAtZero,
 
-                //Boolean - Whether grid lines are shown across the chart
-                scaleShowGridLines : this.scaleShowGridLines,
+                    //Boolean - Whether grid lines are shown across the chart
+                    scaleShowGridLines : this.scaleShowGridLines,
 
-                //String - Colour of the grid lines
-                scaleGridLineColor : this.scaleGridLineColor,
+                    //String - Colour of the grid lines
+                    scaleGridLineColor : this.scaleGridLineColor,
 
-                //Number - Width of the grid lines
-                scaleGridLineWidth : this.scaleGridLineWidth,
+                    //Number - Width of the grid lines
+                    scaleGridLineWidth : this.scaleGridLineWidth,
 
-                //Boolean - Whether to show horizontal lines (except X axis)
-                scaleShowHorizontalLines: this.scaleShowHorizontalLines,
+                    //Boolean - Whether to show horizontal lines (except X axis)
+                    scaleShowHorizontalLines: this.scaleShowHorizontalLines,
 
-                //Boolean - Whether to show vertical lines (except Y axis)
-                scaleShowVerticalLines: this.scaleShowVerticalLines,
+                    //Boolean - Whether to show vertical lines (except Y axis)
+                    scaleShowVerticalLines: this.scaleShowVerticalLines,
 
-                //Boolean - If there is a stroke on each bar
-                barShowStroke : this.barShowStroke,
+                    //Boolean - If there is a stroke on each bar
+                    barShowStroke : this.barShowStroke,
 
-                //Number - Pixel width of the bar stroke
-                barStrokeWidth : this.barStrokeWidth,
+                    //Number - Pixel width of the bar stroke
+                    barStrokeWidth : this.barStrokeWidth,
 
-                //Number - Spacing between each of the X value sets
-                barValueSpacing : this.barValueSpacing,
+                    //Number - Spacing between each of the X value sets
+                    barValueSpacing : this.barValueSpacing,
 
-                //Number - Spacing between data sets within X values
-                barDatasetSpacing : this.barDatasetSpacing,
+                    //Number - Spacing between data sets within X values
+                    barDatasetSpacing : this.barDatasetSpacing,
 
-                //String - A legend template
-                legendTemplate : this.legendTemplate,
+                    //String - A legend template
+                    legendTemplate : this.legendTemplate,
 
-                //The scale line width
-                scaleLineWidth : this.scaleLineWidth,
+                    //The scale line width
+                    scaleLineWidth : this.scaleLineWidth,
 
-                //The scale line color
-                scaleLineColor : this.scaleLineColor,
+                    //The scale line color
+                    scaleLineColor : this.scaleLineColor,
 
-                // maintainAspectRatio
-                maintainAspectRatio : this.maintainAspectRatio,
+                    // maintainAspectRatio
+                    maintainAspectRatio : this.maintainAspectRatio,
 
-                // Show tooltips at all
-                showTooltips : this.showTooltips,
+                    // Show tooltips at all
+                    showTooltips : this.showTooltips,
 
-                // Custom tooltip?
-                customTooltips : false
-
+                    // Custom tooltip?
+                    customTooltips : false
+                }
             });
 
             this.connect(window, "resize", lang.hitch(this, function () {

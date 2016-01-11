@@ -59,13 +59,13 @@ define([
 
         startup: function () {
             // Uncomment line to start debugging
-            //logger.level(logger.DEBUG);
+            logger.level(logger.DEBUG);
             logger.debug(this.id + ".startup");
 
             var domNode = null;
 
             // Activate chartJS.
-            this._chartJS = _charts().chartssrc();
+            this._chartJS = _charts.noConflict();
 
             ///Boolean - Whether the chart is responsive
             this._chartJS.defaults.global.responsive = this.responsive;

@@ -103,70 +103,74 @@ define([
                 this._chart.destroy();
             }
 
-            this._chart = new this._chartJS(this._ctx).Radar(data, {
-                //Boolean - Whether to show lines for each scale point
-                scaleShowLine : this.scaleShowLine,
+            this._chart = new this._chartJS(this._ctx, {
+                type: "radar",
+                data: data,
+                options: {
+                    //Boolean - Whether to show lines for each scale point
+                    scaleShowLine : this.scaleShowLine,
 
-                //Boolean - Whether we show the angle lines out of the radar
-                angleShowLineOut : this.angleShowLineOut,
+                    //Boolean - Whether we show the angle lines out of the radar
+                    angleShowLineOut : this.angleShowLineOut,
 
-                //Boolean - Whether to show labels on the scale
-                scaleShowLabels : this.scaleShowLabels,
+                    //Boolean - Whether to show labels on the scale
+                    scaleShowLabels : this.scaleShowLabels,
 
-                // Boolean - Whether the scale should begin at zero
-                scaleBeginAtZero : this.scaleBeginAtZero,
+                    // Boolean - Whether the scale should begin at zero
+                    scaleBeginAtZero : this.scaleBeginAtZero,
 
-                //String - Colour of the angle line
-                angleLineColor : this.angleLineColor,
+                    //String - Colour of the angle line
+                    angleLineColor : this.angleLineColor,
 
-                //Number - Pixel width of the angle line
-                angleLineWidth : this.angleLineWidth,
+                    //Number - Pixel width of the angle line
+                    angleLineWidth : this.angleLineWidth,
 
-                //String - Point label font declaration
-                pointLabelFontFamily : this.pointLabelFontFamily,
+                    //String - Point label font declaration
+                    pointLabelFontFamily : this.pointLabelFontFamily,
 
-                //String - Point label font weight
-                pointLabelFontStyle : this.pointLabelFontStyle,
+                    //String - Point label font weight
+                    pointLabelFontStyle : this.pointLabelFontStyle,
 
-                //Number - Point label font size in pixels
-                pointLabelFontSize : this.pointLabelFontSize,
+                    //Number - Point label font size in pixels
+                    pointLabelFontSize : this.pointLabelFontSize,
 
-                //String - Point label font colour
-                pointLabelFontColor : this.pointLabelFontColor,
+                    //String - Point label font colour
+                    pointLabelFontColor : this.pointLabelFontColor,
 
-                //Boolean - Whether to show a dot for each point
-                pointDot : this.pointDot,
+                    //Boolean - Whether to show a dot for each point
+                    pointDot : this.pointDot,
 
-                //Number - Radius of each point dot in pixels
-                pointDotRadius : this.pointDotRadius,
+                    //Number - Radius of each point dot in pixels
+                    pointDotRadius : this.pointDotRadius,
 
-                //Number - Pixel width of point dot stroke
-                pointDotStrokeWidth : this.pointDotStrokeWidth,
+                    //Number - Pixel width of point dot stroke
+                    pointDotStrokeWidth : this.pointDotStrokeWidth,
 
-                //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-                pointHitDetectionRadius : this.pointHitDetectionRadius,
+                    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                    pointHitDetectionRadius : this.pointHitDetectionRadius,
 
-                //Boolean - Whether to show a stroke for datasets
-                datasetStroke : this.datasetStroke,
+                    //Boolean - Whether to show a stroke for datasets
+                    datasetStroke : this.datasetStroke,
 
-                //Number - Pixel width of dataset stroke
-                datasetStrokeWidth : this.datasetStrokeWidth,
+                    //Number - Pixel width of dataset stroke
+                    datasetStrokeWidth : this.datasetStrokeWidth,
 
-                //Boolean - Whether to fill the dataset with a colour
-                datasetFill : this.datasetFill,
+                    //Boolean - Whether to fill the dataset with a colour
+                    datasetFill : this.datasetFill,
 
-                //String - A legend template
-                legendTemplate : this.legendTemplate,
+                    //String - A legend template
+                    legendTemplate : this.legendTemplate,
 
-                // Show tooltips at all
-                showTooltips : this.showTooltips,
+                    // Show tooltips at all
+                    showTooltips : this.showTooltips,
 
-                // maintainAspectRatio
-                maintainAspectRatio : this.maintainAspectRatio,
+                    // maintainAspectRatio
+                    maintainAspectRatio : this.maintainAspectRatio,
 
-                // Custom tooltip?
-                customTooltips : false //lang.hitch(this, this.customTooltip)
+                    // Custom tooltip?
+                    customTooltips : false //lang.hitch(this, this.customTooltip)
 
+                }
             });
 
             // Add class to determain chart type

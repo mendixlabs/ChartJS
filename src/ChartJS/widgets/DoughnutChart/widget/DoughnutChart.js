@@ -97,44 +97,48 @@ define([
                 this._chart.update();
             } else {
 
-                this._chart = new this._chartJS(this._ctx).Doughnut(data, {
+                this._chart = new this._chartJS(this._ctx, {
+                    type: 'doughnut',
+                    data: data,
+                    options: {
 
-                    //Boolean - Whether we should show a stroke on each segment
-                    segmentShowStroke : this.segmentShowStroke,
+                        //Boolean - Whether we should show a stroke on each segment
+                        segmentShowStroke : this.segmentShowStroke,
 
-                    //String - The colour of each segment stroke
-                    segmentStrokeColor : this.segmentStrokeColor,
+                        //String - The colour of each segment stroke
+                        segmentStrokeColor : this.segmentStrokeColor,
 
-                    //Number - The width of each segment stroke
-                    segmentStrokeWidth : this.segmentStrokeWidth,
+                        //Number - The width of each segment stroke
+                        segmentStrokeWidth : this.segmentStrokeWidth,
 
-                    //Number - The percentage of the chart that we cut out of the middle
-                    percentageInnerCutout : this.percentageInnerCutout, // This is 0 for Pie charts
+                        //Number - The percentage of the chart that we cut out of the middle
+                        percentageInnerCutout : this.percentageInnerCutout, // This is 0 for Pie charts
 
-                    //Number - Amount of animation steps
-                    animationSteps : this.animationSteps,
+                        //Number - Amount of animation steps
+                        animationSteps : this.animationSteps,
 
-                    //String - Animation easing effect
-                    animationEasing : this.animationEasing,
+                        //String - Animation easing effect
+                        animationEasing : this.animationEasing,
 
-                    //Boolean - Whether we animate the rotation of the Doughnut
-                    animateRotate : this.animateRotate,
+                        //Boolean - Whether we animate the rotation of the Doughnut
+                        animateRotate : this.animateRotate,
 
-                    //Boolean - Whether we animate scaling the Doughnut from the centre
-                    animateScale : this.animateScale,
+                        //Boolean - Whether we animate scaling the Doughnut from the centre
+                        animateScale : this.animateScale,
 
-                    //String - A legend template
-                    legendTemplate : this.legendTemplate,
+                        //String - A legend template
+                        legendTemplate : this.legendTemplate,
 
-                    // Show tooltips at all
-                    showTooltips : this.showTooltips,
+                        // Show tooltips at all
+                        showTooltips : this.showTooltips,
 
-                    // maintainAspectRatio
-                    maintainAspectRatio : this.maintainAspectRatio,
+                        // maintainAspectRatio
+                        maintainAspectRatio : this.maintainAspectRatio,
 
-                    // Custom tooltip?
-                    customTooltips : false //lang.hitch(this, this.customTooltip)
+                        // Custom tooltip?
+                        customTooltips : false //lang.hitch(this, this.customTooltip)
 
+                    }
                 });
 
                 this.connect(window, "resize", lang.hitch(this, function () {
