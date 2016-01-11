@@ -155,7 +155,22 @@ define([
                     maintainAspectRatio : this.maintainAspectRatio,
 
                     // Custom tooltip?
-                    customTooltips : false //lang.hitch(this, this.customTooltip)
+                    customTooltips : false, //lang.hitch(this, this.customTooltip)
+
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+                            ticks: {
+                                //beginAtZero: true
+                            }
+                        }],
+                        yAxes: [{
+                            stacked: true,
+                            ticks: {
+                                //suggestedMax: 10
+                            }
+                        }]
+                    }
 
                 }
             });
