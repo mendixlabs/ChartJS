@@ -17,6 +17,11 @@
                 <category>Appearance</category>
 				<description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
             </property>
+            <property key="labelFont" type="string" required="true" defaultValue="Helvetica Neue">
+                <caption>Font</caption>
+                <category>Appearance</category>
+                <description>Font used in the chart legend. Default (or empty) = Helvetica Neue</description>
+            </property>
             <!-- Data Source -->
             <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
                 <caption>Chart Entity</caption>
@@ -166,14 +171,19 @@
                 <description>Whether to animate scaling the chart from the centre.</description>
             </property>
             <property key="showLegend" type="boolean" required="true" defaultValue="true">
-                <caption>Show Legend</caption>
-                <category>Settings</category>
-				<description>Displays a legend when set to yes</description>
+                <caption>Show Legend (ChartJS)</caption>
+                <category>Legend</category>
+                <description>Displays a legend inside the graph</description>
             </property>
-            <property key="legendTemplate" type="string" required="true" multiline="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;segments.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=segments[i].fillColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(segments[i].label){%&gt;&lt;%=segments[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;">
-                <caption>Legend Template</caption>
-                <category>Settings</category>
-				<description>HTML template used for rendering legend</description>
+            <property key="showLegendCustom" type="boolean" required="true" defaultValue="false">
+                <caption>Show Legend (Custom)</caption>
+                <category>Legend</category>
+                <description>Displays a legend outside the graph (using the template)</description>
+            </property>
+            <property key="legendTemplate" type="string" required="true" multiline="true" defaultValue="&lt;ul class=&#39;&lt;%=name.toLowerCase()%&gt;-legend&#39;&gt;&lt;% for (var i=0; i&lt;datasets.length; i++){%&gt;&lt;li&gt;&lt;span style=&#39;background-color:&lt;%=datasets[i].fillColor%&gt;&#39;&gt;&lt;/span&gt;&lt;%if(datasets[i].label){%&gt;&lt;%=datasets[i].label%&gt;&lt;%}%&gt;&lt;/li&gt;&lt;%}%&gt;&lt;/ul&gt;">
+                <caption>Legend template</caption>
+                <category>Legend</category>
+                <description>HTML template used for rendering legend</description>
             </property>
             <property key="showTooltips" type="boolean" required="true" defaultValue="false">
                 <caption>Show tooltip</caption>

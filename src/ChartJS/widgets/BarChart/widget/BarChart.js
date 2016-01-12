@@ -158,7 +158,7 @@ define([
                         showTooltips : this.showTooltips,
 
                         // Custom tooltip?
-                        customTooltips : false
+                        customTooltips : false,
                     }
                 });
 
