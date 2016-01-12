@@ -72,6 +72,9 @@ define([
             ///Boolean - Whether the chart is responsive
             this._chartJS.defaults.global.responsive = this.responsive;
 
+            // Booleand - Whether or not show tooltips
+            this._chartJS.defaults.global.tooltips.enabled = this.showTooltips;
+
             // Hack to fix the tooltip event, also added "mouseover"
             this._chartJS.defaults.global.tooltipEvents = ["mouseover", "mouseup", "mousedown", "mousemove", "touchstart", "touchmove", "mouseout"];
             this._chartJS.defaults.global.tooltipXOffset = 0;
