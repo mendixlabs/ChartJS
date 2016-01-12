@@ -149,7 +149,7 @@ define([
                 on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
             }
 
-            this._chart.update();
+            this._chart.update(1000);
         }
     });
 });

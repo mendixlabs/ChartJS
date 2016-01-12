@@ -103,7 +103,7 @@ define([
                 this._chart.stop();
                 this._chart.data.datasets = data.datasets;
                 this._chart.data.labels = data.labels;
-                this._chart.update();
+                this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
 			} else {
 

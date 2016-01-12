@@ -71,6 +71,7 @@ define([
 
             ///Boolean - Whether the chart is responsive
             this._chartJS.defaults.global.responsive = this.responsive;
+            this._chartJS.defaults.global.responsiveAnimationDuration = 1000;
 
             // Booleand - Whether or not show tooltips
             this._chartJS.defaults.global.tooltips.enabled = this.showTooltips;
