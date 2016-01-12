@@ -252,7 +252,7 @@
         <property key="bezierCurveTension" type="string" required="true" defaultValue="0.4">
             <caption>Bezier curve tension</caption>
             <category>Settings Line Chart</category>
-            <description>Tension of the bezier curve between points.</description>
+            <description>Tension of the bezier curve between points. (This is usually around 0.4 or lower)</description>
         </property>
         <property key="pointDot" type="boolean" required="true" defaultValue="true">
             <caption>Point dot</caption>
