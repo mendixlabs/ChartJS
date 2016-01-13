@@ -61,7 +61,7 @@ define([
 
         startup: function () {
             // Uncomment line to start debugging
-            //logger.level(logger.DEBUG);
+            logger.level(logger.DEBUG);
             logger.debug(this.id + ".startup");
 
             var domNode = null;
@@ -309,6 +309,40 @@ define([
                     }
                 }
             }
+        },
+
+        _legendCallback: function (chart) {
+            logger.debug(this.id + "._legendCallback");
+            var text = [];
+            text.push('<ul class="' + chart.id + '-legend chart-legend">');
+            for (var i = 0; i < chart.data.datasets.length; i++) {
+                text.push('<li class="chart-legend_item"><span class="chart-legend_bullet" style="background-color:' + chart.data.datasets[i].backgroundColor + '"></span>');
+                if (chart.data.datasets[i].label) {
+                    text.push(chart.data.datasets[i].label);
+                }
+                text.push('</li>');
+            }
+            text.push('</ul>');
+
+            return text.join("");
+        },
+
+        _legendAlternateCallback: function(chart) {
+            var text = [];
+            text.push('<ul class="' + chart.id + '-legend chart-legend">');
+
+            if (chart.data.datasets.length) {
+                for (var i = 0; i < chart.data.datasets[0].data.length; ++i) {
+                    text.push('<li class="chart-legend_item"><span class="chart-legend_bullet" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '"></span>');
+                    if (chart.data.labels[i]) {
+                        text.push(chart.data.labels[i]);
+                    }
+                    text.push('</li>');
+                }
+            }
+
+            text.push('</ul>');
+            return text.join("");
         },
 
         _onClickLegend: function (idx, isSingleSeries) {

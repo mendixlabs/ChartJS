@@ -153,8 +153,7 @@ define([
                         //Boolean - Whether bars should be rendered on a percentage base
                         relativeBars : this.relativeBars,
 
-                        //String - A legend template
-                        legendTemplate : this.legendTemplate,
+                        legendCallback : this._legendCallback,
 
                         //The scale line width
                         scaleLineWidth : this.scaleLineWidth,

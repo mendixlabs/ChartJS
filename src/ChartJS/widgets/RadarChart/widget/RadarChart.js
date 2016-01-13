@@ -173,8 +173,7 @@ define([
                         //Boolean - Whether to fill the dataset with a colour
                         datasetFill : this.datasetFill,
 
-                        //String - A legend template
-                        legendTemplate : this.legendTemplate,
+                        legendCallback : this._legendCallback,
 
                         // Show tooltips at all
                         showTooltips : this.showTooltips,

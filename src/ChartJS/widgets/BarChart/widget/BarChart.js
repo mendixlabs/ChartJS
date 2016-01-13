@@ -152,8 +152,7 @@ define([
                         //Number - Spacing between data sets within X values
                         barDatasetSpacing : this.barDatasetSpacing,
 
-                        //String - A legend template
-                        legendTemplate : this.legendTemplate,
+                        legendCallback : this._legendCallback,
 
                         //The scale line width
                         scaleLineWidth : this.scaleLineWidth,

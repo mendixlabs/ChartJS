@@ -147,8 +147,7 @@ define([
                     //Boolean - Whether to animate scaling the chart from the centre
                     animateScale : this.animateScale,
 
-                    //String - A legend template
-                    legendTemplate : this.legendTemplate,
+                    legendCallback : this._legendAlternateCallback,
 
                     // Show tooltips at all
                     showTooltips : this.showTooltips,

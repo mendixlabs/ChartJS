@@ -134,8 +134,7 @@ define([
                     //Boolean - Whether we animate scaling the Doughnut from the centre
                     animateScale : this.animateScale,
 
-                    //String - A legend template
-                    legendTemplate : this.legendTemplate,
+                    legendCallback : this._legendAlternateCallback,
 
                     // Show tooltips at all
                     showTooltips : this.showTooltips,
