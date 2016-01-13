@@ -69,19 +69,8 @@ define([
             // Activate chartJS.
             this._chartJS = _charts.noConflict();
 
-            ///Boolean - Whether the chart is responsive
-            this._chartJS.defaults.global.responsive = this.responsive;
-            this._chartJS.defaults.global.responsiveAnimationDuration = 1000;
-
-            // Booleand - Whether or not show tooltips
-            this._chartJS.defaults.global.tooltips.enabled = this.showTooltips;
-
-            // Boolean - Whether or not show legend
-            this._chartJS.defaults.global.legend.display = this.showLegend;
-
             // Fonts
             this._font = this.labelFont || "Helvetica Neue";
-            this._chartJS.defaults.global.legend.labels.fontFamily = this._font;
 
             // Hack to fix the tooltip event, also added "mouseover"
             this._chartJS.defaults.global.tooltipEvents = ["mouseover", "mouseup", "mousedown", "mousemove", "touchstart", "touchmove", "mouseout"];
@@ -268,6 +257,8 @@ define([
             logger.debug(this.id + "._createCtx");
             var position = domGeom.position(this.domNode.parentElement, false);
             domAttr.set(this.canvasNode, "id", "canvasid_" + this.id);
+
+            logger.debug(this.id + ".createCtx", position);
 
             if (position.w > 0 && this.responsive) {
                 this.canvasNode.width = position.w;

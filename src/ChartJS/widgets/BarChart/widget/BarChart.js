@@ -109,6 +109,16 @@ define([
                     data: data,
                     options: {
 
+                        responsive : this.responsive,
+                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                        tooltips : {
+                            enabled : this.showTooltips
+                        },
+                        legend: {
+                            display : this.showLegend,
+                            labels : { fontFamily : this._font }
+                        },
+
                         //Boolean - Whether to show labels on the scale
                         scaleShowLabels : this.scaleShowLabels,
 

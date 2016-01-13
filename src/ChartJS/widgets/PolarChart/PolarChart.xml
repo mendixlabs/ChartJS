@@ -22,6 +22,11 @@
                 <category>Appearance</category>
                 <description>Font used in the chart legend. Default (or empty) = Helvetica Neue</description>
             </property>
+            <property key="responsiveAnimationDuration" type="integer" required="true" defaultValue="0">
+                <caption>Responsive animation duration</caption>
+                <category>Appearance</category>
+                <description>Animation duration (milliseconds) for responsive resizing. (Note: When implementing multiple charts, there can be problems with rendering. You can set this to 0 when having problems)</description>
+            </property>
 			<!-- Data Source -->
 			<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
 				<caption>Chart Entity</caption>

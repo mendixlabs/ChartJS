@@ -111,6 +111,17 @@ define([
                     type: "radar",
                     data: data,
                     options: {
+
+                        responsive : this.responsive,
+                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                        tooltips : {
+                            enabled : this.showTooltips
+                        },
+                        legend: {
+                            display: this.showLegend,
+                            labels : { fontFamily : this._font }
+                        },
+
                         //Boolean - Whether to show lines for each scale point
                         scaleShowLine : this.scaleShowLine,
 
