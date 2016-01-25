@@ -133,6 +133,8 @@ define([
                     // maintainAspectRatio
                     maintainAspectRatio : this.maintainAspectRatio,
 
+                    cutoutPercentage : this.percentageInnerCutout,
+
                     // Custom tooltip?
                     customTooltips : false //lang.hitch(this, this.customTooltip)
 
