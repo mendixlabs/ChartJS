@@ -137,7 +137,7 @@ define([
 
 
                     //cutOut of pie
-                    cutoutPercentage : 0 //always zero for Pie chart
+                    cutoutPercentage : 0, //always zero for Pie chart
 
                     // Custom tooltip?
                     customTooltips : false //lang.hitch(this, this.customTooltip)
