@@ -119,8 +119,6 @@ define([
                     //Number - The width of each segment stroke
                     segmentStrokeWidth : this.segmentStrokeWidth,
 
-                    //Number - The percentage of the chart that we cut out of the middle
-                    percentageInnerCutout : this.percentageInnerCutout, // This is 0 for Pie charts
 
                     //Number - Amount of animation steps
                     animationSteps : this.animationSteps,
@@ -141,6 +139,9 @@ define([
 
                     // maintainAspectRatio
                     maintainAspectRatio : this.maintainAspectRatio,
+
+                    //Number - The percentage of the chart that we cut out of the middle    
+                    cutoutPercentage : this.percentageInnerCutout,
 
                     // Custom tooltip?
                     customTooltips : false //lang.hitch(this, this.customTooltip)
