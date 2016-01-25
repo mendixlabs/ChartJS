@@ -103,7 +103,7 @@ define([
                 this._chart.stop();
                 this._chart.data.datasets = data.datasets;
                 this._chart.data.labels = data.labels;
-                this._chart.update();
+                this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
 			} else {
 
@@ -111,6 +111,17 @@ define([
                     type: "radar",
                     data: data,
                     options: {
+
+                        responsive : this.responsive,
+                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                        tooltips : {
+                            enabled : this.showTooltips
+                        },
+                        legend: {
+                            display: this.showLegend,
+                            labels : { fontFamily : this._font }
+                        },
+
                         //Boolean - Whether to show lines for each scale point
                         scaleShowLine : this.scaleShowLine,
 
@@ -162,8 +173,7 @@ define([
                         //Boolean - Whether to fill the dataset with a colour
                         datasetFill : this.datasetFill,
 
-                        //String - A legend template
-                        legendTemplate : this.legendTemplate,
+                        legendCallback : this._legendCallback,
 
                         // Show tooltips at all
                         showTooltips : this.showTooltips,

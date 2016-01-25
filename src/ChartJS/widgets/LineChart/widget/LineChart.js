@@ -71,6 +71,13 @@ define([
                     xlabelsSet = true;
                 }
 
+                var _bezier;
+                try {
+                    _bezier = parseFloat(this.bezierCurveTension);
+                } catch (e) {
+                    _bezier = 0.4;
+                }
+
                 _set = {
                     label : (this.scaleShowLabelsBottom === true) ? label : "",
                     backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.2") : this._hexToRgb(color, "0.2"),
@@ -80,7 +87,8 @@ define([
                     pointHoverBackgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
                     pointHoverBorderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(highlightcolor, "1") : highlightcolor,
                     data : points,
-                    fill: this.seriescolorfilled
+                    fill: this.seriescolorfilled,
+                    tension : this.bezierCurve ? _bezier : 0
                 };
                 this._chartData.datasets.push(_set);
                 this._activeDatasets.push({
@@ -106,7 +114,7 @@ define([
                 this._chart.stop();
                 this._chart.data.datasets = data.datasets;
                 this._chart.data.labels = data.labels;
-                this._chart.update();
+                this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
 			} else {
 
@@ -114,6 +122,16 @@ define([
                     type: "line",
                     data: data,
                     options: {
+
+                        responsive : this.responsive,
+                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                        tooltips : {
+                            enabled : this.showTooltips
+                        },
+                        legend: {
+                            display: this.showLegend,
+                            labels : { fontFamily : this._font }
+                        },
 
                         //Boolean - Whether to show labels on the scale
                         scaleShowLabels : this.scaleShowLabels,
@@ -132,12 +150,6 @@ define([
 
                         //Boolean - Whether to show vertical lines (except Y axis)
                         scaleShowVerticalLines : this.scaleShowVerticalLines,
-
-                        //Boolean - Whether the line is curved between points
-                        bezierCurve : this.bezierCurve,
-
-                        //Number - Tension of the bezier curve between points
-                        bezierCurveTension : this.bezierCurveTension,
 
                         //Boolean - Whether to show a dot for each point
                         pointDot : this.pointDot,
@@ -160,8 +172,7 @@ define([
                         //Boolean - Whether to fill the dataset with a colour
                         datasetFill : this.datasetFill,
 
-                        //String - A legend template
-                        legendTemplate : this.legendTemplate,
+                        legendCallback : this._legendCallback,
 
                         //The scale line width
                         scaleLineWidth : this.scaleLineWidth,
@@ -191,6 +202,7 @@ define([
                 if (this.onclickmf) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
                 }
+
             }
         }
 

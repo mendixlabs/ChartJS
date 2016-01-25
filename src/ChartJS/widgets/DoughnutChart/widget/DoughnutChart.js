@@ -100,6 +100,16 @@ define([
                 data: this._createDataSets(data),
                 options: {
 
+                    responsive : this.responsive,
+                    responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                    tooltips : {
+                        enabled : this.showTooltips
+                    },
+                    legend: {
+                        display: this.showLegend,
+                        labels : { fontFamily : this._font }
+                    },
+
                     //Boolean - Whether we should show a stroke on each segment
                     segmentShowStroke : this.segmentShowStroke,
 
@@ -124,8 +134,7 @@ define([
                     //Boolean - Whether we animate scaling the Doughnut from the centre
                     animateScale : this.animateScale,
 
-                    //String - A legend template
-                    legendTemplate : this.legendTemplate,
+                    legendCallback : this._legendAlternateCallback,
 
                     // Show tooltips at all
                     showTooltips : this.showTooltips,

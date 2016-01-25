@@ -98,82 +98,96 @@ define([
         _createChart : function (data) {
             logger.debug(this.id + "._createChart");
 
-            if (this._chart !== null) {
-                this._chart.destroy();
-            }
+            if (this._chart) {
+                this._chart.stop();
+                this._chart.data.datasets = data.datasets;
+                this._chart.data.labels = data.labels;
+                this._chart.update(1000);
+                this._chart.bindEvents(); // tooltips otherwise won't work
+			} else {
 
-            this._chart = new this._chartJS(this._ctx, {
-                type: 'bar',
-                data: data,
-                options: {
+                this._chart = new this._chartJS(this._ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
 
-                    stacked: true,
+                        responsive : this.responsive,
+                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                        tooltips : {
+                            enabled : this.showTooltips
+                        },
+                        legend: {
+                            display: this.showLegend,
+                            labels : { fontFamily : this._font }
+                        },
 
-                    //Boolean - Whether to show labels on the scale
-                    scaleShowLabels : this.scaleShowLabels,
+                        stacked: true,
 
-                    //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-                    scaleBeginAtZero : this.scaleBeginAtZero,
+                        //Boolean - Whether to show labels on the scale
+                        scaleShowLabels : this.scaleShowLabels,
 
-                    //Boolean - Whether grid lines are shown across the chart
-                    scaleShowGridLines : this.scaleShowGridLines,
+                        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                        scaleBeginAtZero : this.scaleBeginAtZero,
 
-                    //String - Colour of the grid lines
-                    scaleGridLineColor : this.scaleGridLineColor,
+                        //Boolean - Whether grid lines are shown across the chart
+                        scaleShowGridLines : this.scaleShowGridLines,
 
-                    //Number - Width of the grid lines
-                    scaleGridLineWidth : this.scaleGridLineWidth,
+                        //String - Colour of the grid lines
+                        scaleGridLineColor : this.scaleGridLineColor,
 
-                    //Boolean - If there is a stroke on each bar
-                    barShowStroke : this.barShowStroke,
+                        //Number - Width of the grid lines
+                        scaleGridLineWidth : this.scaleGridLineWidth,
 
-                    //Number - Pixel width of the bar stroke
-                    barStrokeWidth : this.barStrokeWidth,
+                        //Boolean - If there is a stroke on each bar
+                        barShowStroke : this.barShowStroke,
 
-                    //Number - Spacing between each of the X value sets
-                    barValueSpacing : this.barValueSpacing,
+                        //Number - Pixel width of the bar stroke
+                        barStrokeWidth : this.barStrokeWidth,
 
-                    //Number - Spacing between data sets within X values
-                    barDatasetSpacing : this.barDatasetSpacing,
+                        //Number - Spacing between each of the X value sets
+                        barValueSpacing : this.barValueSpacing,
 
-                    //Boolean - Whether bars should be rendered on a percentage base
-                    relativeBars : this.relativeBars,
+                        //Number - Spacing between data sets within X values
+                        barDatasetSpacing : this.barDatasetSpacing,
 
-                    //String - A legend template
-                    legendTemplate : this.legendTemplate,
+                        //Boolean - Whether bars should be rendered on a percentage base
+                        relativeBars : this.relativeBars,
 
-                    //The scale line width
-                    scaleLineWidth : this.scaleLineWidth,
+                        legendCallback : this._legendCallback,
 
-                    //The scale line color
-                    scaleLineColor : this.scaleLineColor,
+                        //The scale line width
+                        scaleLineWidth : this.scaleLineWidth,
 
-                    // Show tooltips at all
-                    showTooltips : this.showTooltips,
+                        //The scale line color
+                        scaleLineColor : this.scaleLineColor,
 
-                    // maintainAspectRatio
-                    maintainAspectRatio : this.maintainAspectRatio,
+                        // Show tooltips at all
+                        showTooltips : this.showTooltips,
 
-                    // Custom tooltip?
-                    customTooltips : false, //lang.hitch(this, this.customTooltip)
+                        // maintainAspectRatio
+                        maintainAspectRatio : this.maintainAspectRatio,
 
-                    scales: {
-                        xAxes: [{
-                            stacked: true,
-                            ticks: {
-                                //beginAtZero: true
-                            }
-                        }],
-                        yAxes: [{
-                            stacked: true,
-                            ticks: {
-                                //suggestedMax: 10
-                            }
-                        }]
+                        // Custom tooltip?
+                        customTooltips : false, //lang.hitch(this, this.customTooltip)
+
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                                ticks: {
+                                    //beginAtZero: true
+                                }
+                            }],
+                            yAxes: [{
+                                stacked: true,
+                                ticks: {
+                                    //suggestedMax: 10
+                                }
+                            }]
+                        }
+
                     }
-
-                }
-            });
+                });
+            }
 
             this.connect(window, "resize", lang.hitch(this, function () {
                 this._resize();

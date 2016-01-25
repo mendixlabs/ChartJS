@@ -101,13 +101,23 @@ define([
                 this._chart.stop();
                 this._chart.data.datasets = data.datasets;
                 this._chart.data.labels = data.labels;
-                this._chart.update();
+                this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
 			} else {
                 this._chart = new this._chartJS(this._ctx, {
                     type: 'bar',
                     data: data,
                     options: {
+
+                        responsive : this.responsive,
+                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                        tooltips : {
+                            enabled : this.showTooltips
+                        },
+                        legend: {
+                            display : this.showLegend,
+                            labels : { fontFamily : this._font }
+                        },
 
                         //Boolean - Whether to show labels on the scale
                         scaleShowLabels : this.scaleShowLabels,
@@ -142,8 +152,7 @@ define([
                         //Number - Spacing between data sets within X values
                         barDatasetSpacing : this.barDatasetSpacing,
 
-                        //String - A legend template
-                        legendTemplate : this.legendTemplate,
+                        legendCallback : this._legendCallback,
 
                         //The scale line width
                         scaleLineWidth : this.scaleLineWidth,
@@ -158,7 +167,7 @@ define([
                         showTooltips : this.showTooltips,
 
                         // Custom tooltip?
-                        customTooltips : false
+                        customTooltips : false,
                     }
                 });
 

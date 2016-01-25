@@ -98,6 +98,16 @@ define([
                 data: this._createDataSets(data),
                 options: {
 
+                    responsive : this.responsive,
+                    responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                    tooltips : {
+                        enabled : this.showTooltips
+                    },
+                    legend: {
+                        display: this.showLegend,
+                        labels : { fontFamily : this._font }
+                    },
+
                     //Boolean - Show a backdrop to the scale label
                     scaleShowLabelBackdrop : this.polarScaleShowLabelBackdrop,
 
@@ -137,8 +147,7 @@ define([
                     //Boolean - Whether to animate scaling the chart from the centre
                     animateScale : this.animateScale,
 
-                    //String - A legend template
-                    legendTemplate : this.legendTemplate,
+                    legendCallback : this._legendAlternateCallback,
 
                     // Show tooltips at all
                     showTooltips : this.showTooltips,
