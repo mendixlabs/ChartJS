@@ -418,14 +418,22 @@ define([
             }));
         },
 
+        _isNumber: function (n, attr) {
+            // Fix for older MX versions who do not have the .isNumeric method
+            if (typeof n.isNumeric === "function") {
+                return n.isNumeric(attr);
+            }
+            return n.isNumber(attr);
+        },
+
         _sortArrayMx: function (values, sortAttr) {
             logger.debug(this.id + "._sortArrayMx");
             return values.sort(lang.hitch(this, function (a, b) {
                 var aa = +(a.get(sortAttr)),
                     bb = +(b.get(sortAttr));
                 //if the attribute is numeric
-                aa = a.isNumeric(sortAttr) ? parseFloat(aa) : aa;
-                bb = b.isNumeric(sortAttr) ? parseFloat(bb) : bb;
+                aa = this._isNumber(a, sortAttr) ? parseFloat(aa) : aa;
+                bb = this._isNumber(b, sortAttr) ? parseFloat(bb) : bb;
                 if (aa > bb) {
                     return 1;
                 }
