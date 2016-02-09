@@ -61,7 +61,7 @@ define([
 
         startup: function () {
             // Uncomment line to start debugging
-            logger.level(logger.DEBUG);
+            //logger.level(logger.DEBUG);
             logger.debug(this.id + ".startup");
 
             var domNode = null;
