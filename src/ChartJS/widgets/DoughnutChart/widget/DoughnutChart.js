@@ -96,7 +96,7 @@ define([
                 this._chart.destroy();
             }
             this._chart = new this._chartJS(this._ctx, {
-                type: 'doughnut',
+                type: "doughnut",
                 data: this._createDataSets(data),
                 options: {
 
@@ -140,7 +140,7 @@ define([
                     // maintainAspectRatio
                     maintainAspectRatio : this.maintainAspectRatio,
 
-                    //Number - The percentage of the chart that we cut out of the middle    
+                    //Number - The percentage of the chart that we cut out of the middle
                     cutoutPercentage : this.percentageInnerCutout,
 
                     // Custom tooltip?

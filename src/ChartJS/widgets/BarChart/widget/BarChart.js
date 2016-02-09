@@ -95,7 +95,7 @@ define([
         },
 
         _createChart : function (data) {
-			logger.debug(this.id + "._createChart");
+            logger.debug(this.id + "._createChart");
 
             if (this._chart) {
                 this._chart.stop();
@@ -103,9 +103,9 @@ define([
                 this._chart.data.labels = data.labels;
                 this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
-			} else {
+            } else {
                 this._chart = new this._chartJS(this._ctx, {
-                    type: 'bar',
+                    type: "bar",
                     data: data,
                     options: {
 
