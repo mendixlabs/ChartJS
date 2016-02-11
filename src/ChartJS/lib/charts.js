@@ -4685,6 +4685,10 @@
 				id: 'x-axis-0'
 			}],
 			yAxes: [{
+			        ticks:{
+			            callback:function(value){
+			            	return Number(value).toFixed(3);
+			            }},
 				type: "linear",
 				id: 'y-axis-0'
 			}],
