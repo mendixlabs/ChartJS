@@ -80,7 +80,7 @@ define([
 
                 _set = {
                     label : (this.scaleShowLabelsBottom === true) ? label : "",
-                    backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.2") : this._hexToRgb(color, "0.2"),
+                    backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.2") : color,
                     borderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
                     pointColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
                     pointBorderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
@@ -110,6 +110,7 @@ define([
         _createChart : function (data) {
             logger.debug(this.id + "._createChart");
 
+
             if (this._chart) {
                 this._chart.stop();
                 this._chart.data.datasets = data.datasets;
@@ -117,11 +118,17 @@ define([
                 this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
-
+                            logger.debug("stacked:" + this.isStacked);
                 this._chart = new this._chartJS(this._ctx, {
                     type: "line",
                     data: data,
                     options: {
+                        scales : {
+                            yAxes: [{
+                                //If stacked is set to true, the Y-axis needs to be stacked for it to work
+                                stacked: this.isStacked
+                            }]
+                        },
 
                         responsive : this.responsive,
                         responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
@@ -150,6 +157,9 @@ define([
 
                         //Boolean - Whether to show vertical lines (except Y axis)
                         scaleShowVerticalLines : this.scaleShowVerticalLines,
+
+                        //Boolean - Whether or not to render as a stacked chart
+                        stacked : this.isStacked,
 
                         //Boolean - Whether to show a dot for each point
                         pointDot : this.pointDot,
