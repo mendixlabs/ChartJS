@@ -123,12 +123,6 @@ define([
                     type: "line",
                     data: data,
                     options: {
-                        scales : {
-                            yAxes: [{
-                                //If stacked is set to true, the Y-axis needs to be stacked for it to work
-                                stacked: this.isStacked
-                            }]
-                        },
 
                         responsive : this.responsive,
                         responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
@@ -205,14 +199,17 @@ define([
                                 id: "x-axis-0"
                             }],
                             yAxes: [{
-                                    ticks:{
-                                        callback: lang.hitch(this, function(value){
-                                            var round = parseInt(this.roundY);
-                                            if (!isNaN(round) && round >= 0) {
-                                                return Number(value).toFixed(round);
-                                            }
-                                            return value;
-                                        })},
+                                //If stacked is set to true, the Y-axis needs to be stacked for it to work
+                                stacked: this.isStacked,
+                                ticks:{
+                                    callback: lang.hitch(this, function(value){
+                                        var round = parseInt(this.roundY);
+                                        if (!isNaN(round) && round >= 0) {
+                                            return Number(value).toFixed(round);
+                                        }
+                                        return value;
+                                    })
+                                },
                                 type: "linear",
                                 id: "y-axis-0"
                             }],
