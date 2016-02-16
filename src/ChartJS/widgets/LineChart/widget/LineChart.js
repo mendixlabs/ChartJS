@@ -187,7 +187,26 @@ define([
                         maintainAspectRatio : this.maintainAspectRatio,
 
                         // Custom tooltip?
-                        customTooltips : false //lang.hitch(this, this.customTooltip)
+                        customTooltips : false, //lang.hitch(this, this.customTooltip)
+
+                        scales: {
+                            xAxes: [{
+                                type: "category",
+                                id: "x-axis-0"
+                            }],
+                            yAxes: [{
+                                    ticks:{
+                                        callback: lang.hitch(this, function(value){
+                                            var round = parseInt(this.roundY);
+                                            if (!isNaN(round) && round >= 0) {
+                                                return Number(value).toFixed(round);
+                                            }
+                                            return value;
+                                        })},
+                                type: "linear",
+                                id: "y-axis-0"
+                            }],
+                        }
 
                     }
                 });

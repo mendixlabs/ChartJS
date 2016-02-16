@@ -162,6 +162,11 @@
                 <attributeType name="Decimal"/>
             </attributeTypes>
         </property>
+        <property key="roundY" type="string" required="true" defaultValue="-1">
+            <caption>Round Y value</caption>
+            <category>Data Point</category>
+            <description>Number of decimals to round the value on the Y-axis. Disable it by setting it to '-1'</description>
+        </property>
         <!-- Behavior -->
         <property key="onclickmf" type="microflow" required="false">
             <caption>On Click Microflow</caption>
