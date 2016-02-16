@@ -14,6 +14,11 @@
             <category>Appearance</category>
 			<description>Initial width of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
         </property>
+        <property key="isStacked" type="boolean" required="true" defaultValue="false">
+            <caption>Stacked</caption>
+            <category>Appearance</category>
+            <description>When yes, different dataset will stack on top of eachother on the Y-axis</description>
+        </property>
         <property key="height" type="integer" required="true" defaultValue="250">
             <caption>Height</caption>
             <category>Appearance</category>
