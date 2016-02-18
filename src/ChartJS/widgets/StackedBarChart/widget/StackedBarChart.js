@@ -110,7 +110,22 @@ define([
                     type: "bar",
                     data: data,
                     options: {
-
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                                ticks: {
+                                    fontFamily :this._font
+                                    //beginAtZero: true
+                                }
+                            }],
+                            yAxes: [{
+                                stacked: true,
+                                ticks: {
+                                    fontFamily: this._font
+                                    //suggestedMax: 10
+                                }
+                            }]
+                        },
                         responsive : this.responsive,
                         responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
                         tooltips : {
@@ -169,22 +184,6 @@ define([
 
                         // Custom tooltip?
                         customTooltips : false, //lang.hitch(this, this.customTooltip)
-
-                        scales: {
-                            xAxes: [{
-                                stacked: true,
-                                ticks: {
-                                    //beginAtZero: true
-                                }
-                            }],
-                            yAxes: [{
-                                stacked: true,
-                                ticks: {
-                                    //suggestedMax: 10
-                                }
-                            }]
-                        }
-
                     }
                 });
             }

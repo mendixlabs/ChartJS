@@ -108,6 +108,15 @@ define([
                     type: "bar",
                     data: data,
                     options: {
+                        scales : {
+                            xAxes: [{
+                                ticks : { fontFamily: this._font, }
+                            }],
+                            yAxes: [{
+                                ticks : { fontFamily: this._font, }
+                            }],
+
+                        },
 
                         responsive : this.responsive,
                         responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),

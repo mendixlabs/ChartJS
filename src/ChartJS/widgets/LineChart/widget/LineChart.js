@@ -118,7 +118,7 @@ define([
                 this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
-                            logger.debug("stacked:" + this.isStacked);
+                logger.debug("stacked:" + this.isStacked);
                 this._chart = new this._chartJS(this._ctx, {
                     type: "line",
                     data: data,
@@ -126,7 +126,11 @@ define([
                         scales : {
                             yAxes: [{
                                 //If stacked is set to true, the Y-axis needs to be stacked for it to work
-                                stacked: this.isStacked
+                                stacked: this.isStacked,
+                                ticks : { fontFamily: this._font }
+                            }],
+                            xAxes: [{
+                                ticks : { fontFamily: this._font, }
                             }]
                         },
 
