@@ -132,7 +132,14 @@ define([
                                     labelString: (this.yLabel !== "") ? this.yLabel : "",
                                     fontFamily: this._font
                                 },
-                                ticks : { fontFamily: this._font }
+                                ticks : { fontFamily: this._font,
+                                callback: lang.hitch(this, function(value){
+                                        var round = parseInt(this.roundY);
+                                        if (!isNaN(round) && round >= 0) {
+                                            return Number(value).toFixed(round);
+                                        }
+                                        return value;
+                                    }) }
                             }],
                             xAxes: [{
                                 scaleLabel: {
@@ -140,10 +147,11 @@ define([
                                     labelString: (this.xLabel !== "") ? this.xLabel : "",
                                     fontFamily: this._font
                                 },
+                                type: "category",
+                                id: "x-axis-0", 
                                 ticks : { fontFamily: this._font, }
                             }]
                         },
-
                         responsive : this.responsive,
                         responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
                         tooltips : {
@@ -211,7 +219,7 @@ define([
                         maintainAspectRatio : this.maintainAspectRatio,
 
                         // Custom tooltip?
-                        customTooltips : false //lang.hitch(this, this.customTooltip)
+                        customTooltips : false, //lang.hitch(this, this.customTooltip)
 
                     }
                 });
