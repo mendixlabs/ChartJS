@@ -113,6 +113,11 @@ define([
                         scales: {
                             xAxes: [{
                                 stacked: true,
+                                scaleLabel: {
+                                    display: (this.xLabel !== "") ? true : false,
+                                    labelString: (this.xLabel !== "") ? this.xLabel : "",
+                                    fontFamily: this._font
+                                },
                                 ticks: {
                                     fontFamily :this._font
                                     //beginAtZero: true
@@ -120,6 +125,11 @@ define([
                             }],
                             yAxes: [{
                                 stacked: true,
+                                scaleLabel: {
+                                    display: (this.yLabel !== "") ? true : false,
+                                    labelString: (this.yLabel !== "") ? this.yLabel : "",
+                                    fontFamily: this._font
+                                },
                                 ticks: {
                                     fontFamily: this._font
                                     //suggestedMax: 10

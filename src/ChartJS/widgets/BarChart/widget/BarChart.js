@@ -110,9 +110,19 @@ define([
                     options: {
                         scales : {
                             xAxes: [{
+                                scaleLabel: {
+                                    display: (this.xLabel !== "") ? true : false,
+                                    labelString: (this.xLabel !== "") ? this.xLabel : "",
+                                    fontFamily: this._font
+                                },
                                 ticks : { fontFamily: this._font, }
                             }],
                             yAxes: [{
+                                scaleLabel: {
+                                    display: (this.yLabel !== "") ? true : false,
+                                    labelString: (this.yLabel !== "") ? this.yLabel : "",
+                                    fontFamily: this._font
+                                },
                                 ticks : { fontFamily: this._font, }
                             }],
 

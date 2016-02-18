@@ -127,9 +127,19 @@ define([
                             yAxes: [{
                                 //If stacked is set to true, the Y-axis needs to be stacked for it to work
                                 stacked: this.isStacked,
+                                scaleLabel: {
+                                    display: (this.yLabel !== "") ? true : false,
+                                    labelString: (this.yLabel !== "") ? this.yLabel : "",
+                                    fontFamily: this._font
+                                },
                                 ticks : { fontFamily: this._font }
                             }],
                             xAxes: [{
+                                scaleLabel: {
+                                    display: (this.xLabel !== "") ? true : false,
+                                    labelString: (this.xLabel !== "") ? this.xLabel : "",
+                                    fontFamily: this._font
+                                },
                                 ticks : { fontFamily: this._font, }
                             }]
                         },

@@ -14,6 +14,16 @@
             <category>Appearance</category>
 			<description>Initial width of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
         </property>
+        <property key="xLabel" type="string" required="false" defaultValue="">
+            <caption>X-axis label</caption>
+            <category>Appearance</category>
+            <description>Label to show on the X-axis. Leave empty for no label</description>
+        </property>
+        <property key="yLabel" type="string" required="false" defaultValue="">
+            <caption>Y-axis label</caption>
+            <category>Appearance</category>
+            <description>Label to show on the Y-axis. Leave empty for no label</description>
+        </property>
         <property key="isStacked" type="boolean" required="true" defaultValue="false">
             <caption>Stacked</caption>
             <category>Appearance</category>
