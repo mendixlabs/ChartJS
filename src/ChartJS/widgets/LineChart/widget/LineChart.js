@@ -123,6 +123,12 @@ define([
                     type: "line",
                     data: data,
                     options: {
+                        title: {
+                            display: (this.chartTitle !== "") ? true : false,
+                            text: (this.chartTitle !== "") ? this.chartTitle : "",
+                            fontFamily: this._font,
+                            fontSize: this.titleSize
+                        },
                         scales : {
                             yAxes: [{
                                 //If stacked is set to true, the Y-axis needs to be stacked for it to work
@@ -148,7 +154,7 @@ define([
                                     fontFamily: this._font
                                 },
                                 type: "category",
-                                id: "x-axis-0", 
+                                id: "x-axis-0",
                                 ticks : { fontFamily: this._font, }
                             }]
                         },

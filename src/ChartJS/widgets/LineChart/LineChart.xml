@@ -24,6 +24,16 @@
             <category>Appearance</category>
             <description>Label to show on the Y-axis. Leave empty for no label</description>
         </property>
+        <property key="chartTitle" type="string" required="false" defaultValue="">
+            <caption>Title</caption>
+            <category>Appearance</category>
+            <description>The title of the chart. Will be shown above the chart. Leave empty for no title</description>
+        </property>
+        <property key="titleSize" type="integer" required="true" defaultValue="12">
+            <caption>Title font-size</caption>
+            <category>Appearance</category>
+            <description>The size of the chart title. Default is 12</description>
+        </property>
         <property key="isStacked" type="boolean" required="true" defaultValue="false">
             <caption>Stacked</caption>
             <category>Appearance</category>

@@ -110,6 +110,12 @@ define([
                     type: "bar",
                     data: data,
                     options: {
+                        title: {
+                            display: (this.chartTitle !== "") ? true : false,
+                            text: (this.chartTitle !== "") ? this.chartTitle : "",
+                            fontFamily: this._font,
+                            fontSize: this.titleSize
+                        },
                         scales: {
                             xAxes: [{
                                 stacked: true,
