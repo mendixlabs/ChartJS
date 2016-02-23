@@ -118,12 +118,46 @@ define([
                 this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
-                            logger.debug("stacked:" + this.isStacked);
+                logger.debug("stacked:" + this.isStacked);
                 this._chart = new this._chartJS(this._ctx, {
                     type: "line",
                     data: data,
                     options: {
-
+                        title: {
+                            display: (this.chartTitle !== "") ? true : false,
+                            text: (this.chartTitle !== "") ? this.chartTitle : "",
+                            fontFamily: this._font,
+                            fontSize: this.titleSize
+                        },
+                        scales : {
+                            yAxes: [{
+                                //If stacked is set to true, the Y-axis needs to be stacked for it to work
+                                stacked: this.isStacked,
+                                scaleLabel: {
+                                    display: (this.yLabel !== "") ? true : false,
+                                    labelString: (this.yLabel !== "") ? this.yLabel : "",
+                                    fontFamily: this._font
+                                },
+                                ticks : { fontFamily: this._font,
+                                callback: lang.hitch(this, function(value){
+                                        var round = parseInt(this.roundY);
+                                        if (!isNaN(round) && round >= 0) {
+                                            return Number(value).toFixed(round);
+                                        }
+                                        return value;
+                                    }) }
+                            }],
+                            xAxes: [{
+                                scaleLabel: {
+                                    display: (this.xLabel !== "") ? true : false,
+                                    labelString: (this.xLabel !== "") ? this.xLabel : "",
+                                    fontFamily: this._font
+                                },
+                                type: "category",
+                                id: "x-axis-0",
+                                ticks : { fontFamily: this._font, }
+                            }]
+                        },
                         responsive : this.responsive,
                         responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
                         tooltips : {
@@ -192,28 +226,6 @@ define([
 
                         // Custom tooltip?
                         customTooltips : false, //lang.hitch(this, this.customTooltip)
-
-                        scales: {
-                            xAxes: [{
-                                type: "category",
-                                id: "x-axis-0"
-                            }],
-                            yAxes: [{
-                                //If stacked is set to true, the Y-axis needs to be stacked for it to work
-                                stacked: this.isStacked,
-                                ticks:{
-                                    callback: lang.hitch(this, function(value){
-                                        var round = parseInt(this.roundY);
-                                        if (!isNaN(round) && round >= 0) {
-                                            return Number(value).toFixed(round);
-                                        }
-                                        return value;
-                                    })
-                                },
-                                type: "linear",
-                                id: "y-axis-0"
-                            }],
-                        }
 
                     }
                 });

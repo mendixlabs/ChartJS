@@ -25,6 +25,16 @@
             <category>Appearance</category>
             <description>Font used in the chart legend. Default (or empty) = Helvetica Neue</description>
         </property>
+        <property key="chartTitle" type="string" required="false" defaultValue="">
+            <caption>Title</caption>
+            <category>Appearance</category>
+            <description>The title of the chart. Will be shown above the chart. Leave empty for no title</description>
+        </property>
+        <property key="titleSize" type="integer" required="true" defaultValue="12">
+            <caption>Title font-size</caption>
+            <category>Appearance</category>
+            <description>The size of the chart title. Default is 12</description>
+        </property>
         <property key="responsiveAnimationDuration" type="integer" required="true" defaultValue="0">
             <caption>Responsive animation duration</caption>
             <category>Appearance</category>

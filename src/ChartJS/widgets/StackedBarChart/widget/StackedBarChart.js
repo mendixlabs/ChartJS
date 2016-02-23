@@ -110,7 +110,38 @@ define([
                     type: "bar",
                     data: data,
                     options: {
-
+                        title: {
+                            display: (this.chartTitle !== "") ? true : false,
+                            text: (this.chartTitle !== "") ? this.chartTitle : "",
+                            fontFamily: this._font,
+                            fontSize: this.titleSize
+                        },
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                                scaleLabel: {
+                                    display: (this.xLabel !== "") ? true : false,
+                                    labelString: (this.xLabel !== "") ? this.xLabel : "",
+                                    fontFamily: this._font
+                                },
+                                ticks: {
+                                    fontFamily :this._font
+                                    //beginAtZero: true
+                                }
+                            }],
+                            yAxes: [{
+                                stacked: true,
+                                scaleLabel: {
+                                    display: (this.yLabel !== "") ? true : false,
+                                    labelString: (this.yLabel !== "") ? this.yLabel : "",
+                                    fontFamily: this._font
+                                },
+                                ticks: {
+                                    fontFamily: this._font
+                                    //suggestedMax: 10
+                                }
+                            }]
+                        },
                         responsive : this.responsive,
                         responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
                         tooltips : {
@@ -169,22 +200,6 @@ define([
 
                         // Custom tooltip?
                         customTooltips : false, //lang.hitch(this, this.customTooltip)
-
-                        scales: {
-                            xAxes: [{
-                                stacked: true,
-                                ticks: {
-                                    //beginAtZero: true
-                                }
-                            }],
-                            yAxes: [{
-                                stacked: true,
-                                ticks: {
-                                    //suggestedMax: 10
-                                }
-                            }]
-                        }
-
                     }
                 });
             }

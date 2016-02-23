@@ -99,6 +99,12 @@ define([
                 type: "doughnut",
                 data: this._createDataSets(data),
                 options: {
+                    title: {
+                        display: (this.chartTitle !== "") ? true : false,
+                        text: (this.chartTitle !== "") ? this.chartTitle : "",
+                        fontFamily: this._font,
+                        fontSize: this.titleSize
+                    },
 
                     responsive : this.responsive,
                     responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),

@@ -108,6 +108,31 @@ define([
                     type: "bar",
                     data: data,
                     options: {
+                        title: {
+                            display: (this.chartTitle !== "") ? true : false,
+                            text: (this.chartTitle !== "") ? this.chartTitle : "",
+                            fontFamily: this._font,
+                            fontSize: this.titleSize
+                        },
+                        scales : {
+                            xAxes: [{
+                                scaleLabel: {
+                                    display: (this.xLabel !== "") ? true : false,
+                                    labelString: (this.xLabel !== "") ? this.xLabel : "",
+                                    fontFamily: this._font
+                                },
+                                ticks : { fontFamily: this._font, }
+                            }],
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: (this.yLabel !== "") ? true : false,
+                                    labelString: (this.yLabel !== "") ? this.yLabel : "",
+                                    fontFamily: this._font
+                                },
+                                ticks : { fontFamily: this._font, }
+                            }],
+
+                        },
 
                         responsive : this.responsive,
                         responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
