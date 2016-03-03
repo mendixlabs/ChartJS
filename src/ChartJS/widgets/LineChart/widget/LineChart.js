@@ -78,6 +78,7 @@ define([
                     _bezier = 0.4;
                 }
 
+
                 _set = {
                     label : (this.scaleShowLabelsBottom === true) ? label : "",
                     backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.2") : color,
@@ -89,6 +90,7 @@ define([
                     data : points,
                     fill: this.seriescolorfilled,
                     tension : this.bezierCurve ? _bezier : 0
+
                 };
                 this._chartData.datasets.push(_set);
                 this._activeDatasets.push({
@@ -108,6 +110,7 @@ define([
         },
 
         _createChart : function (data) {
+
             logger.debug(this.id + "._createChart");
 
 
@@ -167,7 +170,16 @@ define([
                             display: this.showLegend,
                             labels : { fontFamily : this._font }
                         },
+                        elements: {
 
+                            point: {
+                                radius : this.pointRadius,
+                                borderWidth : this.pointBorderWidth,
+                                hitRadius : this.pointHitRadius,
+                                hoverRadius : this.pointHoverRadius,
+                                hoverBorderWidth : this.pointHoverBorderWidth
+                            }
+                        },
                         //Boolean - Whether to show labels on the scale
                         scaleShowLabels : this.scaleShowLabels,
 
@@ -188,18 +200,6 @@ define([
 
                         //Boolean - Whether or not to render as a stacked chart
                         stacked : this.isStacked,
-
-                        //Boolean - Whether to show a dot for each point
-                        pointDot : this.pointDot,
-
-                        //Number - Radius of each point dot in pixels
-                        pointDotRadius : this.pointDotRadius,
-
-                        //Number - Pixel width of point dot stroke
-                        pointDotStrokeWidth : this.pointDotStrokeWidth,
-
-                        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-                        pointHitDetectionRadius : this.pointHitDetectionRadius,
 
                         //Boolean - Whether to show a stroke for datasets
                         datasetStroke : this.datasetStroke,
@@ -229,6 +229,7 @@ define([
 
                     }
                 });
+
 
                 this.connect(window, "resize", lang.hitch(this, function () {
                     this._resize();
