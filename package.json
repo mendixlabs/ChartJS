@@ -1,6 +1,6 @@
 {
   "name": "ChartJS",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "This widget is a wrapper for the ChartJS library and you can use it to visualize your aggregated data.",
   "license": "Apache License, Version 2",
   "author": "Mendix",
