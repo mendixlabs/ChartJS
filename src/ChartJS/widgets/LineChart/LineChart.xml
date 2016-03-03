@@ -296,25 +296,30 @@
             <category>Settings Line Chart</category>
             <description>Tension of the bezier curve between points. (This is usually around 0.4 or lower)</description>
         </property>
-        <property key="pointDot" type="boolean" required="true" defaultValue="true">
-            <caption>Point dot</caption>
-            <category>Settings Line Chart</category>
-            <description>Whether to show a dot for each point.</description>
+        <property key="pointRadius" type="integer" required="true" defaultValue="3">
+            <caption>Dot radius</caption>
+            <category>Data Point</category>
+            <description>Radius of each point dot in pixels. Set to zero to disable dots</description>
         </property>
-        <property key="pointDotRadius" type="string" required="true" defaultValue="4">
-            <caption>Point dot radius</caption>
-            <category>Settings Line Chart</category>
-            <description>Radius of each point dot in pixels.</description>
-        </property>
-        <property key="pointDotStrokeWidth" type="string" required="true" defaultValue="1">
-            <caption>Point dot stroke width</caption>
-            <category>Settings Line Chart</category>
+        <property key="pointBorderWidth" type="integer" required="true" defaultValue="1">
+            <caption>Dot stroke width</caption>
+            <category>Data Point</category>
             <description>Pixel width of point dot stroke.</description>
         </property>
-        <property key="pointHitDetectionRadius" type="string" required="true" defaultValue="20">
-            <caption>Point hit detection radius</caption>
-            <category>Settings Line Chart</category>
-            <description>amount extra to add to the radius to cater for hit detection outside the drawn point.</description>
+        <property key="pointHitRadius" type="integer" required="true" defaultValue="20">
+            <caption>Dot hit detection</caption>
+            <category>Data Point</category>
+            <description>Extra width to add to cater for hover hit detection</description>
+        </property>
+        <property key="pointHoverRadius" type="integer" required="true" defaultValue="4">
+            <caption>Dot hover radius</caption>
+            <category>Data Point</category>
+            <description>Radius of each point dot in pixels when hovered over it</description>
+        </property>
+        <property key="pointHoverBorderWidth" type="integer" required="true" defaultValue="1">
+            <caption>Dot hover stroke</caption>
+            <category>Data Point</category>
+            <description>Width of stroke when hovered over it</description>
         </property>
         <property key="scaleLineWidth" type="string" required="true" defaultValue="1.0">
             <caption>Scale line width</caption>
