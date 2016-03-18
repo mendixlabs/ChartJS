@@ -61,7 +61,7 @@ define([
 
         startup: function () {
             // Uncomment line to start debugging
-            //logger.level(logger.DEBUG); 
+            //logger.level(logger.DEBUG);
             logger.debug(this.id + ".startup");
 
             var domNode = null;
@@ -154,14 +154,20 @@ define([
                 var obj = objs[0], // Chart object is always only one.
                     j = null,
                     dataset = null,
-                    pointguids = null;
+                    pointguids = null,
+                    guids = obj.get(this._dataset);
 
                 this._data.object = obj;
                 this._data.datasets = [];
 
+                if (!guids) {
+                    logger.warn(this.id + "._loadData failed, no _dataset. Not rendering Chart");
+                    return;
+                }
+
                 // Retrieve datasets
                 mx.data.get({
-                    guids: obj.get(this._dataset),
+                    guids: guids,
                     callback: lang.hitch(this, function (datasets) {
                         var set = {};
 
