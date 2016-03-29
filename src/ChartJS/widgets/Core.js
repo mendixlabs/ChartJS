@@ -130,14 +130,18 @@ define([
             if (this._handle !== null) {
                 mx.data.unsubscribe(this._handle);
             }
-            this._handle = mx.data.subscribe({
-                guid: this._mxObj.getGuid(),
-                callback: lang.hitch(this, this._loadData)
-            });
-
-            // Load data again.
-            this._loadData();
-
+            if(this._mxObj) {
+                this._handle = mx.data.subscribe({
+                    guid: this._mxObj.getGuid(),
+                    callback: lang.hitch(this, this._loadData)
+                });
+    
+                // Load data again.
+                this._loadData();
+                domStyle.set(this.domNode, "display", "");
+            } else {
+                domStyle.set(this.domNode, "display", "none");
+            }
             if (typeof callback !== "undefined") {
                 callback();
             }
