@@ -129,6 +129,17 @@ define([
                             labels : { fontFamily : this._font }
                         },
 
+                        scale: {
+                            ticks: {
+                                yAxes: [{
+                                    ticks: {
+                                        fontFamily: this._font,
+                                        beginAtZero: this.scaleBeginAtZero
+                                    }
+                                }]
+                            }
+                        },
+
                         //Boolean - Whether to show lines for each scale point
                         scaleShowLine : this.scaleShowLine,
 
@@ -137,9 +148,6 @@ define([
 
                         //Boolean - Whether to show labels on the scale
                         scaleShowLabels : this.scaleShowLabels,
-
-                        // Boolean - Whether the scale should begin at zero
-                        scaleBeginAtZero : this.scaleBeginAtZero,
 
                         //String - Colour of the angle line
                         angleLineColor : this.angleLineColor,

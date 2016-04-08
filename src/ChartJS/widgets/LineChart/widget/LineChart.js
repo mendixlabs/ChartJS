@@ -141,14 +141,17 @@ define([
                                     labelString: (this.yLabel !== "") ? this.yLabel : "",
                                     fontFamily: this._font
                                 },
-                                ticks : { fontFamily: this._font,
-                                callback: lang.hitch(this, function(value){
-                                        var round = parseInt(this.roundY);
-                                        if (!isNaN(round) && round >= 0) {
-                                            return Number(value).toFixed(round);
-                                        }
-                                        return value;
-                                    }) }
+                                ticks : {
+                                    fontFamily: this._font,
+                                    beginAtZero: this.scaleBeginAtZero,
+                                    callback: lang.hitch(this, function(value){
+                                            var round = parseInt(this.roundY);
+                                            if (!isNaN(round) && round >= 0) {
+                                                return Number(value).toFixed(round);
+                                            }
+                                            return value;
+                                        })
+                                }
                             }],
                             xAxes: [{
                                 scaleLabel: {

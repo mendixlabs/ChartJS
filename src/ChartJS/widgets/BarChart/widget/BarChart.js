@@ -130,7 +130,10 @@ define([
                                     labelString: (this.yLabel !== "") ? this.yLabel : "",
                                     fontFamily: this._font
                                 },
-                                ticks : { fontFamily: this._font, }
+                                ticks : {
+                                    fontFamily: this._font,
+                                    beginAtZero: this.scaleBeginAtZero
+                                }
                             }],
 
                         },
@@ -147,9 +150,6 @@ define([
 
                         //Boolean - Whether to show labels on the scale
                         scaleShowLabels : this.scaleShowLabels,
-
-                        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-                        scaleBeginAtZero : this.scaleBeginAtZero,
 
                         //Boolean - Whether grid lines are shown across the chart
                         scaleShowGridLines : this.scaleShowGridLines,

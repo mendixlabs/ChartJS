@@ -113,15 +113,22 @@ define([
                         display: this.showLegend,
                         labels : { fontFamily : this._font }
                     },
+                    scale: {
+                        ticks: {
+                            yAxes: [{
+                                ticks: {
+                                    fontFamily: this._font,
+                                    beginAtZero: this.scaleBeginAtZero
+                                }
+                            }]
+                        }
+                    },
 
                     //Boolean - Show a backdrop to the scale label
                     scaleShowLabelBackdrop : this.polarScaleShowLabelBackdrop,
 
                     //String - The colour of the label backdrop
                     scaleBackdropColor : this.polarScaleBackdropColor,
-
-                    // Boolean - Whether the scale should begin at zero
-                    scaleBeginAtZero : this.polarScaleBeginAtZero,
 
                     //Number - The backdrop padding above & below the label in pixels
                     scaleBackdropPaddingY : this.polarScaleBackdropPaddingY,
