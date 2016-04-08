@@ -50,7 +50,8 @@ define([
                     for (k = 0; k < maxpoints; k++) {
                         points.push(0);
                     }
-                    logger.debug(this.id + " - empty dataset");
+                    logger.warn(this.id + " - empty dataset");
+                    continue;
                 }
 
                 set.points = this._sortArrayMx(set.points, this.sortingxvalue);
