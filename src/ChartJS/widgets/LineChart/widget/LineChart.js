@@ -15,6 +15,7 @@ define([
 
         _processData : function () {
             logger.debug(this.id + "._processData");
+
             var sets = [],
                 points = null,
                 set = {
@@ -79,7 +80,6 @@ define([
                     _bezier = 0.4;
                 }
 
-
                 _set = {
                     label : (this.scaleShowLabelsBottom === true) ? label : "",
                     backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.2") : color,
@@ -111,9 +111,7 @@ define([
         },
 
         _createChart : function (data) {
-
             logger.debug(this.id + "._createChart");
-
 
             if (this._chart) {
                 this._chart.stop();
@@ -123,6 +121,7 @@ define([
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
                 logger.debug("stacked:" + this.isStacked);
+
                 this._chart = new this._chartJS(this._ctx, {
                     type: "line",
                     data: data,
@@ -172,15 +171,15 @@ define([
                             labels : { fontFamily : this._font }
                         },
                         elements: {
-
                             point: {
-                                radius : this.pointRadius,
-                                borderWidth : this.pointBorderWidth,
+                                radius : this.pointDot ? this.pointRadius : 0,
+                                borderWidth : this.pointDot ? this.pointBorderWidth : 0,
                                 hitRadius : this.pointHitRadius,
                                 hoverRadius : this.pointHoverRadius,
                                 hoverBorderWidth : this.pointHoverBorderWidth
                             }
                         },
+
                         //Boolean - Whether to show labels on the scale
                         scaleShowLabels : this.scaleShowLabels,
 
@@ -230,7 +229,6 @@ define([
 
                     }
                 });
-
 
                 this.connect(window, "resize", lang.hitch(this, function () {
                     this._resize();

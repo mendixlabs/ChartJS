@@ -296,10 +296,15 @@
             <category>Settings Line Chart</category>
             <description>Tension of the bezier curve between points. (This is usually around 0.4 or lower)</description>
         </property>
+        <property key="pointDot" type="boolean" required="true" defaultValue="true">
+            <caption>Show dot</caption>
+            <category>Data Point</category>
+            <description>Show dots on a data point.</description>
+        </property>
         <property key="pointRadius" type="integer" required="true" defaultValue="3">
             <caption>Dot radius</caption>
             <category>Data Point</category>
-            <description>Radius of each point dot in pixels. Set to zero to disable dots</description>
+            <description>Radius of each point dot in pixels</description>
         </property>
         <property key="pointBorderWidth" type="integer" required="true" defaultValue="1">
             <caption>Dot stroke width</caption>
