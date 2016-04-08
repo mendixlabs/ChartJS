@@ -59,6 +59,8 @@ define([
         _currentContext: null,
         _addedToBody: false,
 
+        _tooltipNode: null,
+
         startup: function () {
             // Uncomment line to start debugging
             //logger.level(logger.DEBUG);
@@ -91,15 +93,14 @@ define([
 
             this._activeDatasets = [];
 
-            if (!dojoDom.byId("chartjsTooltip")) {
-                domNode = domConstruct.toDom(_chartJSTooltipTemplate);
-                domConstruct.place(domNode, win.body());
-            }
+            // if (!dojoDom.byId("chartjsTooltip")) {
+            //     this._tooltipNode = domConstruct.toDom(_chartJSTooltipTemplate);
+            //     domConstruct.place(this._tooltipNode, win.body());
+            // }
 
             this.connect(this.mxform, "resize", lang.hitch(this, function () {
                 this._resize();
             }));
-
         },
 
         datasetAdd: function (dataset, datapoints) {
@@ -200,6 +201,10 @@ define([
             logger.debug(this.id + ".uninitialize");
             if (this._handle !== null) {
                 mx.data.unsubscribe(this._handle);
+            }
+
+            if (this._tooltipNode) {
+                domConstruct.destroy(this._tooltipNode);
             }
         },
 
