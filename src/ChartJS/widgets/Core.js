@@ -71,12 +71,19 @@ define([
             // Activate chartJS.
             this._chartJS = _charts.noConflict();
 
+            console.log(this._chartJS);
+
             // Fonts
             this._font = this.labelFont || "Helvetica Neue";
 
             // Hack to fix the tooltip event, also added "mouseover"
             this._chartJS.defaults.global.tooltipEvents = ["mouseover", "mouseup", "mousedown", "mousemove", "touchstart", "touchmove", "mouseout"];
             this._chartJS.defaults.global.tooltipXOffset = 0;
+
+            if (!this.chartAnimation) {
+                this._chartJS.defaults.global.animation.duration = 0;
+            }
+
 
             // Set object , dataset and datapoint.
             this._dataset = this.datasetentity.split("/")[0];
@@ -136,7 +143,7 @@ define([
                     guid: this._mxObj.getGuid(),
                     callback: lang.hitch(this, this._loadData)
                 });
-    
+
                 // Load data again.
                 this._loadData();
                 domStyle.set(this.domNode, "display", "");

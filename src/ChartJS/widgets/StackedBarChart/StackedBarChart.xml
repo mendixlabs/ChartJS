@@ -47,6 +47,11 @@
             <category>Appearance</category>
             <description>Animation duration (milliseconds) for responsive resizing. (Note: When implementing multiple charts, there can be problems with rendering. You can set this to 0 when having problems)</description>
         </property>
+        <property key="chartAnimation" type="boolean" required="true" defaultValue="true">
+            <caption>Animation</caption>
+            <category>Appearance</category>
+            <description>Switch animation on and off. Try to switch it off when you have rendering problems with multiple charts on a page</description>
+        </property>
         <!-- Data Source -->
 		<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
 			<caption>Chart Entity</caption>
