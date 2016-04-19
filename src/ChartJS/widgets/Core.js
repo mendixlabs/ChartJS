@@ -71,8 +71,6 @@ define([
             // Activate chartJS.
             this._chartJS = _charts.noConflict();
 
-            console.log(this._chartJS);
-
             // Fonts
             this._font = this.labelFont || "Helvetica Neue";
 

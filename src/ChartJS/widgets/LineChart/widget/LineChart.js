@@ -120,9 +120,9 @@ define([
                 this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
-                logger.debug("stacked:" + this.isStacked);
+                //logger.debug("stacked:" + this.isStacked);
 
-                this._chart = new this._chartJS(this._ctx, {
+                var chartOptions = {
                     type: "line",
                     data: data,
                     options: {
@@ -231,7 +231,14 @@ define([
                         customTooltips : false, //lang.hitch(this, this.customTooltip)
 
                     }
-                });
+                };
+
+                if (this.scaleBeginAtZero) {
+                    chartOptions.options.scales.yAxes[0].ticks.suggestedMin = 0;
+                    chartOptions.options.scales.yAxes[0].ticks.suggestedMax = 4;
+                }
+
+                this._chart = new this._chartJS(this._ctx, chartOptions);
 
                 this.connect(window, "resize", lang.hitch(this, function () {
                     this._resize();
@@ -243,7 +250,6 @@ define([
                 if (this.onclickmf) {
                     on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
                 }
-
             }
         }
 

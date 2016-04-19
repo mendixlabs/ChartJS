@@ -105,7 +105,7 @@ define([
                 this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
-                this._chart = new this._chartJS(this._ctx, {
+                var chartOptions = {
                     type: "bar",
                     data: data,
                     options: {
@@ -195,7 +195,14 @@ define([
                         // Custom tooltip?
                         customTooltips : false,
                     }
-                });
+                };
+
+                if (this.scaleBeginAtZero) {
+                    chartOptions.options.scales.yAxes[0].ticks.suggestedMin = 0;
+                    chartOptions.options.scales.yAxes[0].ticks.suggestedMax = 4;
+                }
+
+                this._chart = new this._chartJS(this._ctx, chartOptions);
 
                 this.connect(window, "resize", lang.hitch(this, function () {
                     this._resize();

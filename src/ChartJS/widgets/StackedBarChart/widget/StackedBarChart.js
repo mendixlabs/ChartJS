@@ -107,7 +107,7 @@ define([
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
 
-                this._chart = new this._chartJS(this._ctx, {
+                var chartOptions = {
                     type: "bar",
                     data: data,
                     options: {
@@ -199,19 +199,27 @@ define([
                         // Custom tooltip?
                         customTooltips : false, //lang.hitch(this, this.customTooltip)
                     }
-                });
+                };
+
+                if (this.scaleBeginAtZero) {
+                    chartOptions.options.scales.yAxes[0].ticks.suggestedMin = 0;
+                    chartOptions.options.scales.yAxes[0].ticks.suggestedMax = 4;
+                }
+
+                this._chart = new this._chartJS(this._ctx, chartOptions);
+
+                this.connect(window, "resize", lang.hitch(this, function () {
+                    this._resize();
+                }));
+
+                // Add class to determain chart type
+                this._addChartClass("chartjs-stacked-bar-chart");
+
+                if (this.onclickmf) {
+                    on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
+                }
             }
 
-            this.connect(window, "resize", lang.hitch(this, function () {
-                this._resize();
-            }));
-
-            // Add class to determain chart type
-            this._addChartClass("chartjs-stacked-bar-chart");
-
-            if (this.onclickmf) {
-                on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
-            }
         }
     });
 });
