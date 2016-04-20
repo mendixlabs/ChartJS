@@ -1,15 +1,25 @@
-/*jslint white:true, nomen: true, plusplus: true */
-/*global mx, mxui, mendix, require, console, define, module, logger, ChartJS, position, clearTimeout, setTimeout */
-/*mendix */
-
-// Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
 define([
 
     // Mixins
-    "dojo/_base/declare", "mxui/widget/_WidgetBase", "dijit/_TemplatedMixin",
+    "dojo/_base/declare",
+    "mxui/widget/_WidgetBase",
+    "dijit/_TemplatedMixin",
 
     // Client API and DOJO functions
-    "mxui/dom", "dojo/dom", "dojo/query", "dojo/dom-prop", "dojo/dom-geometry", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/_base/window", "dojo/dom-construct", "dojo/_base/array", "dojo/_base/lang", "dojo/html", "dojo/ready",
+    "mxui/dom",
+    "dojo/dom",
+    "dojo/query",
+    "dojo/dom-prop",
+    "dojo/dom-geometry",
+    "dojo/dom-class",
+    "dojo/dom-attr",
+    "dojo/dom-style",
+    "dojo/_base/window",
+    "dojo/dom-construct",
+    "dojo/_base/array",
+    "dojo/_base/lang",
+    "dojo/html",
+    "dojo/ready",
 
     // External libraries
     "ChartJS/lib/charts",
@@ -62,8 +72,6 @@ define([
         _tooltipNode: null,
 
         startup: function () {
-            // Uncomment line to start debugging
-            //logger.level(logger.DEBUG);
             logger.debug(this.id + ".startup");
 
             var domNode = null;
@@ -539,9 +547,9 @@ define([
                         callback(obj);
                     }
                 }),
-                error: function (error) {
-                    console.log(error.description);
-                }
+                error: lang.hitch(this, function (error) {
+                    console.log(this.id + "._executeMicroflow error: " + error.description);
+                })
             }, this);
         }
 

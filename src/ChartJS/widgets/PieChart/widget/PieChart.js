@@ -1,15 +1,15 @@
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global mx, mendix, require, console, define, module, logger, window */
-/*mendix */
 define([
-
-    "dojo/_base/declare", "dojo/_base/lang", "dojo/query", "dojo/on", "dojo/html", "dojo/dom-style", "ChartJS/widgets/Core"
-
-], function (declare, lang, domQuery, on, html, domStyle, _core) {
+    "dojo/_base/declare",
+    "ChartJS/widgets/Core",
+    "dojo/_base/lang",
+    "dojo/query",
+    "dojo/on",
+    "dojo/html",
+    "dojo/dom-style"
+], function (declare, Core, lang, domQuery, on, html, domStyle) {
     "use strict";
 
-    // Declare widget.
-    return declare("ChartJS.widgets.PieChart.widget.PieChart", [ _core ], {
+    return declare("ChartJS.widgets.PieChart.widget.PieChart", [ Core ], {
 
         _processData : function () {
             logger.debug(this.id + "._processData");

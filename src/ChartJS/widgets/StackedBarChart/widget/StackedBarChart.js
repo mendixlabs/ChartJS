@@ -1,17 +1,13 @@
-/*jslint white:true, nomen: true, plusplus: true */
-/*global mx, mendix, require, console, define, module, logger, window */
-/*mendix */
 define([
-
-    "dojo/_base/declare", "dojo/_base/lang", "dojo/query", "dojo/on", "ChartJS/widgets/Core"
-
-], function (declare, lang, domQuery, on, _core) {
+    "dojo/_base/declare",
+    "ChartJS/widgets/Core",
+    "dojo/_base/lang",
+    "dojo/query",
+    "dojo/on"
+], function (declare, Core, lang, domQuery, on) {
     "use strict";
 
-    // Declare widget.
-    return declare("ChartJS.widgets.StackedBarChart.widget.StackedBarChart", [ _core ], {
-
-        // Overwrite functions from _core here...
+    return declare("ChartJS.widgets.StackedBarChart.widget.StackedBarChart", [ Core ], {
 
         _processData : function () {
             logger.debug(this.id + "._processData");
@@ -126,8 +122,7 @@ define([
                                     fontFamily: this._font
                                 },
                                 ticks: {
-                                    fontFamily :this._font
-                                    //beginAtZero: true
+                                    fontFamily: this._font
                                 }
                             }],
                             yAxes: [{

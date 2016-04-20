@@ -1,17 +1,12 @@
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global mx, mendix, require, console, define, module, logger, window */
-/*mendix */
 define([
-
-    "dojo/_base/declare", "dojo/_base/lang", "dojo/on", "ChartJS/widgets/Core"
-
-], function (declare, lang, on, _core) {
+    "dojo/_base/declare",
+    "ChartJS/widgets/Core",
+    "dojo/_base/lang",
+    "dojo/on"
+], function (declare, Core, lang, on) {
     "use strict";
 
-    // Declare widget.
-    return declare("ChartJS.widgets.BarChart.widget.BarChart", [ _core ], {
-
-        // Overwrite functions from _core here...
+    return declare("ChartJS.widgets.BarChart.widget.BarChart", [ Core ], {
 
         _processData : function () {
             logger.debug(this.id + "._processData");

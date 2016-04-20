@@ -1,13 +1,5 @@
-.chartjs-node {
-    position: relative;
-}
-.legend-node {
-    width: 100%;
-    padding: 5px;
-}
-.legend-node li {
-    cursor: pointer;
-}
+/* PieChart reference css file, all general ChartJS styles are in widgets/BarChart/widget/ui/BarChart.css */
+
 .pie-legend {
     text-align	: center;
 }

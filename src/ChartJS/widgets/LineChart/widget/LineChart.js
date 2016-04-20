@@ -1,15 +1,13 @@
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global mx, mendix, require, console, define, module, logger, window */
-/*mendix */
 define([
-
-    "dojo/_base/declare", "dojo/_base/lang", "dojo/query", "dojo/on", "ChartJS/widgets/Core"
-
-], function (declare, lang, domQuery, on, _core) {
+    "dojo/_base/declare",
+    "ChartJS/widgets/Core",
+    "dojo/_base/lang",
+    "dojo/query",
+    "dojo/on"
+], function (declare, Core, lang, domQuery, on) {
     "use strict";
 
-    // Declare widget.
-    return declare("ChartJS.widgets.LineChart.widget.LineChart", [ _core ], {
+    return declare("ChartJS.widgets.LineChart.widget.LineChart", [ Core ], {
 
         // Overwrite functions from _core here...
 
@@ -255,6 +253,7 @@ define([
 
     });
 });
+
 require(["ChartJS/widgets/LineChart/widget/LineChart"], function () {
     "use strict";
 });
