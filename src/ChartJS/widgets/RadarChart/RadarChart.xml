@@ -17,6 +17,11 @@
             <category>Appearance</category>
 			<description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
         </property>
+        <property key="responsiveRatio" type="integer" required="true" defaultValue="0">
+            <caption>Responsive w/h ratio (%)</caption>
+            <category>Appearance</category>
+            <description>Responsive is set to 'true': Responsive width height ratio default value is 0, which means it will set the height of the chart the same height as the container. If you set this value to a certain number, it will create a chart where the height is a percentage of the width. So 100 means the height will be 100% of the width (a square)</description>
+        </property>
         <property key="labelFont" type="string" required="true" defaultValue="Helvetica Neue">
             <caption>Font</caption>
             <category>Appearance</category>

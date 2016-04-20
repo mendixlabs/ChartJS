@@ -51,6 +51,9 @@ define([
         // Template path
         templateString: _chartJSTemplate,
 
+        // Set in modeler
+        responsiveRatio: 0,
+
         // Internal variables
         _chartJS: null,
         _chart: null,
@@ -142,8 +145,10 @@ define([
 
             if (this._handle !== null) {
                 mx.data.unsubscribe(this._handle);
+                this._handle = null;
             }
-            if(this._mxObj) {
+
+            if (this._mxObj) {
                 this._handle = mx.data.subscribe({
                     guid: this._mxObj.getGuid(),
                     callback: lang.hitch(this, this._loadData)
@@ -155,9 +160,8 @@ define([
             } else {
                 domStyle.set(this.domNode, "display", "none");
             }
-            if (typeof callback !== "undefined") {
-                callback();
-            }
+
+            mendix.lang.nullExec(callback);
         },
 
         _loadData: function () {
@@ -285,16 +289,20 @@ define([
             var position = domGeom.position(this.domNode.parentElement, false);
             domAttr.set(this.canvasNode, "id", "canvasid_" + this.id);
 
-            logger.debug(this.id + ".createCtx", position);
-
             if (position.w > 0 && this.responsive) {
                 this.canvasNode.width = position.w;
             } else {
                 this.canvasNode.width = this.width;
             }
 
-            if (position.h > 0 && this.responsive) {
-                this.canvasNode.height = position.h;
+            if (this.responsive) {
+                if (this.responsiveRatio > 0) {
+                    this.canvasNode.height = Math.round(this.canvasNode.width * (this.responsiveRatio / 100));
+                } else if (position.h > 0) {
+                    this.canvasNode.height = position.h;
+                } else {
+                    this.canvasNode.height = this.height;
+                }
             } else {
                 this.canvasNode.height = this.height;
             }
