@@ -333,9 +333,6 @@ define([
                 if (this.onclickDataPointMf && dataPointObject) {
                     this._executeMicroflow(this.onclickDataPointMf, null, dataPointObject);
                 }
-
-                console.log(JSON.stringify(datasetObject.jsonData));
-                console.log(JSON.stringify(dataPointObject.jsonData));
             }
 
             if (this.onclickmf) {
