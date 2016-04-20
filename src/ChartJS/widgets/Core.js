@@ -76,8 +76,8 @@ define([
 
             var domNode = null;
 
-            // Activate chartJS.
-            this._chartJS = _charts.noConflict();
+            // Activate chartJS (and clone it).
+            this._chartJS = lang.clone(_charts);
 
             // Fonts
             this._font = this.labelFont || "Helvetica Neue";
@@ -89,7 +89,6 @@ define([
             if (!this.chartAnimation) {
                 this._chartJS.defaults.global.animation.duration = 0;
             }
-
 
             // Set object , dataset and datapoint.
             this._dataset = this.datasetentity.split("/")[0];
