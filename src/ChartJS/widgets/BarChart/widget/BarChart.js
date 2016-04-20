@@ -182,9 +182,7 @@ define([
                 // Add class to determain chart type
                 this._addChartClass("chartjs-bar-chart");
 
-                if (this.onclickmf) {
-                    on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
-                }
+                on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
             }
         }
     });

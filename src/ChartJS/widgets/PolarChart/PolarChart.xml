@@ -148,6 +148,12 @@
                 <description></description>
                 <returnType type="Void"></returnType>
             </property>
+            <property key="onclickDataSetMf" type="microflow" required="false" entityProperty="datasetentity">
+                <caption>On Click Dataset Microflow</caption>
+                <category>Behavior</category>
+                <description>Microflow to invoke when chart canvas is clicked. This Microflow will pass the Dataset object 'Data set entity'</description>
+                <returnType type="Void"></returnType>
+            </property>
             <!-- Settings -->
             <property key="responsive" type="boolean" required="true" defaultValue="true">
                 <caption>Responsive</caption>

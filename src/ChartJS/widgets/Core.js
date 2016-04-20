@@ -76,7 +76,7 @@ define([
 
             var domNode = null;
 
-            // Activate chartJS (and clone it).
+            // Activate chartJS (and clone it, making sure globals are not overwritten for other instances).
             this._chartJS = lang.clone(_charts);
 
             // Fonts
@@ -313,8 +313,31 @@ define([
             console.error("_createChart: This is placeholder function that should be overwritten by the implementing widget.", data);
         },
 
-        _onClickChart: function () {
+        _onClickChart: function (evt) {
             logger.debug(this.id + "._onClickChart");
+
+            var elements = this._chart.getElementAtEvent(evt);
+
+            if (elements.length) {
+                var el = elements[0],
+                datasetIndex = el._datasetIndex,
+                pointIndex = el._index,
+                dataset =  this._data.datasets[datasetIndex],
+                datasetObject = dataset ? dataset.dataset : null,
+                dataPointObject = dataset && dataset.points ? dataset.points[pointIndex] : null;
+
+                if (this.onclickDataSetMf && datasetObject) {
+                    this._executeMicroflow(this.onclickDataSetMf, null, datasetObject);
+                }
+
+                if (this.onclickDataPointMf && dataPointObject) {
+                    this._executeMicroflow(this.onclickDataPointMf, null, dataPointObject);
+                }
+
+                console.log(JSON.stringify(datasetObject.jsonData));
+                console.log(JSON.stringify(dataPointObject.jsonData));
+            }
+
             if (this.onclickmf) {
                 this._executeMicroflow(this.onclickmf);
             }
@@ -569,7 +592,7 @@ define([
                     caller: this.mxform
                 },
                 callback: lang.hitch(this, function (obj) {
-                    if (typeof callback !== "undefined") {
+                    if (typeof callback === "function") {
                         callback(obj);
                     }
                 }),
