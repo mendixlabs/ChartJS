@@ -107,23 +107,7 @@ define([
                 this._chart = new this._chartJS(this._ctx, {
                     type: "radar",
                     data: data,
-                    options: {
-                        title: {
-                            display: (this.chartTitle !== "") ? true : false,
-                            text: (this.chartTitle !== "") ? this.chartTitle : "",
-                            fontFamily: this._font,
-                            fontSize: this.titleSize
-                        },
-
-                        responsive : this.responsive,
-                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
-                        tooltips : {
-                            enabled : this.showTooltips
-                        },
-                        legend: {
-                            display: this.showLegend,
-                            labels : { fontFamily : this._font }
-                        },
+                    options: this._chartOptions({
 
                         scale: {
                             ticks: {
@@ -184,18 +168,8 @@ define([
                         //Boolean - Whether to fill the dataset with a colour
                         datasetFill : this.datasetFill,
 
-                        legendCallback : this._legendCallback,
-
-                        // Show tooltips at all
-                        showTooltips : this.showTooltips,
-
-                        // maintainAspectRatio
-                        maintainAspectRatio : this.maintainAspectRatio,
-
-                        // Custom tooltip?
-                        customTooltips : false //lang.hitch(this, this.customTooltip)
-
-                    }
+                        legendCallback : this._legendCallback
+                    })
                 });
 
                 // Add class to determain chart type

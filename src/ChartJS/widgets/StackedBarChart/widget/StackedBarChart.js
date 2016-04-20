@@ -103,16 +103,11 @@ define([
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
 
-                var chartOptions = {
+                var chartProperties = {
                     type: "bar",
                     data: data,
-                    options: {
-                        title: {
-                            display: (this.chartTitle !== "") ? true : false,
-                            text: (this.chartTitle !== "") ? this.chartTitle : "",
-                            fontFamily: this._font,
-                            fontSize: this.titleSize
-                        },
+                    options: this._chartOptions({
+
                         scales: {
                             xAxes: [{
                                 stacked: true,
@@ -137,15 +132,6 @@ define([
                                     beginAtZero: this.scaleBeginAtZero
                                 }
                             }]
-                        },
-                        responsive : this.responsive,
-                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
-                        tooltips : {
-                            enabled : this.showTooltips
-                        },
-                        legend: {
-                            display: this.showLegend,
-                            labels : { fontFamily : this._font }
                         },
 
                         stacked: true,
@@ -183,25 +169,16 @@ define([
                         scaleLineWidth : this.scaleLineWidth,
 
                         //The scale line color
-                        scaleLineColor : this.scaleLineColor,
-
-                        // Show tooltips at all
-                        showTooltips : this.showTooltips,
-
-                        // maintainAspectRatio
-                        maintainAspectRatio : this.maintainAspectRatio,
-
-                        // Custom tooltip?
-                        customTooltips : false, //lang.hitch(this, this.customTooltip)
-                    }
+                        scaleLineColor : this.scaleLineColor
+                    })
                 };
 
                 if (this.scaleBeginAtZero) {
-                    chartOptions.options.scales.yAxes[0].ticks.suggestedMin = 0;
-                    chartOptions.options.scales.yAxes[0].ticks.suggestedMax = 4;
+                    chartProperties.options.scales.yAxes[0].ticks.suggestedMin = 0;
+                    chartProperties.options.scales.yAxes[0].ticks.suggestedMax = 4;
                 }
 
-                this._chart = new this._chartJS(this._ctx, chartOptions);
+                this._chart = new this._chartJS(this._ctx, chartProperties);
 
                 this.connect(window, "resize", lang.hitch(this, function () {
                     this._resize();
@@ -218,6 +195,7 @@ define([
         }
     });
 });
+
 require(["ChartJS/widgets/StackedBarChart/widget/StackedBarChart"], function () {
     "use strict";
 });

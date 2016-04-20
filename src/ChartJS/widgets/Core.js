@@ -521,6 +521,33 @@ define([
             return "rgba(220,220,220," + alpha + ")";
         },
 
+        _chartOptions: function (options) {
+            logger.debug(this.id + "._chartOptions");
+            // returns default chart options, mixed with specific options for a chart
+
+            var defaultOptions = {
+                title: {
+                    display: (this.chartTitle !== "") ? true : false,
+                    text: (this.chartTitle !== "") ? this.chartTitle : "",
+                    fontFamily: this._font,
+                    fontSize: this.titleSize
+                },
+                responsive : this.responsive,
+                responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                tooltips : {
+                    enabled : this.showTooltips
+                },
+                legend: {
+                    display : this.showLegend,
+                    labels : { fontFamily : this._font }
+                },
+                maintainAspectRatio : this.maintainAspectRatio,
+                showTooltips : this.showTooltips
+            };
+
+            return lang.mixin(lang.clone(defaultOptions), options);
+        },
+
         _executeMicroflow: function (mf, callback, obj) {
             logger.debug(this.id + "._executeMicroflow");
             var _params = {

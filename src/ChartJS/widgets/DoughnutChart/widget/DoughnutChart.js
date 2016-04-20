@@ -97,23 +97,7 @@ define([
             this._chart = new this._chartJS(this._ctx, {
                 type: "doughnut",
                 data: this._createDataSets(data),
-                options: {
-                    title: {
-                        display: (this.chartTitle !== "") ? true : false,
-                        text: (this.chartTitle !== "") ? this.chartTitle : "",
-                        fontFamily: this._font,
-                        fontSize: this.titleSize
-                    },
-
-                    responsive : this.responsive,
-                    responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
-                    tooltips : {
-                        enabled : this.showTooltips
-                    },
-                    legend: {
-                        display: this.showLegend,
-                        labels : { fontFamily : this._font }
-                    },
+                options: this._chartOptions({
 
                     //Boolean - Whether we should show a stroke on each segment
                     segmentShowStroke : this.segmentShowStroke,
@@ -123,7 +107,6 @@ define([
 
                     //Number - The width of each segment stroke
                     segmentStrokeWidth : this.segmentStrokeWidth,
-
 
                     //Number - Amount of animation steps
                     animationSteps : this.animationSteps,
@@ -139,19 +122,9 @@ define([
 
                     legendCallback : this._legendAlternateCallback,
 
-                    // Show tooltips at all
-                    showTooltips : this.showTooltips,
-
-                    // maintainAspectRatio
-                    maintainAspectRatio : this.maintainAspectRatio,
-
                     //Number - The percentage of the chart that we cut out of the middle
-                    cutoutPercentage : this.percentageInnerCutout,
-
-                    // Custom tooltip?
-                    customTooltips : false //lang.hitch(this, this.customTooltip)
-
-                }
+                    cutoutPercentage : this.percentageInnerCutout
+                })
             });
 
             this.connect(window, "resize", lang.hitch(this, function () {
@@ -171,6 +144,7 @@ define([
         }
     });
 });
+
 require(["ChartJS/widgets/DoughnutChart/widget/DoughnutChart"], function () {
     "use strict";
 });

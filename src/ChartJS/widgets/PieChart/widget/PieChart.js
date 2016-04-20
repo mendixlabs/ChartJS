@@ -99,26 +99,10 @@ define([
                 this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
-                var chartOptions = {
+                var chartProperties = {
                     type: "pie",
                     data:  this._createDataSets(data),
-                    options: {
-                        title: {
-                            display: (this.chartTitle !== "") ? true : false,
-                            text: (this.chartTitle !== "") ? this.chartTitle : "",
-                            fontFamily: this._font,
-                            fontSize: this.titleSize
-                        },
-
-                        responsive : this.responsive,
-                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
-                        tooltips : {
-                            enabled : this.showTooltips
-                        },
-                        legend: {
-                            display: this.showLegend,
-                            labels : { fontFamily : this._font }
-                        },
+                    options: this._chartOptions({
 
                         //Boolean - Whether we should show a stroke on each segment
                         segmentShowStroke : this.segmentShowStroke,
@@ -143,22 +127,12 @@ define([
 
                         legendCallback : this._legendAlternateCallback,
 
-                        // Show tooltips at all
-                        showTooltips : this.showTooltips,
-
-                        // maintainAspectRatio
-                        maintainAspectRatio : this.maintainAspectRatio,
-
-
                         //cutOut of pie
                         cutoutPercentage : 0, //always zero for Pie chart
 
-                        // Custom tooltip?
-                        customTooltips : false //lang.hitch(this, this.customTooltip)
-
-                    }
+                    })
                 };
-                this._chart = new this._chartJS(this._ctx, chartOptions);
+                this._chart = new this._chartJS(this._ctx, chartProperties);
 
                 // Set the con
                 html.set(this._numberNode, this._data.object.get(this.numberInside));
@@ -173,6 +147,7 @@ define([
         }
     });
 });
+
 require(["ChartJS/widgets/PieChart/widget/PieChart"], function () {
     "use strict";
 });
