@@ -9,6 +9,8 @@ define([
 
     return declare("ChartJS.widgets.StackedBarChart.widget.StackedBarChart", [ Core ], {
 
+        _chartType: "bar",
+
         _processData : function () {
             logger.debug(this.id + "._processData");
             var sets = [],
@@ -104,7 +106,7 @@ define([
             } else {
 
                 var chartProperties = {
-                    type: "bar",
+                    type: this._chartType,
                     data: data,
                     options: this._chartOptions({
 

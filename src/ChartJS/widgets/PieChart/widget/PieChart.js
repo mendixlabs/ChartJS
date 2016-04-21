@@ -11,6 +11,8 @@ define([
 
     return declare("ChartJS.widgets.PieChart.widget.PieChart", [ Core ], {
 
+        _chartType: "pie",
+
         _processData : function () {
             logger.debug(this.id + "._processData");
             var sets = [],
@@ -46,6 +48,7 @@ define([
 
                 chartData.push(point);
                 this._activeDatasets.push({
+                    obj: set.dataset,
                     dataset : point,
                     idx : j,
                     active : true
@@ -53,7 +56,6 @@ define([
             }
 
             this._createChart(chartData);
-
             this._createLegend(true);
         },
 
@@ -100,7 +102,7 @@ define([
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
                 var chartProperties = {
-                    type: "pie",
+                    type: this._chartType,
                     data:  this._createDataSets(data),
                     options: this._chartOptions({
 

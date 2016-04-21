@@ -8,6 +8,8 @@ define([
 
     return declare("ChartJS.widgets.BarChart.widget.BarChart", [ Core ], {
 
+        _chartType: "bar",
+
         _processData : function () {
             logger.debug(this.id + "._processData");
             var sets = [],
@@ -101,7 +103,7 @@ define([
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
                 var chartProperties = {
-                    type: "bar",
+                    type: this._chartType,
                     data: data,
                     options: this._chartOptions({
 

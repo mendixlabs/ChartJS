@@ -9,7 +9,7 @@ define([
 
     return declare("ChartJS.widgets.LineChart.widget.LineChart", [ Core ], {
 
-        // Overwrite functions from _core here...
+        _chartType: "line",
 
         _processData : function () {
             logger.debug(this.id + "._processData");
@@ -100,8 +100,8 @@ define([
             }
             this._chartData.labels = xlabels;
 
-            logger.debug(this.id + " Created LineChart data");
-            logger.debug(this.id + "  " + JSON.stringify(this._chartData));
+            //logger.debug(this.id + " Created LineChart data");
+            //logger.debug(this.id + "  " + JSON.stringify(this._chartData));
 
             this._createChart(this._chartData);
 
@@ -121,7 +121,7 @@ define([
                 //logger.debug("stacked:" + this.isStacked);
 
                 var chartProperties = {
-                    type: "line",
+                    type: this._chartType,
                     data: data,
                     options: this._chartOptions({
 

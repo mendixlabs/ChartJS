@@ -11,6 +11,8 @@ define([
     // Declare widget.
     return declare("ChartJS.widgets.PolarChart.widget.PolarChart", [ _core ], {
 
+        _chartType: "polarArea",
+
         _processData : function () {
             logger.debug(this.id + "._processData");
             var sets = [],
@@ -46,6 +48,7 @@ define([
 
                 chartData.push(point);
                 this._activeDatasets.push({
+                    obj: set.dataset,
                     dataset : point,
                     idx : j,
                     active : true
@@ -94,7 +97,7 @@ define([
             logger.debug(this.id + "._createChart");
 
             this._chart = new this._chartJS(this._ctx, {
-                type: "polarArea",
+                type: this._chartType,
                 data: this._createDataSets(data),
                 options: {
                     title: {

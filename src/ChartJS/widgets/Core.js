@@ -67,6 +67,8 @@ define([
         _mxObj: null,
         _handle: null,
 
+        _chartType: null,
+
         _resizeTimer: null,
 
         _currentContext: null,
@@ -319,9 +321,7 @@ define([
 
         _onClickChart: function (evt) {
             logger.debug(this.id + "._onClickChart");
-
             var elements = this._chart.getElementAtEvent(evt);
-
             if (elements.length) {
                 var el = elements[0],
                 datasetIndex = el._datasetIndex,
@@ -331,6 +331,11 @@ define([
                 dataPointObject = dataset && dataset.points ? dataset.points[pointIndex] : null;
 
                 if (this.onclickDataSetMf && datasetObject) {
+                    if (this._chartType === "pie" || this._chartType === "doughnut" || this._chartType === "polarArea") {
+                        // These chartTypes use a single series data set, so the datasetobject is different
+                        datasetObject = this._activeDatasets[pointIndex].obj;
+                    }
+
                     this._executeMicroflow(this.onclickDataSetMf, null, datasetObject);
                 }
 
@@ -431,7 +436,7 @@ define([
         },
 
         _createDataSets: function (data) {
-            logger.debug(this.id + "._createDataSets", data);
+            logger.debug(this.id + "._createDataSets");
             var _chartData = {
                 labels: [],
                 datasets: [
@@ -516,7 +521,7 @@ define([
         },
 
         _hexToRgb: function (hex, alpha) {
-            logger.debug(this.id + "._hexToRgb", hex, alpha);
+            //logger.debug(this.id + "._hexToRgb", hex, alpha);
             if (hex !== null) {
                 var regex = null,
                     shorthandRegex = null,

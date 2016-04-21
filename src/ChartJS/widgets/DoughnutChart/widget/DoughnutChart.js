@@ -10,6 +10,8 @@ define([
 
     return declare("ChartJS.widgets.DoughnutChart.widget.DoughnutChart", [ Core ], {
 
+        _chartType: "doughnut",
+
         _processData : function () {
             logger.debug(this.id + "._processData");
             var sets = [],
@@ -46,6 +48,7 @@ define([
 
                 chartData.push(point);
                 this._activeDatasets.push({
+                    obj: set.dataset,
                     dataset : point,
                     idx : j,
                     active : true
@@ -95,7 +98,7 @@ define([
                 this._chart.destroy();
             }
             this._chart = new this._chartJS(this._ctx, {
-                type: "doughnut",
+                type: this._chartType,
                 data: this._createDataSets(data),
                 options: this._chartOptions({
 

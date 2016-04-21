@@ -9,6 +9,8 @@ define([
 
     return declare("ChartJS.widgets.RadarChart.widget.RadarChart", [ Core ], {
 
+        _chartType: "radar",
+
         _processData : function () {
             logger.debug(this.id + "._processData");
             var sets = [],
@@ -105,7 +107,7 @@ define([
             } else {
 
                 this._chart = new this._chartJS(this._ctx, {
-                    type: "radar",
+                    type: this._chartType,
                     data: data,
                     options: this._chartOptions({
 
