@@ -57,6 +57,11 @@
             <category>Appearance</category>
             <description>Switch animation on and off. Try to switch it off when you have rendering problems with multiple charts on a page</description>
         </property>
+        <property key="animationDuration" type="integer" required="true" defaultValue="1000">
+            <caption>Animation duration</caption>
+            <category>Appearance</category>
+            <description>Animation duration (milliseconds) for rendering (this is different from the Responsive animation duration)</description>
+        </property>
         <!-- Data Source -->
 		<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
 			<caption>Chart Entity</caption>

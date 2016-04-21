@@ -89,10 +89,6 @@ define([
             this._chartJS.defaults.global.tooltipEvents = ["mouseover", "mouseup", "mousedown", "mousemove", "touchstart", "touchmove", "mouseout"];
             this._chartJS.defaults.global.tooltipXOffset = 0;
 
-            if (!this.chartAnimation) {
-                this._chartJS.defaults.global.animation.duration = 0;
-            }
-
             // Set object , dataset and datapoint.
             this._dataset = this.datasetentity.split("/")[0];
             this._datapoint = this.datapointentity && this.datapointentity.split("/")[0];
@@ -569,7 +565,10 @@ define([
                     labels : { fontFamily : this._font }
                 },
                 maintainAspectRatio : this.maintainAspectRatio,
-                showTooltips : this.showTooltips
+                showTooltips : this.showTooltips,
+                animation: {
+                    duration: this.chartAnimation ? 1000 : 0
+                }
             };
 
             return lang.mixin(lang.clone(defaultOptions), options);
