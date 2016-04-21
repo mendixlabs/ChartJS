@@ -567,7 +567,7 @@ define([
                 maintainAspectRatio : this.maintainAspectRatio,
                 showTooltips : this.showTooltips,
                 animation: {
-                    duration: this.chartAnimation ? 1000 : 0
+                    duration: this.chartAnimation ? this.animationDuration : 0
                 }
             };
 
