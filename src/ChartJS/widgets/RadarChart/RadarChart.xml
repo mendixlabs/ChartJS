@@ -56,7 +56,7 @@
         <property key="animationEasing" type="enumeration" required="true" defaultValue="easeOutQuart">
             <caption>Animation easing</caption>
             <category>Animation</category>
-            <description>Animation easing function (the way it animates). See examples at: http://easings.net</description>
+            <description>Animation easing function (the way it animates). See examples at: http://easings.net. Note: Setting this any other than easeOutQuart might result in weird behaviour of the widget rendering</description>
             <enumerationValues>
                 <enumerationValue key="linear">linear</enumerationValue>
                 <enumerationValue key="easeInSine">easeInSine</enumerationValue>
