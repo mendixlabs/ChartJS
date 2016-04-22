@@ -37,20 +37,59 @@
                 <category>Appearance</category>
                 <description>The size of the chart title. Default is 12</description>
             </property>
-            <property key="responsiveAnimationDuration" type="integer" required="true" defaultValue="0">
+            <!-- Animation -->
+            <property key="responsiveAnimationDuration" type="integer" required="true" defaultValue="1000">
                 <caption>Responsive animation duration</caption>
-                <category>Appearance</category>
+                <category>Animation</category>
                 <description>Animation duration (milliseconds) for responsive resizing. (Note: When implementing multiple charts, there can be problems with rendering. You can set this to 0 when having problems)</description>
             </property>
             <property key="chartAnimation" type="boolean" required="true" defaultValue="true">
                 <caption>Animation</caption>
-                <category>Appearance</category>
+                <category>Animation</category>
                 <description>Switch animation on and off. Try to switch it off when you have rendering problems with multiple charts on a page</description>
             </property>
             <property key="animationDuration" type="integer" required="true" defaultValue="1000">
                 <caption>Animation duration</caption>
-                <category>Appearance</category>
+                <category>Animation</category>
                 <description>Animation duration (milliseconds) for rendering (this is different from the Responsive animation duration)</description>
+            </property>
+            <property key="animationEasing" type="enumeration" required="true" defaultValue="easeOutQuart">
+                <caption>Animation easing</caption>
+                <category>Animation</category>
+                <description>Animation easing function (the way it animates). See examples at: http://easings.net</description>
+                <enumerationValues>
+                    <enumerationValue key="linear">linear</enumerationValue>
+                    <enumerationValue key="easeInSine">easeInSine</enumerationValue>
+                    <enumerationValue key="easeOutSine">easeOutSine</enumerationValue>
+                    <enumerationValue key="easeInOutSine">easeInOutSine</enumerationValue>
+                    <enumerationValue key="easeInQuad">easeInQuad</enumerationValue>
+                    <enumerationValue key="easeOutQuad">easeOutQuad</enumerationValue>
+                    <enumerationValue key="easeInOutQuad">easeInOutQuad</enumerationValue>
+                    <enumerationValue key="easeInCubic">easeInCubic</enumerationValue>
+                    <enumerationValue key="easeOutCubic">easeOutCubic</enumerationValue>
+                    <enumerationValue key="easeInOutCubic">easeInOutCubic</enumerationValue>
+                    <enumerationValue key="easeInQuart">easeInQuart</enumerationValue>
+                    <enumerationValue key="easeOutQuart">easeOutQuart</enumerationValue>
+                    <enumerationValue key="easeInOutQuart">easeInOutQuart</enumerationValue>
+                    <enumerationValue key="easeInQuint">easeInQuint</enumerationValue>
+                    <enumerationValue key="easeOutQuint">easeOutQuint</enumerationValue>
+                    <enumerationValue key="easeInOutQuint">easeInOutQuint</enumerationValue>
+                    <enumerationValue key="easeInExpo">easeInExpo</enumerationValue>
+                    <enumerationValue key="easeOutExpo">easeOutExpo</enumerationValue>
+                    <enumerationValue key="easeInOutExpo">easeInOutExpo</enumerationValue>
+                    <enumerationValue key="easeInCirc">easeInCirc</enumerationValue>
+                    <enumerationValue key="easeOutCirc">easeOutCirc</enumerationValue>
+                    <enumerationValue key="easeInOutCirc">easeInOutCirc</enumerationValue>
+                    <enumerationValue key="easeInBack">easeInBack</enumerationValue>
+                    <enumerationValue key="easeOutBack">easeOutBack</enumerationValue>
+                    <enumerationValue key="easeInOutBack">easeInOutBack</enumerationValue>
+                    <enumerationValue key="easeInElastic">easeInElastic</enumerationValue>
+                    <enumerationValue key="easeOutElastic">easeOutElastic</enumerationValue>
+                    <enumerationValue key="easeInOutElastic">easeInOutElastic</enumerationValue>
+                    <enumerationValue key="easeInBounce">easeInBounce</enumerationValue>
+                    <enumerationValue key="easeOutBounce">easeOutBounce</enumerationValue>
+                    <enumerationValue key="easeInOutBounce">easeInOutBounce</enumerationValue>
+                </enumerationValues>
             </property>
 			<!-- Data Source -->
 			<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
@@ -189,11 +228,6 @@
                 <caption>Animation Steps</caption>
                 <category>Settings</category>
                 <description>Amount of animation steps.</description>
-            </property>
-            <property key="animationEasing" type="string" required="true" defaultValue="easeOutBounce">
-                <caption>Animation Easing</caption>
-                <category>Settings</category>
-                <description>Animation easing effect.</description>
             </property>
             <property key="animateRotate" type="boolean" required="true" defaultValue="true">
                 <caption>Animate Rotate</caption>

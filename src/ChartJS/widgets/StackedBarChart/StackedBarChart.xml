@@ -7,327 +7,366 @@
 
     <properties>
         <!-- Appearance -->
-		<property key="width" type="integer" required="true" defaultValue="500">
-			<caption>Width</caption>
-			<category>Appearance</category>
-			<description>Initial width of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
-		</property>
-		<property key="height" type="integer" required="true" defaultValue="250">
-			<caption>Height</caption>
-			<category>Appearance</category>
-			<description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
-		</property>
+        <property key="width" type="integer" required="true" defaultValue="500">
+            <caption>Width</caption>
+            <category>Appearance</category>
+            <description>Initial width of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
+        </property>
+        <property key="height" type="integer" required="true" defaultValue="250">
+            <caption>Height</caption>
+            <category>Appearance</category>
+            <description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
+        </property>
         <property key="responsiveRatio" type="integer" required="true" defaultValue="0">
             <caption>Responsive w/h ratio (%)</caption>
             <category>Appearance</category>
             <description>Responsive is set to 'true': Responsive width height ratio default value is 0, which means it will set the height of the chart the same height as the container. If you set this value to a certain number, it will create a chart where the height is a percentage of the width. So 100 means the height will be 100% of the width (a square)</description>
         </property>
-    <property key="xLabel" type="string" required="false" defaultValue="">
-        <caption>X-axis label</caption>
-        <category>Appearance</category>
-        <description>Label to show on the X-axis. Leave empty for no label</description>
-    </property>
-    <property key="yLabel" type="string" required="false" defaultValue="">
-        <caption>Y-axis label</caption>
-        <category>Appearance</category>
-        <description>Label to show on the Y-axis. Leave empty for no label</description>
-    </property>
-    <property key="chartTitle" type="string" required="false" defaultValue="">
-        <caption>Title</caption>
-        <category>Appearance</category>
-        <description>The title of the chart. Will be shown above the chart. Leave empty for no title</description>
-    </property>
-		<property key="titleSize" type="integer" required="true" defaultValue="12">
-				<caption>Title font-size</caption>
-				<category>Appearance</category>
-				<description>The size of the chart title. Default is 12</description>
-		</property>
+        <property key="xLabel" type="string" required="false" defaultValue="">
+            <caption>X-axis label</caption>
+            <category>Appearance</category>
+            <description>Label to show on the X-axis. Leave empty for no label</description>
+        </property>
+        <property key="yLabel" type="string" required="false" defaultValue="">
+            <caption>Y-axis label</caption>
+            <category>Appearance</category>
+            <description>Label to show on the Y-axis. Leave empty for no label</description>
+        </property>
+        <property key="chartTitle" type="string" required="false" defaultValue="">
+            <caption>Title</caption>
+            <category>Appearance</category>
+            <description>The title of the chart. Will be shown above the chart. Leave empty for no title</description>
+        </property>
+        <property key="titleSize" type="integer" required="true" defaultValue="12">
+            <caption>Title font-size</caption>
+            <category>Appearance</category>
+            <description>The size of the chart title. Default is 12</description>
+        </property>
         <property key="labelFont" type="string" required="true" defaultValue="Helvetica Neue">
             <caption>Font</caption>
             <category>Appearance</category>
             <description>Font used in the chart legend. Default (or empty) = Helvetica Neue</description>
         </property>
-        <property key="responsiveAnimationDuration" type="integer" required="true" defaultValue="0">
+        <!-- Animation -->
+        <property key="responsiveAnimationDuration" type="integer" required="true" defaultValue="1000">
             <caption>Responsive animation duration</caption>
-            <category>Appearance</category>
+            <category>Animation</category>
             <description>Animation duration (milliseconds) for responsive resizing. (Note: When implementing multiple charts, there can be problems with rendering. You can set this to 0 when having problems)</description>
         </property>
         <property key="chartAnimation" type="boolean" required="true" defaultValue="true">
             <caption>Animation</caption>
-            <category>Appearance</category>
+            <category>Animation</category>
             <description>Switch animation on and off. Try to switch it off when you have rendering problems with multiple charts on a page</description>
         </property>
         <property key="animationDuration" type="integer" required="true" defaultValue="1000">
             <caption>Animation duration</caption>
-            <category>Appearance</category>
+            <category>Animation</category>
             <description>Animation duration (milliseconds) for rendering (this is different from the Responsive animation duration)</description>
         </property>
+        <property key="animationEasing" type="enumeration" required="true" defaultValue="easeOutQuart">
+            <caption>Animation easing</caption>
+            <category>Animation</category>
+            <description>Animation easing function (the way it animates). See examples at: http://easings.net</description>
+            <enumerationValues>
+                <enumerationValue key="linear">linear</enumerationValue>
+                <enumerationValue key="easeInSine">easeInSine</enumerationValue>
+                <enumerationValue key="easeOutSine">easeOutSine</enumerationValue>
+                <enumerationValue key="easeInOutSine">easeInOutSine</enumerationValue>
+                <enumerationValue key="easeInQuad">easeInQuad</enumerationValue>
+                <enumerationValue key="easeOutQuad">easeOutQuad</enumerationValue>
+                <enumerationValue key="easeInOutQuad">easeInOutQuad</enumerationValue>
+                <enumerationValue key="easeInCubic">easeInCubic</enumerationValue>
+                <enumerationValue key="easeOutCubic">easeOutCubic</enumerationValue>
+                <enumerationValue key="easeInOutCubic">easeInOutCubic</enumerationValue>
+                <enumerationValue key="easeInQuart">easeInQuart</enumerationValue>
+                <enumerationValue key="easeOutQuart">easeOutQuart</enumerationValue>
+                <enumerationValue key="easeInOutQuart">easeInOutQuart</enumerationValue>
+                <enumerationValue key="easeInQuint">easeInQuint</enumerationValue>
+                <enumerationValue key="easeOutQuint">easeOutQuint</enumerationValue>
+                <enumerationValue key="easeInOutQuint">easeInOutQuint</enumerationValue>
+                <enumerationValue key="easeInExpo">easeInExpo</enumerationValue>
+                <enumerationValue key="easeOutExpo">easeOutExpo</enumerationValue>
+                <enumerationValue key="easeInOutExpo">easeInOutExpo</enumerationValue>
+                <enumerationValue key="easeInCirc">easeInCirc</enumerationValue>
+                <enumerationValue key="easeOutCirc">easeOutCirc</enumerationValue>
+                <enumerationValue key="easeInOutCirc">easeInOutCirc</enumerationValue>
+                <enumerationValue key="easeInBack">easeInBack</enumerationValue>
+                <enumerationValue key="easeOutBack">easeOutBack</enumerationValue>
+                <enumerationValue key="easeInOutBack">easeInOutBack</enumerationValue>
+                <enumerationValue key="easeInElastic">easeInElastic</enumerationValue>
+                <enumerationValue key="easeOutElastic">easeOutElastic</enumerationValue>
+                <enumerationValue key="easeInOutElastic">easeInOutElastic</enumerationValue>
+                <enumerationValue key="easeInBounce">easeInBounce</enumerationValue>
+                <enumerationValue key="easeOutBounce">easeOutBounce</enumerationValue>
+                <enumerationValue key="easeInOutBounce">easeInOutBounce</enumerationValue>
+            </enumerationValues>
+        </property>
         <!-- Data Source -->
-		<property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
-			<caption>Chart Entity</caption>
-			<category>Data Source</category>
-			<description>Container entity, referencing DataSet entity objects.</description>
-		</property>
-		<property key="datasourcemf" type="microflow" required="false">
-			<caption>Microflow</caption>
-			<category>Data Source</category>
-			<description>Microflow returning a 'Chart Entity' object.</description>
-			<returnType type="Object" entityProperty="sourceentity"></returnType>
-		</property>
-		<!--Placeholder-->
-		<!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
-			<caption>Attribute to trigger</caption>
-			<category>Data Set</category>
-			<description>Attribute to trigger the microflow.</description>
-			<attributeTypes>
-				<attributeType name="Enum"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>-->
-        <!-- Data Set -->
-		<property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
-			<caption>Data Set Entity</caption>
-			<category>Data Set</category>
-			<description>Entity, referencing Datapoint entity objects.</description>
-		</property>
-		<property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-			<caption>Data Set label</caption>
-			<category>Data Set</category>
-			<description>Label, displayed in legend</description>
-			<attributeTypes>
-				<attributeType name="Enum"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
-		<property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-			<caption>Sorting</caption>
-			<category>Data Set</category>
-			<description>Attribute used for sorting dataset objects</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-			</attributeTypes>
-		</property>
-		<property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
-			<caption>Fill color (in Hex)</caption>
-			<category>Data Set</category>
-			<description>Initial bar color</description>
-			<attributeTypes>
-				<attributeType name="Enum"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
-		<property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
-			<caption>Highlight color (in Hex)</caption>
-			<category>Data Set</category>
-			<description>Color while hovering over bar.</description>
-			<attributeTypes>
-				<attributeType name="Enum"/>
-				<attributeType name="String"/>
-			</attributeTypes>
-		</property>
-		<property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
-			<caption>Reduce opacity</caption>
-			<category>Data Set</category>
-			<description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
-		</property>
-        <!-- Data Point -->
-		<property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
-			<caption>Data Point Entity</caption>
-			<category>Data Point</category>
-			<description>Entity containing X-axis and Y-axis values</description>
-		</property>
-		<property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>X Value</caption>
-			<category>Data Point</category>
-			<description>X-axis value</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Boolean"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Enum"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-				<attributeType name="String"/>
-				<attributeType name="Decimal"/>
-			</attributeTypes>
-		</property>
-		<property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>X sorting</caption>
-			<category>Data Point</category>
-			<description>Attribute value is used for sorting datapoint on X-Axis </description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-			</attributeTypes>
-		</property>
-		<property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
-			<caption>Y value</caption>
-			<category>Data Point</category>
-			<description>Y-Axis value</description>
-			<attributeTypes>
-				<attributeType name="AutoNumber"/>
-				<attributeType name="Boolean"/>
-				<attributeType name="Currency"/>
-				<attributeType name="DateTime"/>
-				<attributeType name="Enum"/>
-				<attributeType name="Float"/>
-				<attributeType name="Integer"/>
-				<attributeType name="Long"/>
-				<attributeType name="String"/>
-				<attributeType name="Decimal"/>
-			</attributeTypes>
-		</property>
-        <!-- Behavior -->
-		<property key="onclickmf" type="microflow" required="false">
-			<caption>On Click Microflow</caption>
-			<category>Behavior</category>
-			<description>Microflow to invoke when chart canvas is clicked</description>
-			<returnType type="Void"></returnType>
-		</property>
-        <property key="onclickDataSetMf" type="microflow" required="false" entityProperty="datasetentity">
-            <caption>On Click Dataset Microflow</caption>
-            <category>Behavior</category>
-            <description>Microflow to invoke when chart canvas is clicked. This Microflow will pass the Dataset object 'Data set entity'</description>
-            <returnType type="Void"></returnType>
+        <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
+            <caption>Chart Entity</caption>
+            <category>Data Source</category>
+            <description>Container entity, referencing DataSet entity objects.</description>
         </property>
-        <property key="onclickDataPointMf" type="microflow" required="false" entityProperty="datapointentity">
-            <caption>On Click Datapoint Microflow</caption>
-            <category>Behavior</category>
-            <description>Microflow to invoke when chart canvas is clicked. This Microflow will pass the Datapoint object 'Data point entity'</description>
-            <returnType type="Void"></returnType>
+        <property key="datasourcemf" type="microflow" required="false">
+            <caption>Microflow</caption>
+            <category>Data Source</category>
+            <description>Microflow returning a 'Chart Entity' object.</description>
+            <returnType type="Object" entityProperty="sourceentity"></returnType>
         </property>
-        <!-- Settings -->
-		<property key="responsive" type="boolean" required="true" defaultValue="true">
-			<caption>Responsive</caption>
-			<category>Appearance</category>
-			<description>Chart canvas dimensions respond to changes in layout</description>
-		</property>
-		<property key="scaleBeginAtZero" type="boolean" required="true" defaultValue="true">
-			<caption>Begin at zero</caption>
-			<category>Settings</category>
-			<description>Whether the scale should start at zero, or an order of magnitude down from the lowest value</description>
-		</property>
-		<property key="scaleShowGridLines" type="boolean" required="true" defaultValue="true">
-			<caption>Show grid lines</caption>
-			<category>Settings</category>
-			<description>Whether grid lines are shown across the chart.</description>
-		</property>
-        <property key="scaleGridLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.05)">
-            <caption>Grid line color</caption>
-            <category>Settings</category>
-            <description>Color of the grid lines(rgba).</description>
-        </property>
-        <property key="scaleGridLineWidth" type="string" required="true" defaultValue="1">
-            <caption>Grid line width</caption>
-            <category>Settings</category>
-            <description>Width of the grid lines.</description>
-        </property>
-        <property key="scaleShowHorizontalLines" type="boolean" required="true" defaultValue="true">
-            <caption>Show horizontal lines</caption>
-            <category>Settings</category>
-            <description>Whether to show horizontal lines (except X axis).</description>
-        </property>
-        <property key="scaleShowVerticalLines" type="boolean" required="true" defaultValue="true">
-            <caption>Show vertical lines</caption>
-            <category>Settings</category>
-            <description>Whether to show vertical lines (except Y axis).</description>
-        </property>
-        <property key="datasetStroke" type="boolean" required="true" defaultValue="true">
-            <caption>DataSet stroke</caption>
-            <category>Settings</category>
-            <description>Whether to show a stroke for datasets.</description>
-        </property>
-        <property key="datasetStrokeWidth" type="string" required="true" defaultValue="2">
-            <caption>DataSet stroke width</caption>
-            <category>Settings</category>
-            <description>Pixel width of dataset stroke.</description>
-        </property>
-        <property key="datasetFill" type="boolean" required="true" defaultValue="true">
-            <caption>DataSet fill</caption>
-            <category>Settings</category>
-            <description>Whether to fill the dataset with a colour.</description>
-        </property>
-        <property key="showLegend" type="boolean" required="true" defaultValue="true">
-            <caption>Show Legend (ChartJS)</caption>
-            <category>Legend</category>
-            <description>Displays a legend inside the graph</description>
-        </property>
-        <property key="showLegendCustom" type="boolean" required="true" defaultValue="false">
-            <caption>Show Legend (Custom)</caption>
-            <category>Legend</category>
-            <description>Displays a legend outside the graph</description>
-        </property>
-		<property key="scaleShowLabelsBottom" type="boolean" required="true" defaultValue="true">
-			<caption>Show labels bottom</caption>
-			<category>Settings</category>
-			<description>Whether to show the labels on the X-axis scale.</description>
-		</property>
-		<property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
-            <caption>Show labels left</caption>
-            <category>Settings</category>
-			<description>Whether to show labels on the y-axis scale.</description>
-        </property>
-        <property key="showTooltips" type="boolean" required="true" defaultValue="true">
-            <caption>Show tooltip</caption>
-            <category>Settings</category>
-			<description>Determines whether to draw tooltips on the canvas or not.</description>
-        </property>
-        <!--<property key="tooltipForm" type="form" required="false">
-            <caption>Tooltip form</caption>
-            <category>Settings</category>
-            <description>.</description>
-        </property>-->
-        <property key="maintainAspectRatio" type="boolean" required="true" defaultValue="true">
-            <caption>Maintain aspect ratio</caption>
-            <category>Settings</category>
-            <description>Maintain the aspect ratio?</description>
-        </property>
-        <!-- Bar chart settings -->
-        <property key="barShowStroke" type="boolean" required="true" defaultValue="true">
-            <caption>Bar show stroke</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>If there is a stroke on each bar.</description>
-        </property>
-        <property key="barStrokeWidth" type="string" required="true" defaultValue="2">
-            <caption>Bar stroke width</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>Pixel width of the bar stroke.</description>
-        </property>
-        <property key="barValueSpacing" type="string" required="true" defaultValue="5">
-            <caption>Bar X Spacing</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>Spacing between each of the X value sets.</description>
-        </property>
-        <property key="barDatasetSpacing" type="string" required="true" defaultValue="1">
-            <caption>Bar dataset spacing</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>Spacing between data sets within X values.</description>
-        </property>
-        <property key="relativeBars" type="boolean" required="true" defaultValue="false">
-            <caption>Relative Bars</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>Whether bars should be rendered on a percentage base.</description>
-        </property>
-        <property key="scaleLineWidth" type="string" required="true" defaultValue="1.0">
-            <caption>Scale line width</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>The scale line width.</description>
-        </property>
-        <property key="scaleLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.1)">
-            <caption>Scale line color</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>The scale line color.</description>
-        </property>
-    </properties>
+        <!--Placeholder-->
+        <!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
+        <caption>Attribute to trigger</caption>
+        <category>Data Set</category>
+        <description>Attribute to trigger the microflow.</description>
+        <attributeTypes>
+        <attributeType name="Enum"/>
+        <attributeType name="String"/>
+    </attributeTypes>
+</property>-->
+<!-- Data Set -->
+<property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
+    <caption>Data Set Entity</caption>
+    <category>Data Set</category>
+    <description>Entity, referencing Datapoint entity objects.</description>
+</property>
+<property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+    <caption>Data Set label</caption>
+    <category>Data Set</category>
+    <description>Label, displayed in legend</description>
+    <attributeTypes>
+        <attributeType name="Enum"/>
+        <attributeType name="String"/>
+    </attributeTypes>
+</property>
+<property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+    <caption>Sorting</caption>
+    <category>Data Set</category>
+    <description>Attribute used for sorting dataset objects</description>
+    <attributeTypes>
+        <attributeType name="AutoNumber"/>
+        <attributeType name="Currency"/>
+        <attributeType name="DateTime"/>
+        <attributeType name="Float"/>
+        <attributeType name="Integer"/>
+        <attributeType name="Long"/>
+    </attributeTypes>
+</property>
+<property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+    <caption>Fill color (in Hex)</caption>
+    <category>Data Set</category>
+    <description>Initial bar color</description>
+    <attributeTypes>
+        <attributeType name="Enum"/>
+        <attributeType name="String"/>
+    </attributeTypes>
+</property>
+<property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
+    <caption>Highlight color (in Hex)</caption>
+    <category>Data Set</category>
+    <description>Color while hovering over bar.</description>
+    <attributeTypes>
+        <attributeType name="Enum"/>
+        <attributeType name="String"/>
+    </attributeTypes>
+</property>
+<property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
+    <caption>Reduce opacity</caption>
+    <category>Data Set</category>
+    <description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
+</property>
+<!-- Data Point -->
+<property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
+    <caption>Data Point Entity</caption>
+    <category>Data Point</category>
+    <description>Entity containing X-axis and Y-axis values</description>
+</property>
+<property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+    <caption>X Value</caption>
+    <category>Data Point</category>
+    <description>X-axis value</description>
+    <attributeTypes>
+        <attributeType name="AutoNumber"/>
+        <attributeType name="Boolean"/>
+        <attributeType name="Currency"/>
+        <attributeType name="DateTime"/>
+        <attributeType name="Enum"/>
+        <attributeType name="Float"/>
+        <attributeType name="Integer"/>
+        <attributeType name="Long"/>
+        <attributeType name="String"/>
+        <attributeType name="Decimal"/>
+    </attributeTypes>
+</property>
+<property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+    <caption>X sorting</caption>
+    <category>Data Point</category>
+    <description>Attribute value is used for sorting datapoint on X-Axis </description>
+    <attributeTypes>
+        <attributeType name="AutoNumber"/>
+        <attributeType name="Currency"/>
+        <attributeType name="DateTime"/>
+        <attributeType name="Float"/>
+        <attributeType name="Integer"/>
+        <attributeType name="Long"/>
+    </attributeTypes>
+</property>
+<property key="seriesylabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
+    <caption>Y value</caption>
+    <category>Data Point</category>
+    <description>Y-Axis value</description>
+    <attributeTypes>
+        <attributeType name="AutoNumber"/>
+        <attributeType name="Boolean"/>
+        <attributeType name="Currency"/>
+        <attributeType name="DateTime"/>
+        <attributeType name="Enum"/>
+        <attributeType name="Float"/>
+        <attributeType name="Integer"/>
+        <attributeType name="Long"/>
+        <attributeType name="String"/>
+        <attributeType name="Decimal"/>
+    </attributeTypes>
+</property>
+<!-- Behavior -->
+<property key="onclickmf" type="microflow" required="false">
+    <caption>On Click Microflow</caption>
+    <category>Behavior</category>
+    <description>Microflow to invoke when chart canvas is clicked</description>
+    <returnType type="Void"></returnType>
+</property>
+<property key="onclickDataSetMf" type="microflow" required="false" entityProperty="datasetentity">
+    <caption>On Click Dataset Microflow</caption>
+    <category>Behavior</category>
+    <description>Microflow to invoke when chart canvas is clicked. This Microflow will pass the Dataset object 'Data set entity'</description>
+    <returnType type="Void"></returnType>
+</property>
+<property key="onclickDataPointMf" type="microflow" required="false" entityProperty="datapointentity">
+    <caption>On Click Datapoint Microflow</caption>
+    <category>Behavior</category>
+    <description>Microflow to invoke when chart canvas is clicked. This Microflow will pass the Datapoint object 'Data point entity'</description>
+    <returnType type="Void"></returnType>
+</property>
+<!-- Settings -->
+<property key="responsive" type="boolean" required="true" defaultValue="true">
+    <caption>Responsive</caption>
+    <category>Appearance</category>
+    <description>Chart canvas dimensions respond to changes in layout</description>
+</property>
+<property key="scaleBeginAtZero" type="boolean" required="true" defaultValue="true">
+    <caption>Begin at zero</caption>
+    <category>Settings</category>
+    <description>Whether the scale should start at zero, or an order of magnitude down from the lowest value</description>
+</property>
+<property key="scaleShowGridLines" type="boolean" required="true" defaultValue="true">
+    <caption>Show grid lines</caption>
+    <category>Settings</category>
+    <description>Whether grid lines are shown across the chart.</description>
+</property>
+<property key="scaleGridLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.05)">
+    <caption>Grid line color</caption>
+    <category>Settings</category>
+    <description>Color of the grid lines(rgba).</description>
+</property>
+<property key="scaleGridLineWidth" type="string" required="true" defaultValue="1">
+    <caption>Grid line width</caption>
+    <category>Settings</category>
+    <description>Width of the grid lines.</description>
+</property>
+<property key="scaleShowHorizontalLines" type="boolean" required="true" defaultValue="true">
+    <caption>Show horizontal lines</caption>
+    <category>Settings</category>
+    <description>Whether to show horizontal lines (except X axis).</description>
+</property>
+<property key="scaleShowVerticalLines" type="boolean" required="true" defaultValue="true">
+    <caption>Show vertical lines</caption>
+    <category>Settings</category>
+    <description>Whether to show vertical lines (except Y axis).</description>
+</property>
+<property key="datasetStroke" type="boolean" required="true" defaultValue="true">
+    <caption>DataSet stroke</caption>
+    <category>Settings</category>
+    <description>Whether to show a stroke for datasets.</description>
+</property>
+<property key="datasetStrokeWidth" type="string" required="true" defaultValue="2">
+    <caption>DataSet stroke width</caption>
+    <category>Settings</category>
+    <description>Pixel width of dataset stroke.</description>
+</property>
+<property key="datasetFill" type="boolean" required="true" defaultValue="true">
+    <caption>DataSet fill</caption>
+    <category>Settings</category>
+    <description>Whether to fill the dataset with a colour.</description>
+</property>
+<property key="showLegend" type="boolean" required="true" defaultValue="true">
+    <caption>Show Legend (ChartJS)</caption>
+    <category>Legend</category>
+    <description>Displays a legend inside the graph</description>
+</property>
+<property key="showLegendCustom" type="boolean" required="true" defaultValue="false">
+    <caption>Show Legend (Custom)</caption>
+    <category>Legend</category>
+    <description>Displays a legend outside the graph</description>
+</property>
+<property key="scaleShowLabelsBottom" type="boolean" required="true" defaultValue="true">
+    <caption>Show labels bottom</caption>
+    <category>Settings</category>
+    <description>Whether to show the labels on the X-axis scale.</description>
+</property>
+<property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
+    <caption>Show labels left</caption>
+    <category>Settings</category>
+    <description>Whether to show labels on the y-axis scale.</description>
+</property>
+<property key="showTooltips" type="boolean" required="true" defaultValue="true">
+    <caption>Show tooltip</caption>
+    <category>Settings</category>
+    <description>Determines whether to draw tooltips on the canvas or not.</description>
+</property>
+<!--<property key="tooltipForm" type="form" required="false">
+<caption>Tooltip form</caption>
+<category>Settings</category>
+<description>.</description>
+</property>-->
+<property key="maintainAspectRatio" type="boolean" required="true" defaultValue="true">
+    <caption>Maintain aspect ratio</caption>
+    <category>Settings</category>
+    <description>Maintain the aspect ratio?</description>
+</property>
+<!-- Bar chart settings -->
+<property key="barShowStroke" type="boolean" required="true" defaultValue="true">
+    <caption>Bar show stroke</caption>
+    <category>Settings Stacked Bar Chart</category>
+    <description>If there is a stroke on each bar.</description>
+</property>
+<property key="barStrokeWidth" type="string" required="true" defaultValue="2">
+    <caption>Bar stroke width</caption>
+    <category>Settings Stacked Bar Chart</category>
+    <description>Pixel width of the bar stroke.</description>
+</property>
+<property key="barValueSpacing" type="string" required="true" defaultValue="5">
+    <caption>Bar X Spacing</caption>
+    <category>Settings Stacked Bar Chart</category>
+    <description>Spacing between each of the X value sets.</description>
+</property>
+<property key="barDatasetSpacing" type="string" required="true" defaultValue="1">
+    <caption>Bar dataset spacing</caption>
+    <category>Settings Stacked Bar Chart</category>
+    <description>Spacing between data sets within X values.</description>
+</property>
+<property key="relativeBars" type="boolean" required="true" defaultValue="false">
+    <caption>Relative Bars</caption>
+    <category>Settings Stacked Bar Chart</category>
+    <description>Whether bars should be rendered on a percentage base.</description>
+</property>
+<property key="scaleLineWidth" type="string" required="true" defaultValue="1.0">
+    <caption>Scale line width</caption>
+    <category>Settings Stacked Bar Chart</category>
+    <description>The scale line width.</description>
+</property>
+<property key="scaleLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.1)">
+    <caption>Scale line color</caption>
+    <category>Settings Stacked Bar Chart</category>
+    <description>The scale line color.</description>
+</property>
+</properties>
 </widget>
