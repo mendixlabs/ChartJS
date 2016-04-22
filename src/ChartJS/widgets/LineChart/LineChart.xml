@@ -318,6 +318,11 @@
             <category>Settings Line Chart</category>
             <description>Whether the line is curved between points.</description>
         </property>
+        <property key="maxTickSize" type="integer" required="true" defaultValue="0">
+            <caption>Max tick size (X axis)</caption>
+            <category>Settings Line Chart</category>
+            <description>When there are many points on the X axis (horizontal), the labels can overlap. Setting the tick size means it will render only a certain amount of labels. Setting this to 0 will render them all</description>
+        </property>
         <property key="bezierCurveTension" type="string" required="true" defaultValue="0.4">
             <caption>Bezier curve tension</caption>
             <category>Settings Line Chart</category>

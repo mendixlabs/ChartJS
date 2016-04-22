@@ -154,7 +154,10 @@ define([
                                 },
                                 type: "category",
                                 id: "x-axis-0",
-                                ticks : { fontFamily: this._font, }
+                                ticks : {
+                                    fontFamily: this._font,
+                                    maxTicksLimit: this.maxTickSize > 0 ? this.maxTickSize : null
+                                }
                             }]
                         },
 
