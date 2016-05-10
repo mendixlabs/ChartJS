@@ -571,10 +571,10 @@ define([
                 },
                 maintainAspectRatio : this.maintainAspectRatio,
                 showTooltips : this.showTooltips,
-                animation: {
-                    duration: this.chartAnimation ? this.animationDuration : 0,
-                    easing: this.animationEasing
-                }
+                animation: this.chartAnimation ? ({
+					duration: this.chartAnimation ? this.animationDuration : 0,
+					easing: this.animationEasing
+				}) : false
             };
 
             return lang.mixin(lang.clone(defaultOptions), options);
