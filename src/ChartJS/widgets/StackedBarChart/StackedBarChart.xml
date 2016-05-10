@@ -257,10 +257,10 @@
     <category>Settings</category>
     <description>Whether the scale should start at zero, or an order of magnitude down from the lowest value</description>
 </property>
-<property key="scaleShowGridLines" type="boolean" required="true" defaultValue="true">
-    <caption>Show grid lines</caption>
+<property key="scaleShow" type="boolean" required="true" defaultValue="true">
+    <caption>Show scales</caption>
     <category>Settings</category>
-    <description>Whether grid lines are shown across the chart.</description>
+    <description>Whether scales are shown. This will enable/disable scales, scale labels and gridlines</description>
 </property>
 <property key="scaleGridLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.05)">
     <caption>Grid line color</caption>

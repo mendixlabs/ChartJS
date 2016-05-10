@@ -112,43 +112,40 @@ define([
 
                         scales: {
                             xAxes: [{
+                                display: this.scaleShow,
                                 stacked: true,
                                 scaleLabel: {
                                     display: (this.xLabel !== "") ? true : false,
                                     labelString: (this.xLabel !== "") ? this.xLabel : "",
                                     fontFamily: this._font
                                 },
-                                ticks: {
-                                    fontFamily: this._font
-                                }
+                                ticks : { fontFamily: this._font, },
+                                gridLines: {
+                                    display: this.scaleShowVerticalLines,
+                                    color: this.scaleGridLineColor,
+                                    lineWidth: this.scaleLineWidth
+                                },
                             }],
                             yAxes: [{
+                                display: this.scaleShow,
                                 stacked: true,
                                 scaleLabel: {
                                     display: (this.yLabel !== "") ? true : false,
                                     labelString: (this.yLabel !== "") ? this.yLabel : "",
                                     fontFamily: this._font
                                 },
-                                ticks: {
+                                ticks : {
                                     fontFamily: this._font,
-                                    beginAtZero: this.scaleBeginAtZero
-                                }
+                                    beginAtZero: this.scaleBeginAtZero,
+                                    display: this.scaleShowLabels
+                                },
+                                gridLines: {
+                                    display: this.scaleShowHorizontalLines,
+                                    color: this.scaleGridLineColor,
+                                    lineWidth: this.scaleLineWidth
+                                },
                             }]
                         },
-
-                        stacked: true,
-
-                        //Boolean - Whether to show labels on the scale
-                        scaleShowLabels : this.scaleShowLabels,
-
-                        //Boolean - Whether grid lines are shown across the chart
-                        scaleShowGridLines : this.scaleShowGridLines,
-
-                        //String - Colour of the grid lines
-                        scaleGridLineColor : this.scaleGridLineColor,
-
-                        //Number - Width of the grid lines
-                        scaleGridLineWidth : this.scaleGridLineWidth,
 
                         //Boolean - If there is a stroke on each bar
                         barShowStroke : this.barShowStroke,

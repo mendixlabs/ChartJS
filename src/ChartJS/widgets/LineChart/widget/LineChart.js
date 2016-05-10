@@ -127,6 +127,7 @@ define([
 
                         scales : {
                             yAxes: [{
+                                display: this.scaleShow,
                                 //If stacked is set to true, the Y-axis needs to be stacked for it to work
                                 stacked: this.isStacked,
                                 scaleLabel: {
@@ -134,9 +135,15 @@ define([
                                     labelString: (this.yLabel !== "") ? this.yLabel : "",
                                     fontFamily: this._font
                                 },
+                                gridLines: {
+                                    display: this.scaleShowHorizontalLines,
+                                    color: this.scaleGridLineColor,
+                                    lineWidth: this.scaleLineWidth
+                                },
                                 ticks : {
                                     fontFamily: this._font,
                                     beginAtZero: this.scaleBeginAtZero,
+                                    display: this.scaleShowLabels,
                                     callback: lang.hitch(this, function(value){
                                             var round = parseInt(this.roundY);
                                             if (!isNaN(round) && round >= 0) {
@@ -147,14 +154,21 @@ define([
                                 }
                             }],
                             xAxes: [{
+                                display: this.scaleShow,
                                 scaleLabel: {
                                     display: (this.xLabel !== "") ? true : false,
                                     labelString: (this.xLabel !== "") ? this.xLabel : "",
                                     fontFamily: this._font
                                 },
+                                gridLines: {
+                                    display: this.scaleShowVerticalLines,
+                                    color: this.scaleGridLineColor,
+                                    lineWidth: this.scaleLineWidth
+                                },
                                 type: "category",
                                 id: "x-axis-0",
                                 ticks : {
+                                    display: this.scaleShowLabelsBottom,
                                     fontFamily: this._font,
                                     maxTicksLimit: this.maxTickSize > 0 ? this.maxTickSize : null
                                 }
@@ -170,24 +184,6 @@ define([
                                 hoverBorderWidth : this.pointHoverBorderWidth
                             }
                         },
-
-                        //Boolean - Whether to show labels on the scale
-                        scaleShowLabels : this.scaleShowLabels,
-
-                        ///Boolean - Whether grid lines are shown across the chart
-                        scaleShowGridLines : this.scaleShowGridLines,
-
-                        //String - Colour of the grid lines
-                        scaleGridLineColor : this.scaleGridLineColor,
-
-                        //Number - Width of the grid lines
-                        scaleGridLineWidth : this.scaleGridLineWidth,
-
-                        //Boolean - Whether to show horizontal lines (except X axis)
-                        scaleShowHorizontalLines : this.scaleShowHorizontalLines,
-
-                        //Boolean - Whether to show vertical lines (except Y axis)
-                        scaleShowVerticalLines : this.scaleShowVerticalLines,
 
                         //Boolean - Whether or not to render as a stacked chart
                         stacked : this.isStacked,
