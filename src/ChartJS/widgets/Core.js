@@ -345,7 +345,7 @@ define([
             }
 
             if (this.onclickmf) {
-                this._executeMicroflow(this.onclickmf);
+                this._executeMicroflow(this.onclickmf, null, this._mxObj);
             }
         },
 
