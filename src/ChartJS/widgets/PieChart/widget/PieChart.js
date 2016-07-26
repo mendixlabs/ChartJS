@@ -1,15 +1,17 @@
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global mx, mendix, require, console, define, module, logger, window */
-/*mendix */
 define([
-
-    "dojo/_base/declare", "dojo/_base/lang", "dojo/query", "dojo/on", "dojo/html", "dojo/dom-style", "ChartJS/widgets/Core"
-
-], function (declare, lang, domQuery, on, html, domStyle, _core) {
+    "dojo/_base/declare",
+    "ChartJS/widgets/Core",
+    "dojo/_base/lang",
+    "dojo/query",
+    "dojo/on",
+    "dojo/html",
+    "dojo/dom-style"
+], function (declare, Core, lang, domQuery, on, html, domStyle) {
     "use strict";
 
-    // Declare widget.
-    return declare("ChartJS.widgets.PieChart.widget.PieChart", [ _core ], {
+    return declare("ChartJS.widgets.PieChart.widget.PieChart", [ Core ], {
+
+        _chartType: "pie",
 
         _processData : function () {
             logger.debug(this.id + "._processData");
@@ -46,6 +48,7 @@ define([
 
                 chartData.push(point);
                 this._activeDatasets.push({
+                    obj: set.dataset,
                     dataset : point,
                     idx : j,
                     active : true
@@ -53,7 +56,6 @@ define([
             }
 
             this._createChart(chartData);
-
             this._createLegend(true);
         },
 
@@ -91,79 +93,61 @@ define([
 
         _createChart : function (data) {
             logger.debug(this.id + "._createChart");
-            this._chart = new this._chartJS(this._ctx, {
-                type: "pie",
-                data:  this._createDataSets(data),
-                options: {
-                    title: {
-                        display: (this.chartTitle !== "") ? true : false,
-                        text: (this.chartTitle !== "") ? this.chartTitle : "",
-                        fontFamily: this._font,
-                        fontSize: this.titleSize
-                    },
+            if (this._chart) {
+                var set = this._createDataSets(data);
+                this._chart.stop();
+                this._chart.data.datasets = set.datasets;
+                this._chart.data.labels = set.labels;
+                this._chart.update(1000);
+                this._chart.bindEvents(); // tooltips otherwise won't work
+            } else {
+                var chartProperties = {
+                    type: this._chartType,
+                    data:  this._createDataSets(data),
+                    options: this._chartOptions({
 
-                    responsive : this.responsive,
-                    responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
-                    tooltips : {
-                        enabled : this.showTooltips
-                    },
-                    legend: {
-                        display: this.showLegend,
-                        labels : { fontFamily : this._font }
-                    },
+                        //Boolean - Whether we should show a stroke on each segment
+                        segmentShowStroke : this.segmentShowStroke,
 
-                    //Boolean - Whether we should show a stroke on each segment
-                    segmentShowStroke : this.segmentShowStroke,
+                        //String - The colour of each segment stroke
+                        segmentStrokeColor : this.segmentStrokeColor,
 
-                    //String - The colour of each segment stroke
-                    segmentStrokeColor : this.segmentStrokeColor,
+                        //Number - The width of each segment stroke
+                        segmentStrokeWidth : this.segmentStrokeWidth,
 
-                    //Number - The width of each segment stroke
-                    segmentStrokeWidth : this.segmentStrokeWidth,
+                        //Number - Amount of animation steps
+                        animationSteps : this.animationSteps,
 
-                    //Number - Amount of animation steps
-                    animationSteps : this.animationSteps,
+                        //String - Animation easing effect
+                        animationEasing : this.animationEasing,
 
-                    //String - Animation easing effect
-                    animationEasing : this.animationEasing,
+                        //Boolean - Whether we animate the rotation of the Doughnut
+                        animateRotate : this.animateRotate,
 
-                    //Boolean - Whether we animate the rotation of the Doughnut
-                    animateRotate : this.animateRotate,
+                        //Boolean - Whether we animate scaling the Doughnut from the centre
+                        animateScale : this.animateScale,
 
-                    //Boolean - Whether we animate scaling the Doughnut from the centre
-                    animateScale : this.animateScale,
+                        legendCallback : this._legendAlternateCallback,
 
-                    legendCallback : this._legendAlternateCallback,
+                        //cutOut of pie
+                        cutoutPercentage : 0, //always zero for Pie chart
 
-                    // Show tooltips at all
-                    showTooltips : this.showTooltips,
+                    })
+                };
+                this._chart = new this._chartJS(this._ctx, chartProperties);
 
-                    // maintainAspectRatio
-                    maintainAspectRatio : this.maintainAspectRatio,
+                // Set the con
+                html.set(this._numberNode, this._data.object.get(this.numberInside));
 
+                // Add class to determain chart type
+                this._addChartClass("chartjs-pie-chart");
 
-                    //cutOut of pie
-                    cutoutPercentage : 0, //always zero for Pie chart
-
-                    // Custom tooltip?
-                    customTooltips : false //lang.hitch(this, this.customTooltip)
-
-                }
-            });
-
-            // Set the con
-            html.set(this._numberNode, this._data.object.get(this.numberInside));
-
-            // Add class to determain chart type
-            this._addChartClass("chartjs-pie-chart");
-
-            if (this.onclickmf) {
                 on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
             }
-
         }
     });
 });
+
 require(["ChartJS/widgets/PieChart/widget/PieChart"], function () {
     "use strict";
 });

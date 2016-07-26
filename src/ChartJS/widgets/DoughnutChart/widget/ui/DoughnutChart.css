@@ -1,18 +1,1 @@
-.chartjs-node {
-    position: relative;
-}
-.legend-node {
-	width: 100%;
-	padding: 5px;
-}
-.legend-node li {
-	cursor: pointer;
-}
-.pie-legend {
-	text-align	: center;
-}
-.pie-legend li {
-	clear: none;
-	display: inline-block;
-	margin-right: 20px;
-}
+/* DoughnutChart reference css file, all general ChartJS styles are in widgets/BarChart/widget/ui/BarChart.css */

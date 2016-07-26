@@ -1,17 +1,14 @@
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global mx, mendix, require, console, define, module, logger, window */
-/*mendix */
 define([
-
-    "dojo/_base/declare", "dojo/_base/lang", "dojo/on", "ChartJS/widgets/Core"
-
-], function (declare, lang, on, _core) {
+    "dojo/_base/declare",
+    "ChartJS/widgets/Core",
+    "dojo/_base/lang",
+    "dojo/on"
+], function (declare, Core, lang, on) {
     "use strict";
 
-    // Declare widget.
-    return declare("ChartJS.widgets.BarChart.widget.BarChart", [ _core ], {
+    return declare("ChartJS.widgets.BarChart.widget.BarChart", [ Core ], {
 
-        // Overwrite functions from _core here...
+        _chartType: "bar",
 
         _processData : function () {
             logger.debug(this.id + "._processData");
@@ -50,7 +47,8 @@ define([
                     for (k = 0; k < maxpoints; k++) {
                         points.push(0);
                     }
-                    logger.debug(this.id + " - empty dataset");
+                    logger.warn(this.id + " - empty dataset");
+                    continue;
                 }
 
                 set.points = this._sortArrayMx(set.points, this.sortingxvalue);
@@ -104,66 +102,45 @@ define([
                 this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
-                this._chart = new this._chartJS(this._ctx, {
-                    type: "bar",
+                var chartProperties = {
+                    type: this._chartType,
                     data: data,
-                    options: {
-                        title: {
-                            display: (this.chartTitle !== "") ? true : false,
-                            text: (this.chartTitle !== "") ? this.chartTitle : "",
-                            fontFamily: this._font,
-                            fontSize: this.titleSize
-                        },
+                    options: this._chartOptions({
+
                         scales : {
                             xAxes: [{
+                                display: this.scaleShow,
                                 scaleLabel: {
                                     display: (this.xLabel !== "") ? true : false,
                                     labelString: (this.xLabel !== "") ? this.xLabel : "",
                                     fontFamily: this._font
                                 },
-                                ticks : { fontFamily: this._font, }
+                                ticks : { fontFamily: this._font, },
+                                gridLines: {
+                                    display: this.scaleShowVerticalLines,
+                                    color: this.scaleGridLineColor,
+                                    lineWidth: this.scaleLineWidth
+                                },
                             }],
                             yAxes: [{
+                                display: this.scaleShow,
                                 scaleLabel: {
                                     display: (this.yLabel !== "") ? true : false,
                                     labelString: (this.yLabel !== "") ? this.yLabel : "",
                                     fontFamily: this._font
                                 },
-                                ticks : { fontFamily: this._font, }
-                            }],
-
+                                ticks : {
+                                    fontFamily: this._font,
+                                    beginAtZero: this.scaleBeginAtZero,
+                                    display: this.scaleShowLabels
+                                },
+                                gridLines: {
+                                    display: this.scaleShowHorizontalLines,
+                                    color: this.scaleGridLineColor,
+                                    lineWidth: this.scaleLineWidth
+                                },
+                            }]
                         },
-
-                        responsive : this.responsive,
-                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
-                        tooltips : {
-                            enabled : this.showTooltips
-                        },
-                        legend: {
-                            display : this.showLegend,
-                            labels : { fontFamily : this._font }
-                        },
-
-                        //Boolean - Whether to show labels on the scale
-                        scaleShowLabels : this.scaleShowLabels,
-
-                        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-                        scaleBeginAtZero : this.scaleBeginAtZero,
-
-                        //Boolean - Whether grid lines are shown across the chart
-                        scaleShowGridLines : this.scaleShowGridLines,
-
-                        //String - Colour of the grid lines
-                        scaleGridLineColor : this.scaleGridLineColor,
-
-                        //Number - Width of the grid lines
-                        scaleGridLineWidth : this.scaleGridLineWidth,
-
-                        //Boolean - Whether to show horizontal lines (except X axis)
-                        scaleShowHorizontalLines: this.scaleShowHorizontalLines,
-
-                        //Boolean - Whether to show vertical lines (except Y axis)
-                        scaleShowVerticalLines: this.scaleShowVerticalLines,
 
                         //Boolean - If there is a stroke on each bar
                         barShowStroke : this.barShowStroke,
@@ -183,18 +160,16 @@ define([
                         scaleLineWidth : this.scaleLineWidth,
 
                         //The scale line color
-                        scaleLineColor : this.scaleLineColor,
+                        scaleLineColor : this.scaleLineColor
+                    })
+                };
 
-                        // maintainAspectRatio
-                        maintainAspectRatio : this.maintainAspectRatio,
+                if (this.scaleBeginAtZero) {
+                    chartProperties.options.scales.yAxes[0].ticks.suggestedMin = 0;
+                    chartProperties.options.scales.yAxes[0].ticks.suggestedMax = 4;
+                }
 
-                        // Show tooltips at all
-                        showTooltips : this.showTooltips,
-
-                        // Custom tooltip?
-                        customTooltips : false,
-                    }
-                });
+                this._chart = new this._chartJS(this._ctx, chartProperties);
 
                 this.connect(window, "resize", lang.hitch(this, function () {
                     this._resize();
@@ -203,13 +178,12 @@ define([
                 // Add class to determain chart type
                 this._addChartClass("chartjs-bar-chart");
 
-                if (this.onclickmf) {
-                    on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
-                }
+                on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
             }
         }
     });
 });
+
 require(["ChartJS/widgets/BarChart/widget/BarChart"], function () {
     "use strict";
 });

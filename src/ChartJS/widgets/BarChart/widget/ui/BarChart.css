@@ -1,6 +1,7 @@
 .chartjs-node {
     position: relative;
 }
+
 .legend-node {
     width: 250px;
     padding: 5px;
@@ -24,6 +25,7 @@
     opacity: 0.5;
     filter:Alpha(opacity=50);
 }
+
 .chartjs-custom-tooltip {
     position: absolute;
     top: -50px;

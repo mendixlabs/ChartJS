@@ -1,15 +1,16 @@
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global mx, mendix, require, console, define, module, logger, window */
-/*mendix */
 define([
-
-    "dojo/_base/declare", "dojo/_base/lang", "dojo/query", "dojo/on", "dojo/html", "ChartJS/widgets/Core"
-
-], function (declare, lang, domQuery, on, html, _core) {
+    "dojo/_base/declare",
+    "ChartJS/widgets/Core",
+    "dojo/_base/lang",
+    "dojo/query",
+    "dojo/on",
+    "dojo/html"
+], function (declare, Core, lang, domQuery, on, html) {
     "use strict";
 
-    // Declare widget.
-    return declare("ChartJS.widgets.DoughnutChart.widget.DoughnutChart", [ _core ], {
+    return declare("ChartJS.widgets.DoughnutChart.widget.DoughnutChart", [ Core ], {
+
+        _chartType: "doughnut",
 
         _processData : function () {
             logger.debug(this.id + "._processData");
@@ -47,6 +48,7 @@ define([
 
                 chartData.push(point);
                 this._activeDatasets.push({
+                    obj: set.dataset,
                     dataset : point,
                     idx : j,
                     active : true
@@ -96,25 +98,9 @@ define([
                 this._chart.destroy();
             }
             this._chart = new this._chartJS(this._ctx, {
-                type: "doughnut",
+                type: this._chartType,
                 data: this._createDataSets(data),
-                options: {
-                    title: {
-                        display: (this.chartTitle !== "") ? true : false,
-                        text: (this.chartTitle !== "") ? this.chartTitle : "",
-                        fontFamily: this._font,
-                        fontSize: this.titleSize
-                    },
-
-                    responsive : this.responsive,
-                    responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
-                    tooltips : {
-                        enabled : this.showTooltips
-                    },
-                    legend: {
-                        display: this.showLegend,
-                        labels : { fontFamily : this._font }
-                    },
+                options: this._chartOptions({
 
                     //Boolean - Whether we should show a stroke on each segment
                     segmentShowStroke : this.segmentShowStroke,
@@ -124,7 +110,6 @@ define([
 
                     //Number - The width of each segment stroke
                     segmentStrokeWidth : this.segmentStrokeWidth,
-
 
                     //Number - Amount of animation steps
                     animationSteps : this.animationSteps,
@@ -140,19 +125,9 @@ define([
 
                     legendCallback : this._legendAlternateCallback,
 
-                    // Show tooltips at all
-                    showTooltips : this.showTooltips,
-
-                    // maintainAspectRatio
-                    maintainAspectRatio : this.maintainAspectRatio,
-
                     //Number - The percentage of the chart that we cut out of the middle
-                    cutoutPercentage : this.percentageInnerCutout,
-
-                    // Custom tooltip?
-                    customTooltips : false //lang.hitch(this, this.customTooltip)
-
-                }
+                    cutoutPercentage : this.percentageInnerCutout
+                })
             });
 
             this.connect(window, "resize", lang.hitch(this, function () {
@@ -165,13 +140,11 @@ define([
             // Add class to determain chart type
             this._addChartClass("chartjs-doughnut-chart");
 
-            if (this.onclickmf) {
-                on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
-            }
-
+            on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
         }
     });
 });
+
 require(["ChartJS/widgets/DoughnutChart/widget/DoughnutChart"], function () {
     "use strict";
 });

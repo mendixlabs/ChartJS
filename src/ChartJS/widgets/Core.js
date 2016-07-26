@@ -1,15 +1,25 @@
-/*jslint white:true, nomen: true, plusplus: true */
-/*global mx, mxui, mendix, require, console, define, module, logger, ChartJS, position, clearTimeout, setTimeout */
-/*mendix */
-
-// Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
 define([
 
     // Mixins
-    "dojo/_base/declare", "mxui/widget/_WidgetBase", "dijit/_TemplatedMixin",
+    "dojo/_base/declare",
+    "mxui/widget/_WidgetBase",
+    "dijit/_TemplatedMixin",
 
     // Client API and DOJO functions
-    "mxui/dom", "dojo/dom", "dojo/query", "dojo/dom-prop", "dojo/dom-geometry", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/_base/window", "dojo/dom-construct", "dojo/_base/array", "dojo/_base/lang", "dojo/html", "dojo/ready",
+    "mxui/dom",
+    "dojo/dom",
+    "dojo/query",
+    "dojo/dom-prop",
+    "dojo/dom-geometry",
+    "dojo/dom-class",
+    "dojo/dom-attr",
+    "dojo/dom-style",
+    "dojo/_base/window",
+    "dojo/dom-construct",
+    "dojo/_base/array",
+    "dojo/_base/lang",
+    "dojo/html",
+    "dojo/ready",
 
     // External libraries
     "ChartJS/lib/charts",
@@ -41,6 +51,9 @@ define([
         // Template path
         templateString: _chartJSTemplate,
 
+        // Set in modeler
+        responsiveRatio: 0,
+
         // Internal variables
         _chartJS: null,
         _chart: null,
@@ -54,20 +67,22 @@ define([
         _mxObj: null,
         _handle: null,
 
+        _chartType: null,
+
         _resizeTimer: null,
 
         _currentContext: null,
         _addedToBody: false,
 
+        _tooltipNode: null,
+
         startup: function () {
-            // Uncomment line to start debugging
-            //logger.level(logger.DEBUG);
             logger.debug(this.id + ".startup");
 
             var domNode = null;
 
-            // Activate chartJS.
-            this._chartJS = _charts.noConflict();
+            // Activate chartJS (and clone it, making sure globals are not overwritten for other instances).
+            this._chartJS = lang.clone(_charts);
 
             // Fonts
             this._font = this.labelFont || "Helvetica Neue";
@@ -91,15 +106,14 @@ define([
 
             this._activeDatasets = [];
 
-            if (!dojoDom.byId("chartjsTooltip")) {
-                domNode = domConstruct.toDom(_chartJSTooltipTemplate);
-                domConstruct.place(domNode, win.body());
-            }
+            // if (!dojoDom.byId("chartjsTooltip")) {
+            //     this._tooltipNode = domConstruct.toDom(_chartJSTooltipTemplate);
+            //     domConstruct.place(this._tooltipNode, win.body());
+            // }
 
             this.connect(this.mxform, "resize", lang.hitch(this, function () {
                 this._resize();
             }));
-
         },
 
         datasetAdd: function (dataset, datapoints) {
@@ -129,18 +143,23 @@ define([
 
             if (this._handle !== null) {
                 mx.data.unsubscribe(this._handle);
+                this._handle = null;
             }
-            this._handle = mx.data.subscribe({
-                guid: this._mxObj.getGuid(),
-                callback: lang.hitch(this, this._loadData)
-            });
 
-            // Load data again.
-            this._loadData();
+            if (this._mxObj) {
+                this._handle = mx.data.subscribe({
+                    guid: this._mxObj.getGuid(),
+                    callback: lang.hitch(this, this._loadData)
+                });
 
-            if (typeof callback !== "undefined") {
-                callback();
+                // Load data again.
+                this._loadData();
+                domStyle.set(this.domNode, "display", "");
+            } else {
+                domStyle.set(this.domNode, "display", "none");
             }
+
+            mendix.lang.nullExec(callback);
         },
 
         _loadData: function () {
@@ -200,6 +219,10 @@ define([
             logger.debug(this.id + ".uninitialize");
             if (this._handle !== null) {
                 mx.data.unsubscribe(this._handle);
+            }
+
+            if (this._tooltipNode) {
+                domConstruct.destroy(this._tooltipNode);
             }
         },
 
@@ -264,16 +287,20 @@ define([
             var position = domGeom.position(this.domNode.parentElement, false);
             domAttr.set(this.canvasNode, "id", "canvasid_" + this.id);
 
-            logger.debug(this.id + ".createCtx", position);
-
             if (position.w > 0 && this.responsive) {
                 this.canvasNode.width = position.w;
             } else {
                 this.canvasNode.width = this.width;
             }
 
-            if (position.h > 0 && this.responsive) {
-                this.canvasNode.height = position.h;
+            if (this.responsive) {
+                if (this.responsiveRatio > 0) {
+                    this.canvasNode.height = Math.round(this.canvasNode.width * (this.responsiveRatio / 100));
+                } else if (position.h > 0) {
+                    this.canvasNode.height = position.h;
+                } else {
+                    this.canvasNode.height = this.height;
+                }
             } else {
                 this.canvasNode.height = this.height;
             }
@@ -292,10 +319,33 @@ define([
             console.error("_createChart: This is placeholder function that should be overwritten by the implementing widget.", data);
         },
 
-        _onClickChart: function () {
+        _onClickChart: function (evt) {
             logger.debug(this.id + "._onClickChart");
+            var elements = this._chart.getElementAtEvent(evt);
+            if (elements.length) {
+                var el = elements[0],
+                datasetIndex = el._datasetIndex,
+                pointIndex = el._index,
+                dataset =  this._data.datasets[datasetIndex],
+                datasetObject = dataset ? dataset.dataset : null,
+                dataPointObject = dataset && dataset.points ? dataset.points[pointIndex] : null;
+
+                if (this.onclickDataSetMf && datasetObject) {
+                    if (this._chartType === "pie" || this._chartType === "doughnut" || this._chartType === "polarArea") {
+                        // These chartTypes use a single series data set, so the datasetobject is different
+                        datasetObject = this._activeDatasets[pointIndex].obj;
+                    }
+
+                    this._executeMicroflow(this.onclickDataSetMf, null, datasetObject);
+                }
+
+                if (this.onclickDataPointMf && dataPointObject) {
+                    this._executeMicroflow(this.onclickDataPointMf, null, dataPointObject);
+                }
+            }
+
             if (this.onclickmf) {
-                this._executeMicroflow(this.onclickmf);
+                this._executeMicroflow(this.onclickmf, null, this._mxObj);
             }
         },
 
@@ -386,7 +436,7 @@ define([
         },
 
         _createDataSets: function (data) {
-            logger.debug(this.id + "._createDataSets", data);
+            logger.debug(this.id + "._createDataSets");
             var _chartData = {
                 labels: [],
                 datasets: [
@@ -471,7 +521,7 @@ define([
         },
 
         _hexToRgb: function (hex, alpha) {
-            logger.debug(this.id + "._hexToRgb", hex, alpha);
+            //logger.debug(this.id + "._hexToRgb", hex, alpha);
             if (hex !== null) {
                 var regex = null,
                     shorthandRegex = null,
@@ -499,6 +549,37 @@ define([
             return "rgba(220,220,220," + alpha + ")";
         },
 
+        _chartOptions: function (options) {
+            logger.debug(this.id + "._chartOptions");
+            // returns default chart options, mixed with specific options for a chart
+
+            var defaultOptions = {
+                title: {
+                    display: (this.chartTitle !== "") ? true : false,
+                    text: (this.chartTitle !== "") ? this.chartTitle : "",
+                    fontFamily: this._font,
+                    fontSize: this.titleSize
+                },
+                responsive : this.responsive,
+                responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                tooltips : {
+                    enabled : this.showTooltips
+                },
+                legend: {
+                    display : this.showLegend,
+                    labels : { fontFamily : this._font }
+                },
+                maintainAspectRatio : this.maintainAspectRatio,
+                showTooltips : this.showTooltips,
+                animation: this.chartAnimation ? ({
+					duration: this.chartAnimation ? this.animationDuration : 0,
+					easing: this.animationEasing
+				}) : false
+            };
+
+            return lang.mixin(lang.clone(defaultOptions), options);
+        },
+
         _executeMicroflow: function (mf, callback, obj) {
             logger.debug(this.id + "._executeMicroflow");
             var _params = {
@@ -521,13 +602,13 @@ define([
                     caller: this.mxform
                 },
                 callback: lang.hitch(this, function (obj) {
-                    if (typeof callback !== "undefined") {
+                    if (typeof callback === "function") {
                         callback(obj);
                     }
                 }),
-                error: function (error) {
-                    console.log(error.description);
-                }
+                error: lang.hitch(this, function (error) {
+                    console.log(this.id + "._executeMicroflow error: " + error.description);
+                })
             }, this);
         }
 

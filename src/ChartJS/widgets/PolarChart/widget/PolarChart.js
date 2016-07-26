@@ -11,6 +11,8 @@ define([
     // Declare widget.
     return declare("ChartJS.widgets.PolarChart.widget.PolarChart", [ _core ], {
 
+        _chartType: "polarArea",
+
         _processData : function () {
             logger.debug(this.id + "._processData");
             var sets = [],
@@ -46,6 +48,7 @@ define([
 
                 chartData.push(point);
                 this._activeDatasets.push({
+                    obj: set.dataset,
                     dataset : point,
                     idx : j,
                     active : true
@@ -94,7 +97,7 @@ define([
             logger.debug(this.id + "._createChart");
 
             this._chart = new this._chartJS(this._ctx, {
-                type: "polarArea",
+                type: this._chartType,
                 data: this._createDataSets(data),
                 options: {
                     title: {
@@ -113,15 +116,22 @@ define([
                         display: this.showLegend,
                         labels : { fontFamily : this._font }
                     },
+                    scale: {
+                        ticks: {
+                            yAxes: [{
+                                ticks: {
+                                    fontFamily: this._font,
+                                    beginAtZero: this.scaleBeginAtZero
+                                }
+                            }]
+                        }
+                    },
 
                     //Boolean - Show a backdrop to the scale label
                     scaleShowLabelBackdrop : this.polarScaleShowLabelBackdrop,
 
                     //String - The colour of the label backdrop
                     scaleBackdropColor : this.polarScaleBackdropColor,
-
-                    // Boolean - Whether the scale should begin at zero
-                    scaleBeginAtZero : this.polarScaleBeginAtZero,
 
                     //Number - The backdrop padding above & below the label in pixels
                     scaleBackdropPaddingY : this.polarScaleBackdropPaddingY,
@@ -171,9 +181,7 @@ define([
             // Add class to determain chart type
             this._addChartClass("chartjs-polar-chart");
 
-            if (this.onclickmf) {
-                on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
-            }
+            on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
         }
     });
 });

@@ -1,20 +1,19 @@
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global mx, mendix, require, console, define, module, logger, window */
-/*mendix */
 define([
-
-    "dojo/_base/declare", "dojo/_base/lang", "dojo/query", "dojo/on", "ChartJS/widgets/Core"
-
-], function (declare, lang, domQuery, on, _core) {
+    "dojo/_base/declare",
+    "ChartJS/widgets/Core",
+    "dojo/_base/lang",
+    "dojo/query",
+    "dojo/on"
+], function (declare, Core, lang, domQuery, on) {
     "use strict";
 
-    // Declare widget.
-    return declare("ChartJS.widgets.LineChart.widget.LineChart", [ _core ], {
+    return declare("ChartJS.widgets.LineChart.widget.LineChart", [ Core ], {
 
-        // Overwrite functions from _core here...
+        _chartType: "line",
 
         _processData : function () {
             logger.debug(this.id + "._processData");
+
             var sets = [],
                 points = null,
                 set = {
@@ -50,7 +49,8 @@ define([
                     for (k = 0; k < maxpoints; k++) {
                         points.push(0);
                     }
-                    logger.debug(this.id + " - empty dataset");
+                    logger.warn(this.id + " - empty dataset");
+                    continue;
                 }
 
                 set.points = this._sortArrayMx(set.points, this.sortingxvalue);
@@ -78,7 +78,6 @@ define([
                     _bezier = 0.4;
                 }
 
-
                 _set = {
                     label : (this.scaleShowLabelsBottom === true) ? label : "",
                     backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.2") : color,
@@ -101,8 +100,8 @@ define([
             }
             this._chartData.labels = xlabels;
 
-            logger.debug(this.id + " Created LineChart data");
-            logger.debug(this.id + "  " + JSON.stringify(this._chartData));
+            //logger.debug(this.id + " Created LineChart data");
+            //logger.debug(this.id + "  " + JSON.stringify(this._chartData));
 
             this._createChart(this._chartData);
 
@@ -110,9 +109,7 @@ define([
         },
 
         _createChart : function (data) {
-
             logger.debug(this.id + "._createChart");
-
 
             if (this._chart) {
                 this._chart.stop();
@@ -121,19 +118,16 @@ define([
                 this._chart.update(1000);
                 this._chart.bindEvents(); // tooltips otherwise won't work
             } else {
-                logger.debug("stacked:" + this.isStacked);
-                this._chart = new this._chartJS(this._ctx, {
-                    type: "line",
+                //logger.debug("stacked:" + this.isStacked);
+
+                var chartProperties = {
+                    type: this._chartType,
                     data: data,
-                    options: {
-                        title: {
-                            display: (this.chartTitle !== "") ? true : false,
-                            text: (this.chartTitle !== "") ? this.chartTitle : "",
-                            fontFamily: this._font,
-                            fontSize: this.titleSize
-                        },
+                    options: this._chartOptions({
+
                         scales : {
                             yAxes: [{
+                                display: this.scaleShow,
                                 //If stacked is set to true, the Y-axis needs to be stacked for it to work
                                 stacked: this.isStacked,
                                 scaleLabel: {
@@ -141,62 +135,55 @@ define([
                                     labelString: (this.yLabel !== "") ? this.yLabel : "",
                                     fontFamily: this._font
                                 },
-                                ticks : { fontFamily: this._font,
-                                callback: lang.hitch(this, function(value){
-                                        var round = parseInt(this.roundY);
-                                        if (!isNaN(round) && round >= 0) {
-                                            return Number(value).toFixed(round);
-                                        }
-                                        return value;
-                                    }) }
+                                gridLines: {
+                                    display: this.scaleShowHorizontalLines,
+                                    color: this.scaleGridLineColor,
+                                    lineWidth: this.scaleLineWidth
+                                },
+                                ticks : {
+                                    fontFamily: this._font,
+                                    beginAtZero: this.scaleBeginAtZero,
+                                    display: this.scaleShowLabels,
+                                    callback: lang.hitch(this, function(value){
+                                            var round = parseInt(this.roundY);
+                                            if (!isNaN(round) && round >= 0) {
+                                                return Number(value).toFixed(round);
+                                            }
+                                            return value;
+                                        })
+                                }
                             }],
                             xAxes: [{
+                                display: this.scaleShow,
                                 scaleLabel: {
                                     display: (this.xLabel !== "") ? true : false,
                                     labelString: (this.xLabel !== "") ? this.xLabel : "",
                                     fontFamily: this._font
                                 },
+                                gridLines: {
+                                    display: this.scaleShowVerticalLines,
+                                    color: this.scaleGridLineColor,
+                                    lineWidth: this.scaleLineWidth
+                                },
                                 type: "category",
                                 id: "x-axis-0",
-                                ticks : { fontFamily: this._font, }
+                                ticks : {
+                                    display: this.scaleShowLabelsBottom,
+                                    fontFamily: this._font,
+                                    maxTicksLimit: this.maxTickSize > 0 ? this.maxTickSize : null
+                                }
                             }]
                         },
-                        responsive : this.responsive,
-                        responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
-                        tooltips : {
-                            enabled : this.showTooltips
-                        },
-                        legend: {
-                            display: this.showLegend,
-                            labels : { fontFamily : this._font }
-                        },
-                        elements: {
 
+                        elements: {
                             point: {
-                                radius : this.pointRadius,
-                                borderWidth : this.pointBorderWidth,
+                                radius : this.pointDot ? this.pointRadius : 0,
+                                borderWidth : this.pointDot ? this.pointBorderWidth : 0,
                                 hitRadius : this.pointHitRadius,
                                 hoverRadius : this.pointHoverRadius,
                                 hoverBorderWidth : this.pointHoverBorderWidth
                             }
                         },
-                        //Boolean - Whether to show labels on the scale
-                        scaleShowLabels : this.scaleShowLabels,
-
-                        ///Boolean - Whether grid lines are shown across the chart
-                        scaleShowGridLines : this.scaleShowGridLines,
-
-                        //String - Colour of the grid lines
-                        scaleGridLineColor : this.scaleGridLineColor,
-
-                        //Number - Width of the grid lines
-                        scaleGridLineWidth : this.scaleGridLineWidth,
-
-                        //Boolean - Whether to show horizontal lines (except X axis)
-                        scaleShowHorizontalLines : this.scaleShowHorizontalLines,
-
-                        //Boolean - Whether to show vertical lines (except Y axis)
-                        scaleShowVerticalLines : this.scaleShowVerticalLines,
 
                         //Boolean - Whether or not to render as a stacked chart
                         stacked : this.isStacked,
@@ -216,20 +203,16 @@ define([
                         scaleLineWidth : this.scaleLineWidth,
 
                         //The scale line color
-                        scaleLineColor : this.scaleLineColor,
+                        scaleLineColor : this.scaleLineColor
+                    })
+                };
 
-                        // Show tooltips at all
-                        showTooltips : this.showTooltips,
+                if (this.scaleBeginAtZero) {
+                    chartProperties.options.scales.yAxes[0].ticks.suggestedMin = 0;
+                    chartProperties.options.scales.yAxes[0].ticks.suggestedMax = 4;
+                }
 
-                        // maintainAspectRatio
-                        maintainAspectRatio : this.maintainAspectRatio,
-
-                        // Custom tooltip?
-                        customTooltips : false, //lang.hitch(this, this.customTooltip)
-
-                    }
-                });
-
+                this._chart = new this._chartJS(this._ctx, chartProperties);
 
                 this.connect(window, "resize", lang.hitch(this, function () {
                     this._resize();
@@ -238,15 +221,13 @@ define([
                 // Add class to determain chart type
                 this._addChartClass("chartjs-line-chart");
 
-                if (this.onclickmf) {
-                    on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
-                }
-
+                on(this._chart.chart.canvas, "click", lang.hitch(this, this._onClickChart));
             }
         }
 
     });
 });
+
 require(["ChartJS/widgets/LineChart/widget/LineChart"], function () {
     "use strict";
 });
