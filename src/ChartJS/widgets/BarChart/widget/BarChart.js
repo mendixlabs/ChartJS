@@ -21,6 +21,7 @@ define([
                 xlabelsSet = false,
                 color = "",
                 highlightcolor = "",
+                datasettype = "",
                 label = "",
                 j = null,
                 i = null,
@@ -55,6 +56,7 @@ define([
                 color = set.dataset.get(this.seriescolor);
                 highlightcolor = this.serieshighlightcolor ? set.dataset.get(this.serieshighlightcolor) : color;
 
+                datasettype = set.dataset.get(this.datasettype);
                 label = set.dataset.get(this.datasetlabel);
 
                 for (i = 0; i < set.points.length; i++) {
@@ -70,6 +72,7 @@ define([
                 }
 
                 _set = {
+                    type : datasettype,
                     label : label,
                     backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
                     borderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
