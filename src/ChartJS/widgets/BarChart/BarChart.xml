@@ -129,6 +129,14 @@
             <category>Data Set</category>
             <description>Entity, referencing Datapoint entity objects.</description>
         </property>
+        <property key="datasettype" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
+            <caption>Data Set Type</caption>
+            <category>Data Set</category>
+            <description>Type (bar/line)</description>
+            <attributeTypes>
+                <attributeType name="Enum"/>
+            </attributeTypes>
+        </property>
         <property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
             <caption>Data Set label</caption>
             <category>Data Set</category>
