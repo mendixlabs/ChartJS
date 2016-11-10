@@ -4,7 +4,6 @@ test/.classpath
 test/.project
 test/theme/
 test/userlib/
-test/widgets/
 test/.classpath
 test/.project
 *.launch
