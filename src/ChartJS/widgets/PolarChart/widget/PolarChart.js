@@ -69,6 +69,7 @@ define([
                     dataset = null;
 
                 this._data.object = obj;
+                this._chartEntityObject = obj;
 
                 // Retrieve datasets
                 mx.data.get({

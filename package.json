@@ -24,7 +24,7 @@
   },
   "generatorVersion": "2.0.1",
   "paths": {
-    "testProjectFolder": "./test/",
+    "testProjectFolder": "C:\\Projects\\MendixProjects\\GC-Test-main\\",
     "testProjectFileName": "[Test] ChartJS.mpr"
   },
   "scripts": {

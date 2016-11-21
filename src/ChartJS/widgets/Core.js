@@ -76,6 +76,8 @@ define([
 
         _tooltipNode: null,
 
+        _chartEntityObject: null,
+
         startup: function () {
             logger.debug(this.id + ".startup");
 
@@ -142,12 +144,13 @@ define([
             this._mxObj = obj;
 
             if (this._handle !== null) {
-                mx.data.unsubscribe(this._handle);
+                this.unsubscribe(this._handle);
                 this._handle = null;
             }
 
             if (this._mxObj) {
-                this._handle = mx.data.subscribe({
+                logger.debug(this.id + ".update obj " + this._mxObj.getGuid());
+                this._handle = this.subscribe({
                     guid: this._mxObj.getGuid(),
                     callback: lang.hitch(this, this._loadData)
                 });
@@ -184,6 +187,8 @@ define([
                     return;
                 }
 
+                this._chartEntityObject = obj;
+
                 // Retrieve datasets
                 mx.data.get({
                     guids: guids,
@@ -217,12 +222,32 @@ define([
 
         uninitialize: function () {
             logger.debug(this.id + ".uninitialize");
+
+            console.log(this._data);
             if (this._handle !== null) {
-                mx.data.unsubscribe(this._handle);
+                this.unsubscribe(this._handle);
             }
 
             if (this._tooltipNode) {
                 domConstruct.destroy(this._tooltipNode);
+            }
+
+            if (mx.data.release) { // mx.data.release is deprecated in MX7, so this is for MX5 & MX6
+                if (this._data && this._data.datasets && this._data.datasets.length > 0) {
+                    logger.debug(this.id + ".uninitialize release datasets");
+                    for (var i = 0; i < this._data.datasets.length; i++) {
+                        var data = this._data.datasets[i];
+                        if (data.dataset && data.dataset.getGuid) {
+                            logger.debug(this.id + ".uninitialize release dataset obj " + data.dataset.getGuid());
+                            mx.data.release(data.dataset);
+                        }
+                    }
+                }
+
+                if (this._chartEntityObject !== null) {
+                    logger.debug(this.id + ".uninitialize release obj " + this._chartEntityObject.getGuid());
+                    mx.data.release(this._chartEntityObject);
+                }
             }
         },
 
