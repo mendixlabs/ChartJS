@@ -241,12 +241,25 @@ define([
                             logger.debug(this.id + ".uninitialize release dataset obj " + data.dataset.getGuid());
                             mx.data.release(data.dataset);
                         }
+                        if (data.points && data.points.length > 0) {
+                            for (var j = 0; j < data.points.length; j++) {
+                                var point = data.points[j];
+                                if (point && point.getGuid) {
+                                    logger.debug(this.id + ".uninitialize release datapoint " + point.getGuid());
+                                    mx.data.release(point);
+                                }
+                            }
+                        }
                     }
                 }
 
                 if (this._chartEntityObject !== null) {
                     logger.debug(this.id + ".uninitialize release obj " + this._chartEntityObject.getGuid());
                     mx.data.release(this._chartEntityObject);
+                }
+
+                if (this._data.object && this._data.object.getGuid) {
+                    mx.data.release(this._data.object);
                 }
             }
         },
