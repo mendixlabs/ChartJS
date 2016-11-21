@@ -223,7 +223,7 @@ define([
         uninitialize: function () {
             logger.debug(this.id + ".uninitialize");
 
-            console.log(this._data);
+            //console.log(this._data);
             if (this._handle !== null) {
                 this.unsubscribe(this._handle);
             }
