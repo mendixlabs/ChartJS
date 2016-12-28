@@ -136,7 +136,7 @@ define([
             }));
 
             // Set the con
-            html.set(this._numberNode, this._data.object.get(this.numberInside));
+            html.set(this._numberNode, this._data.object.get(this.numberInside).toString());
 
             // Add class to determain chart type
             this._addChartClass("chartjs-doughnut-chart");

@@ -138,7 +138,7 @@ define([
                 this._chart = new this._chartJS(this._ctx, chartProperties);
 
                 // Set the con
-                html.set(this._numberNode, this._data.object.get(this.numberInside));
+                html.set(this._numberNode, this._data.object.get(this.numberInside).toString());
 
                 // Add class to determain chart type
                 this._addChartClass("chartjs-pie-chart");

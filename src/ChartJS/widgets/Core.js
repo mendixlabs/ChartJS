@@ -232,7 +232,7 @@ define([
                 domConstruct.destroy(this._tooltipNode);
             }
 
-            if (mx.data.release) { // mx.data.release is deprecated in MX7, so this is for MX5 & MX6
+            if (mx.data.release && !mx.version || mx.version && parseInt(mx.version.split(".")[0]) < 7) { // mx.data.release is deprecated in MX7, so this is for MX5 & MX6
                 if (this._data && this._data.datasets && this._data.datasets.length > 0) {
                     logger.debug(this.id + ".uninitialize release datasets");
                     for (var i = 0; i < this._data.datasets.length; i++) {
