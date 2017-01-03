@@ -162,7 +162,7 @@ define([
                 domStyle.set(this.domNode, "display", "none");
             }
 
-            mendix.lang.nullExec(callback);
+            this._executeCallback(callback, "update");
         },
 
         _loadData: function () {
@@ -634,11 +634,8 @@ define([
                 _params.guids = [obj.getGuid()];
             }
 
-            mx.data.action({
+            var mfAction = {
                 params: _params,
-                store: {
-                    caller: this.mxform
-                },
                 callback: lang.hitch(this, function (obj) {
                     if (typeof callback === "function") {
                         callback(obj);
@@ -647,7 +644,24 @@ define([
                 error: lang.hitch(this, function (error) {
                     console.log(this.id + "._executeMicroflow error: " + error.description);
                 })
-            }, this);
+            };
+
+            if (!mx.version || mx.version && parseInt(mx.version.split(".")[0]) < 6) {
+                mfAction.store = {
+                    caller: this.mxform
+                };
+            } else {
+                mfAction.origin = this.mxform;
+            }
+
+            mx.data.action(mfAction, this);
+        },
+
+        _executeCallback: function (cb, from) {
+            logger.debug(this.id + "._executeCallback" + (from ? " from " + from : ""));
+            if (cb && typeof cb === "function") {
+                cb();
+            }
         }
 
     });
