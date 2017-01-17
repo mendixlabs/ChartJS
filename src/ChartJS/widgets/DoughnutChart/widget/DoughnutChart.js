@@ -127,7 +127,11 @@ define([
                     legendCallback : this._legendAlternateCallback,
 
                     //Number - The percentage of the chart that we cut out of the middle
-                    cutoutPercentage : this.percentageInnerCutout
+                    cutoutPercentage : this.percentageInnerCutout,
+
+                    animation: {
+                        onComplete: lang.hitch(this, this._animationComplete)
+                    }
                 })
             });
 

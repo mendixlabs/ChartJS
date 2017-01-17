@@ -170,7 +170,11 @@ define([
                     showTooltips : this.showTooltips,
 
                     // Custom tooltip?
-                    customTooltips : false //lang.hitch(this, this.customTooltip)
+                    customTooltips : false, //lang.hitch(this, this.customTooltip)
+
+                    animation: {
+                        onComplete: lang.hitch(this, this._animationComplete)
+                    }
 
                 }
             });
