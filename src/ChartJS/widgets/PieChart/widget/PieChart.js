@@ -116,17 +116,15 @@ define([
                         }
                       },
 
-                        //Number - Amount of animation steps
-                        animationSteps : this.animationSteps,
-
-                        //String - Animation easing effect
-                        animationEasing : this.animationEasing,
-
-                        //Boolean - Whether we animate the rotation of the Doughnut
-                        animateRotate : this.animateRotate,
-
-                        //Boolean - Whether we animate scaling the Doughnut from the centre
-                        animateScale : this.animateScale,
+                        animation : {
+                          //Boolean - Whether we animate the rotation of the Doughnut
+                          animateRotate: this.animateRotate,
+                          //Boolean - Whether we animate scaling the Doughnut from the centre
+                          animateScale: this.animateScale,
+                          duration: this.animationDuration,
+                          //String - Animation easing effect
+                          easing: this.animationEasing
+                        },
 
                         legendCallback : this._legendAlternateCallback,
 
