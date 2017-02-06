@@ -107,14 +107,14 @@ define([
                     data:  this._createDataSets(data),
                     options: this._chartOptions({
 
-                        //Boolean - Whether we should show a stroke on each segment
-                        segmentShowStroke : this.segmentShowStroke,
-
-                        //String - The colour of each segment stroke
-                        segmentStrokeColor : this.segmentStrokeColor,
-
-                        //Number - The width of each segment stroke
-                        segmentStrokeWidth : this.segmentStrokeWidth,
+                      elements: {
+                        arc: {
+                          //String - The colour of each segment stroke
+                          borderColor: this.segmentStrokeColor,
+                          //Number - The width of each segment stroke
+                          borderWidth: this.segmentShowStroke ? this.segmentStrokeWidth : 0
+                        }
+                      },
 
                         //Number - Amount of animation steps
                         animationSteps : this.animationSteps,
