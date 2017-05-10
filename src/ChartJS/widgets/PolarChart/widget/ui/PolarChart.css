@@ -2,17 +2,17 @@
     position: relative;
 }
 .legend-node {
-	width: 100%;
-	padding: 5px;
+    width: 100%;
+    padding: 5px;
 }
 .legend-node li {
-	cursor: pointer;
+    cursor: pointer;
 }
 .pie-legend {
-	text-align	: center;
+    text-align    : center;
 }
 .pie-legend li {
-	clear: none;
-	display: inline-block;
-	margin-right: 20px;
+    clear: none;
+    display: inline-block;
+    margin-right: 20px;
 }
