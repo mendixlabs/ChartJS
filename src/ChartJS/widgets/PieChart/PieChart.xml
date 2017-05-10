@@ -119,6 +119,7 @@
 				<attributeType name="String"/>
                 <attributeType name="Integer"/>
                 <attributeType name="Float"/>
+                <attributeType name="Decimal"/>
             </attributeTypes>
         </property>
         <!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
