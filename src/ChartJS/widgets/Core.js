@@ -173,49 +173,53 @@ define([
             };
 
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
-                var obj = objs[0], // Chart object is always only one.
-                    j = null,
-                    dataset = null,
-                    pointguids = null,
-                    guids = obj.get(this._dataset);
+                if (objs && objs.length > 0) {
+                    var obj = objs[0], // Chart object is always only one.
+                        j = null,
+                        dataset = null,
+                        pointguids = null,
+                        guids = obj.get(this._dataset);
 
-                this._data.object = obj;
-                this._data.datasets = [];
+                    this._data.object = obj;
+                    this._data.datasets = [];
 
-                if (!guids) {
-                    logger.warn(this.id + "._loadData failed, no _dataset. Not rendering Chart");
-                    return;
+                    if (!guids) {
+                        logger.warn(this.id + "._loadData failed, no _dataset. Not rendering Chart");
+                        return;
+                    }
+
+                    this._chartEntityObject = obj;
+
+                    // Retrieve datasets
+                    mx.data.get({
+                        guids: guids,
+                        callback: lang.hitch(this, function (datasets) {
+                            var set = {};
+
+                            this._datasetCounter = datasets.length;
+                            this._data.datasets = [];
+
+                            for (j = 0; j < datasets.length; j++) {
+                                dataset = datasets[j];
+                                pointguids = dataset.get(this._datapoint);
+                                if (typeof pointguids === "string" && pointguids !== "") {
+                                    pointguids = [pointguids];
+                                }
+                                if (typeof pointguids !== "string") {
+                                    mx.data.get({
+                                        guids: pointguids,
+                                        callback: lang.hitch(this, this.datasetAdd, dataset)
+                                    });
+                                } else {
+                                    this.datasetAdd(dataset, []);
+                                }
+                            }
+
+                        })
+                    });
+                } else {
+                    console.warn(this.id + "._loadData execution of microflow:" + this.datasourcemf + " has not returned any objects.");
                 }
-
-                this._chartEntityObject = obj;
-
-                // Retrieve datasets
-                mx.data.get({
-                    guids: guids,
-                    callback: lang.hitch(this, function (datasets) {
-                        var set = {};
-
-                        this._datasetCounter = datasets.length;
-                        this._data.datasets = [];
-
-                        for (j = 0; j < datasets.length; j++) {
-                            dataset = datasets[j];
-                            pointguids = dataset.get(this._datapoint);
-                            if (typeof pointguids === "string" && pointguids !== "") {
-                                pointguids = [pointguids];
-                            }
-                            if (typeof pointguids !== "string") {
-                                mx.data.get({
-                                    guids: pointguids,
-                                    callback: lang.hitch(this, this.datasetAdd, dataset)
-                                });
-                            } else {
-                                this.datasetAdd(dataset, []);
-                            }
-                        }
-
-                    })
-                });
             }), this._mxObj);
 
         },
