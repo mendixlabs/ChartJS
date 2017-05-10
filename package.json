@@ -5,7 +5,8 @@
   "license": "Apache License, Version 2",
   "author": "Mendix",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "del": "^2.2.2",
     "gulp": "^3.9.1",
@@ -13,18 +14,20 @@
     "gulp-intercept": "^0.1.0",
     "gulp-json-transform": "^0.4.2",
     "gulp-newer": "^1.3.0",
+    "gulp-plumber": "^1.1.0",
     "gulp-util": "^3.0.7",
     "gulp-zip": "^3.2.0",
+    "gulp-jsvalidate": "^3.0.0",
     "widgetbuilder-gulp-helper": "https://github.com/JelteMX/widgetbuilder-gulp-helper/archive/1.0.1.tar.gz",
     "yargs": "^6.0.0"
   },
   "engines": {
     "node": ">=5"
   },
-  "generatorVersion": "2.0.1",
+  "generatorVersion": "2.2.3",
   "paths": {
     "testProjectFolder": "./test/",
-    "testProjectFileName": "[Test] ChartJS.mpr"
+    "testProjectFileName": "Test.mpr"
   },
   "scripts": {
     "build": "node ./node_modules/gulp/bin/gulp build",
