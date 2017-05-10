@@ -27,7 +27,7 @@
   "generatorVersion": "2.2.3",
   "paths": {
     "testProjectFolder": "./test/",
-    "testProjectFileName": "Test.mpr"
+    "testProjectFileName": "[Test] ChartJS.mpr"
   },
   "scripts": {
     "build": "node ./node_modules/gulp/bin/gulp build",
