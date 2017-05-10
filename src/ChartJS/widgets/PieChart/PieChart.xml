@@ -46,10 +46,15 @@
             <category>Animation</category>
             <description>Animation duration (milliseconds) for responsive resizing. (Note: When implementing multiple charts, there can be problems with rendering. You can set this to 0 when having problems)</description>
         </property>
-        <property key="chartAnimation" type="boolean" required="true" defaultValue="true">
-            <caption>Animation</caption>
+        <property key="animateRotate" type="boolean" required="true" defaultValue="true">
+            <caption>Animate Rotate</caption>
             <category>Animation</category>
-            <description>Switch animation on and off. Try to switch it off when you have rendering problems with multiple charts on a page</description>
+            <description>Whether to animate the rotation of the chart.</description>
+        </property>
+        <property key="animateScale" type="boolean" required="true" defaultValue="false">
+            <caption>Animate Scale</caption>
+            <category>Animation</category>
+            <description>Whether to animate scaling the chart from the centre.</description>
         </property>
         <property key="animationDuration" type="integer" required="true" defaultValue="1000">
             <caption>Animation duration</caption>
@@ -227,21 +232,6 @@
             <caption>Segment Stroke Width</caption>
             <category>Settings</category>
             <description>The width of the stroke value in pixels.</description>
-        </property>
-        <property key="animationSteps" type="string" required="true" defaultValue="100">
-            <caption>Animation Steps</caption>
-            <category>Settings</category>
-            <description>Amount of animation steps.</description>
-        </property>
-        <property key="animateRotate" type="boolean" required="true" defaultValue="true">
-            <caption>Animate Rotate</caption>
-            <category>Settings</category>
-            <description>Whether to animate the rotation of the chart.</description>
-        </property>
-        <property key="animateScale" type="boolean" required="true" defaultValue="false">
-            <caption>Animate Scale</caption>
-            <category>Settings</category>
-            <description>Whether to animate scaling the chart from the centre.</description>
         </property>
         <property key="showLegend" type="boolean" required="true" defaultValue="true">
             <caption>Show Legend (ChartJS)</caption>
