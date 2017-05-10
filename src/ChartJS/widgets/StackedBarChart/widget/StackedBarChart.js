@@ -193,6 +193,4 @@ define([
     });
 });
 
-require(["ChartJS/widgets/StackedBarChart/widget/StackedBarChart"], function () {
-    "use strict";
-});
+require(["ChartJS/widgets/StackedBarChart/widget/StackedBarChart"]);

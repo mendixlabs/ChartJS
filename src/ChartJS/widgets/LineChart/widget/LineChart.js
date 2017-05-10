@@ -228,6 +228,4 @@ define([
     });
 });
 
-require(["ChartJS/widgets/LineChart/widget/LineChart"], function () {
-    "use strict";
-});
+require(["ChartJS/widgets/LineChart/widget/LineChart"]);

@@ -184,6 +184,4 @@ define([
     });
 });
 
-require(["ChartJS/widgets/BarChart/widget/BarChart"], function () {
-    "use strict";
-});
+require(["ChartJS/widgets/BarChart/widget/BarChart"]);

@@ -186,6 +186,5 @@ define([
         }
     });
 });
-require(["ChartJS/widgets/PolarChart/widget/PolarChart"], function () {
-    "use strict";
-});
+
+require(["ChartJS/widgets/PolarChart/widget/PolarChart"]);
