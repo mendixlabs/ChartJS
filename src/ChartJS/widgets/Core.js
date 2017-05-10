@@ -76,8 +76,6 @@ define([
 
         _tooltipNode: null,
 
-        _chartEntityObject: null,
-
         startup: function () {
             logger.debug(this.id + ".startup");
 
@@ -188,8 +186,6 @@ define([
                         return;
                     }
 
-                    this._chartEntityObject = obj;
-
                     // Retrieve datasets
                     mx.data.get({
                         guids: guids,
@@ -233,7 +229,6 @@ define([
                         dataset = null;
 
                     this._data.object = obj;
-                    this._chartEntityObject = obj;
 
                     // Retrieve datasets
                     mx.data.get({
@@ -293,13 +288,16 @@ define([
                     }
                 }
 
-                if (this._chartEntityObject !== null) {
-                    logger.debug(this.id + ".uninitialize release obj " + this._chartEntityObject.getGuid());
-                    mx.data.release(this._chartEntityObject);
-                }
-
                 if (this._data.object && this._data.object.getGuid) {
-                    mx.data.release(this._data.object);
+                    if (this.onDestroyMf) {
+                        this._executeMicroflow(this.onDestroyMf, lang.hitch(this, function () {
+                            logger.debug(this.id + ".uninitialize release obj " + this._data.object.getGuid());
+                            mx.data.release(this._data.object);
+                        }), this._data.object);
+                    } else {
+                        logger.debug(this.id + ".uninitialize release obj " + this._data.object.getGuid());
+                        mx.data.release(this._data.object);
+                    }
                 }
             }
         },
@@ -659,7 +657,7 @@ define([
         },
 
         _executeMicroflow: function (mf, callback, obj) {
-            logger.debug(this.id + "._executeMicroflow");
+            logger.debug(this.id + "._executeMicroflow " + mf);
             var _params = {
                 applyto: "selection",
                 actionname: mf,
