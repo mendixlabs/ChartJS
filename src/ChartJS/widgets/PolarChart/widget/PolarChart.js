@@ -61,41 +61,7 @@ define([
         },
 
         _loadData : function () {
-            logger.debug(this.id + "._loadData");
-
-            this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
-                if (objs && objs.length > 0) {
-                    var obj = objs[0], // Chart object is always only one.
-                        j = null,
-                        dataset = null;
-
-                    this._data.object = obj;
-                    this._chartEntityObject = obj;
-
-                    // Retrieve datasets
-                    mx.data.get({
-                        guids : obj.get(this._dataset),
-                        callback : lang.hitch(this, function (datasets) {
-                            var set = null;
-                            this._data.datasets = [];
-
-                            for (j = 0; j < datasets.length; j++) {
-                                dataset = datasets[j];
-
-                                set = {
-                                    dataset : dataset,
-                                    sorting : +(dataset.get(this.datasetsorting))
-                                };
-                                this._data.datasets.push(set);
-                            }
-                            this._processData();
-                        })
-                    });
-                } else {
-                    console.warn(this.id + "._loadData execution of microflow:" + this.datasourcemf + " has not returned any objects.");
-                }
-            }), this._mxObj);
-
+            this._loadDataSingleSet();
         },
 
         _createChart : function (data) {
