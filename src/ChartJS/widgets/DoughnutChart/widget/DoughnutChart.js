@@ -138,8 +138,10 @@ define([
                 this._resize();
             }));
 
+            var content = this._data.object.get(this.numberInside);
+
             // Set the con
-            html.set(this._numberNode, this._data.object.get(this.numberInside).toString());
+            html.set(this._numberNode, content !== null ? content.toString() : "");
 
             // Add class to determain chart type
             this._addChartClass("chartjs-doughnut-chart");
