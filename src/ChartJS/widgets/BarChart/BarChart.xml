@@ -35,12 +35,12 @@
         <property key="height" type="integer" required="true" defaultValue="250">
             <caption>Height</caption>
             <category>Appearance</category>
-			<description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
+            <description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
         </property>
         <property key="responsiveRatio" type="integer" required="true" defaultValue="0">
             <caption>Responsive w/h ratio (%)</caption>
             <category>Appearance</category>
-			<description>Responsive is set to 'true': Responsive width height ratio default value is 0, which means it will set the height of the chart the same height as the container. If you set this value to a certain number, it will create a chart where the height is a percentage of the width. So 100 means the height will be 100% of the width (a square)</description>
+            <description>Responsive is set to 'true': Responsive width height ratio default value is 0, which means it will set the height of the chart the same height as the container. If you set this value to a certain number, it will create a chart where the height is a percentage of the width. So 100 means the height will be 100% of the width (a square)</description>
         </property>
         <property key="labelFont" type="string" required="true" defaultValue="Helvetica Neue">
             <caption>Font</caption>
@@ -113,8 +113,8 @@
             <description>Microflow returning a 'Chart Entity' object.</description>
             <returnType type="Object" entityProperty="sourceentity"></returnType>
         </property>
-		<!--Placeholder-->
-		<!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
+        <!--Placeholder-->
+        <!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
             <caption>Attribute to trigger</caption>
             <category>Data Set</category>
             <description>Attribute to trigger the microflow.</description>
@@ -157,8 +157,8 @@
             <category>Data Set</category>
             <description>Initial bar color</description>
             <attributeTypes>
-				<attributeType name="Enum"/>
-				<attributeType name="String"/>
+                <attributeType name="Enum"/>
+                <attributeType name="String"/>
             </attributeTypes>
         </property>
         <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
@@ -166,14 +166,14 @@
             <category>Data Set</category>
             <description>Color while hovering over bar.</description>
             <attributeTypes>
-				<attributeType name="Enum"/>
-				<attributeType name="String"/>
+                <attributeType name="Enum"/>
+                <attributeType name="String"/>
             </attributeTypes>
         </property>
         <property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
             <caption>Reduce opacity</caption>
             <category>Data Set</category>
-			<description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
+            <description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
         </property>
         <!-- Data Point -->
         <property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
@@ -248,6 +248,14 @@
             <description>Microflow to invoke when chart canvas is clicked. This Microflow will pass the Datapoint object 'Data point entity'</description>
             <returnType type="Void"></returnType>
         </property>
+        <property key="onDestroyMf" type="microflow" required="false" entityProperty="sourceentity">
+            <caption>On Destroy Microflow</caption>
+            <category>Behavior</category>
+            <description>Microflow to be called when the widget is destroyed. This can be used to destroy the Chart Entity from 'Data Source'.
+
+Note: This is experimental. In case of non-persistent objects this should not be necessary, and in MX 7 this is useless. Only use this if you experience memory leaks in Mendix 5</description>
+            <returnType type="Void"></returnType>
+        </property>
         <!-- Settings -->
         <property key="responsive" type="boolean" required="true" defaultValue="true">
             <caption>Responsive</caption>
@@ -257,7 +265,7 @@
         <property key="scaleBeginAtZero" type="boolean" required="true" defaultValue="true">
             <caption>Begin at zero</caption>
             <category>Settings</category>
-			<description>Whether the scale should start at zero, or an order of magnitude down from the lowest value</description>
+            <description>Whether the scale should start at zero, or an order of magnitude down from the lowest value</description>
         </property>
         <property key="scaleShow" type="boolean" required="true" defaultValue="true">
             <caption>Show scales</caption>
@@ -314,15 +322,15 @@
             <category>Settings</category>
             <description>Whether to show the labels on the X-axis scale.</description>
         </property>
-		<property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
-			<caption>Show labels Y-axis</caption>
-			<category>Settings</category>
-			<description>Whether to show labels on the y-axis scale.</description>
-		</property>
+        <property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
+            <caption>Show labels Y-axis</caption>
+            <category>Settings</category>
+            <description>Whether to show labels on the y-axis scale.</description>
+        </property>
         <property key="showTooltips" type="boolean" required="true" defaultValue="true">
             <caption>Show tooltip</caption>
             <category>Settings</category>
-			<description>Determines whether to draw tooltips on the canvas or not.</description>
+            <description>Determines whether to draw tooltips on the canvas or not.</description>
         </property>
         <!--<property key="tooltipForm" type="form" required="false">
             <caption>Tooltip form</caption>
@@ -332,7 +340,7 @@
         <property key="maintainAspectRatio" type="boolean" required="true" defaultValue="true">
             <caption>Maintain aspect ratio</caption>
             <category>Settings</category>
-			<description>Whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container</description>
+            <description>Whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container</description>
         </property>
         <!-- Bar chart settings -->
         <property key="barShowStroke" type="boolean" required="true" defaultValue="true">

@@ -166,7 +166,6 @@ define([
 
                 if (this.scaleBeginAtZero) {
                     chartProperties.options.scales.yAxes[0].ticks.suggestedMin = 0;
-                    chartProperties.options.scales.yAxes[0].ticks.suggestedMax = 4;
                 }
 
                 this._chart = new this._chartJS(this._ctx, chartProperties);
@@ -184,6 +183,4 @@ define([
     });
 });
 
-require(["ChartJS/widgets/BarChart/widget/BarChart"], function () {
-    "use strict";
-});
+require(["ChartJS/widgets/BarChart/widget/BarChart"]);

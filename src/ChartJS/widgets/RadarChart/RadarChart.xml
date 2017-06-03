@@ -10,12 +10,12 @@
         <property key="width" type="integer" required="true" defaultValue="500">
             <caption>Width</caption>
             <category>Appearance</category>
-			<description>Initial width of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
+            <description>Initial width of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
         </property>
         <property key="height" type="integer" required="true" defaultValue="250">
             <caption>Height</caption>
             <category>Appearance</category>
-			<description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
+            <description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
         </property>
         <property key="responsiveRatio" type="integer" required="true" defaultValue="0">
             <caption>Responsive w/h ratio (%)</caption>
@@ -95,13 +95,21 @@
         <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
             <caption>Chart Entity</caption>
             <category>Data Source</category>
-			<description>Container entity, referencing DataSet entity objects.</description>
+            <description>Container entity, referencing DataSet entity objects.</description>
         </property>
         <property key="datasourcemf" type="microflow" required="false">
             <caption>Microflow</caption>
             <category>Data Source</category>
-			<description>Microflow returning a 'Chart Entity' object.</description>
+            <description>Microflow returning a 'Chart Entity' object.</description>
             <returnType type="Object" entityProperty="sourceentity"></returnType>
+        </property>
+        <property key="onDestroyMf" type="microflow" required="false" entityProperty="sourceentity">
+            <caption>On Destroy Microflow</caption>
+            <category>Behavior</category>
+            <description>Microflow to be called when the widget is destroyed. This can be used to destroy the Chart Entity from 'Data Source'.
+
+Note: This is experimental. In case of non-persistent objects this should not be necessary, and in MX 7 this is useless. Only use this if you experience memory leaks in Mendix 5</description>
+            <returnType type="Void"></returnType>
         </property>
         <!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
             <caption>Attribute to trigger</caption>
@@ -116,12 +124,12 @@
         <property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
             <caption>Data Set Entity</caption>
             <category>Data Set</category>
-			<description>Entity, referencing Datapoint entity objects.</description>
+            <description>Entity, referencing Datapoint entity objects.</description>
         </property>
         <property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
             <caption>Data Set label</caption>
             <category>Data Set</category>
-			<description>Label, displayed in legend</description>
+            <description>Label, displayed in legend</description>
             <attributeTypes>
                 <attributeType name="Enum"/>
                 <attributeType name="String"/>
@@ -130,7 +138,7 @@
         <property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
             <caption>Sorting</caption>
             <category>Data Set</category>
-			<description>Attribute used for sorting dataset objects</description>
+            <description>Attribute used for sorting dataset objects</description>
             <attributeTypes>
                 <attributeType name="AutoNumber"/>
                 <attributeType name="Currency"/>
@@ -159,11 +167,11 @@
                 <attributeType name="String"/>
             </attributeTypes>
         </property>
-		<property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
-			<caption>Reduce opacity</caption>
-			<category>Data Set</category>
-			<description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
-		</property>
+        <property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
+            <caption>Reduce opacity</caption>
+            <category>Data Set</category>
+            <description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
+        </property>
         <!-- Data Point -->
         <property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
             <caption>Data Point Entity</caption>
@@ -222,7 +230,7 @@
         <property key="onclickmf" type="microflow" required="false">
             <caption>On Click Microflow</caption>
             <category>Behavior</category>
-			<description>Microflow to invoke when chart canvas is clicked</description>
+            <description>Microflow to invoke when chart canvas is clicked</description>
             <returnType type="Void"></returnType>
         </property>
         <property key="onclickDataSetMf" type="microflow" required="false" entityProperty="datasetentity">
@@ -241,12 +249,12 @@
         <property key="responsive" type="boolean" required="true" defaultValue="true">
             <caption>Responsive</caption>
             <category>Appearance</category>
-			<description>Chart canvas dimensions respond to changes in layout</description>
+            <description>Chart canvas dimensions respond to changes in layout</description>
         </property>
         <property key="scaleBeginAtZero" type="boolean" required="true" defaultValue="true">
             <caption>Begin at zero</caption>
             <category>Settings</category>
-			<description>Whether the scale should start at zero, or an order of magnitude down from the lowest value</description>
+            <description>Whether the scale should start at zero, or an order of magnitude down from the lowest value</description>
         </property>
         <property key="scaleShowGridLines" type="boolean" required="true" defaultValue="true">
             <caption>Show grid lines</caption>
@@ -266,12 +274,12 @@
         <property key="scaleShowHorizontalLines" type="boolean" required="true" defaultValue="true">
             <caption>Show horizontal lines</caption>
             <category>Settings</category>
-			<description>Whether to show horizontal lines (Does not affect X-axis).</description>
+            <description>Whether to show horizontal lines (Does not affect X-axis).</description>
         </property>
         <property key="scaleShowVerticalLines" type="boolean" required="true" defaultValue="true">
             <caption>Show vertical lines</caption>
             <category>Settings</category>
-			<description>Whether to show vertical lines (Does not affect y-axis).</description>
+            <description>Whether to show vertical lines (Does not affect y-axis).</description>
         </property>
         <property key="datasetStroke" type="boolean" required="true" defaultValue="true">
             <caption>DataSet stroke</caption>

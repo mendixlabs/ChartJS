@@ -12,7 +12,7 @@
         <property key="width" type="integer" required="true" defaultValue="500">
             <caption>Width</caption>
             <category>Appearance</category>
-			<description>Initial width of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
+            <description>Initial width of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
         </property>
         <property key="xLabel" type="string" required="false" defaultValue="">
             <caption>X-axis label</caption>
@@ -42,7 +42,7 @@
         <property key="height" type="integer" required="true" defaultValue="250">
             <caption>Height</caption>
             <category>Appearance</category>
-			<description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
+            <description>Initial height of the chart canvas, will be ignored when responsive property is set to 'Yes'</description>
         </property>
         <property key="responsiveRatio" type="integer" required="true" defaultValue="0">
             <caption>Responsive w/h ratio (%)</caption>
@@ -112,15 +112,15 @@
         <property key="sourceentity" type="entity" required="true" allowNonPersistableEntities="true">
             <caption>Chart Entity</caption>
             <category>Data Source</category>
-			<description>Container entity, referencing DataSet entity objects.</description>
+            <description>Container entity, referencing DataSet entity objects.</description>
         </property>
         <property key="datasourcemf" type="microflow" required="false">
             <caption>Microflow</caption>
             <category>Data Source</category>
-			<description>Microflow returning a 'Chart Entity' object.</description>
+            <description>Microflow returning a 'Chart Entity' object.</description>
             <returnType type="Object" entityProperty="sourceentity"></returnType>
         </property>
-		<!--Placeholder-->
+        <!--Placeholder-->
         <!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
             <caption>Attribute to trigger</caption>
             <category>Data Set</category>
@@ -134,12 +134,12 @@
         <property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
             <caption>Data Set Entity</caption>
             <category>Data Set</category>
-			<description>Entity, referencing Datapoint entity objects.</description>
+            <description>Entity, referencing Datapoint entity objects.</description>
         </property>
         <property key="datasetlabel" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
             <caption>Data Set label</caption>
             <category>Data Set</category>
-			<description>Label, displayed in legend</description>
+            <description>Label, displayed in legend</description>
             <attributeTypes>
                 <attributeType name="Enum"/>
                 <attributeType name="String"/>
@@ -148,7 +148,7 @@
         <property key="datasetsorting" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
             <caption>Sorting</caption>
             <category>Data Set</category>
-			<description>Attribute used for sorting dataset objects</description>
+            <description>Attribute used for sorting dataset objects</description>
             <attributeTypes>
                 <attributeType name="AutoNumber"/>
                 <attributeType name="Currency"/>
@@ -162,19 +162,19 @@
         <property key="seriescolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="true">
             <caption>Fill Color (in Hex)</caption>
             <category>Data Set</category>
-			<description>Initial line color</description>
+            <description>Initial line color</description>
             <attributeTypes>
-				<attributeType name="Enum"/>
-				<attributeType name="String"/>
+                <attributeType name="Enum"/>
+                <attributeType name="String"/>
             </attributeTypes>
         </property>
         <property key="serieshighlightcolor" type="attribute" entityProperty="datasetentity" allowNonPersistableEntities="true" required="false">
             <caption>Highlight Color (in Hex)</caption>
             <category>Data Set</category>
-			<description>Color while hovering over line.</description>
+            <description>Color while hovering over line.</description>
             <attributeTypes>
-				<attributeType name="Enum"/>
-				<attributeType name="String"/>
+                <attributeType name="Enum"/>
+                <attributeType name="String"/>
             </attributeTypes>
         </property>
         <property key="seriescolorfilled" type="boolean" required="true" defaultValue="true">
@@ -182,21 +182,21 @@
             <category>Appearance</category>
             <description>Fill the space below the line</description>
         </property>
-		<property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
-			<caption>Reduce opacity</caption>
-			<category>Data Set</category>
-			<description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
-		</property>
+        <property key="seriesColorReduceOpacity" type="boolean" required="true" defaultValue="true">
+            <caption>Reduce opacity</caption>
+            <category>Data Set</category>
+            <description>Adds transparency to the fill color(opacity:0.5) and highlight color(opacity:0.75)</description>
+        </property>
         <!-- Data Point -->
         <property key="datapointentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="datasetentity" isPath="yes" pathType="referenceSet">
-			<caption>Data Point Entity</caption>
-			<category>Data Point</category>
-			<description>Entity containing X-axis and Y-axis values</description>
-		</property>
+            <caption>Data Point Entity</caption>
+            <category>Data Point</category>
+            <description>Entity containing X-axis and Y-axis values</description>
+        </property>
         <property key="seriesxlabel" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
             <caption>X Value</caption>
             <category>Data Point</category>
-			<description>X-axis value</description>
+            <description>X-axis value</description>
             <attributeTypes>
                 <attributeType name="AutoNumber"/>
                 <attributeType name="Boolean"/>
@@ -213,7 +213,7 @@
         <property key="sortingxvalue" type="attribute" entityProperty="datapointentity" allowNonPersistableEntities="true" required="true">
             <caption>X sorting</caption>
             <category>Data Point</category>
-			<description>Attribute value is used for sorting datapoint on X-Axis </description>
+            <description>Attribute value is used for sorting datapoint on X-Axis </description>
             <attributeTypes>
                 <attributeType name="AutoNumber"/>
                 <attributeType name="Currency"/>
@@ -250,7 +250,7 @@
         <property key="onclickmf" type="microflow" required="false">
             <caption>On Click Microflow</caption>
             <category>Behavior</category>
-			<description>Microflow to invoke when chart canvas is clicked</description>
+            <description>Microflow to invoke when chart canvas is clicked</description>
             <returnType type="Void"></returnType>
         </property>
         <property key="onclickDataSetMf" type="microflow" required="false" entityProperty="datasetentity">
@@ -269,12 +269,12 @@
         <property key="responsive" type="boolean" required="true" defaultValue="true">
             <caption>Responsive</caption>
             <category>Appearance</category>
-			<description>Chart canvas dimensions respond to changes in layout</description>
+            <description>Chart canvas dimensions respond to changes in layout</description>
         </property>
         <property key="scaleBeginAtZero" type="boolean" required="true" defaultValue="true">
             <caption>Begin at zero</caption>
             <category>Settings</category>
-			<description>Whether the scale should start at zero, or an order of magnitude down from the lowest value</description>
+            <description>Whether the scale should start at zero, or an order of magnitude down from the lowest value</description>
         </property>
         <property key="scaleShow" type="boolean" required="true" defaultValue="true">
             <caption>Show scales</caption>
@@ -294,12 +294,12 @@
         <property key="scaleShowHorizontalLines" type="boolean" required="true" defaultValue="true">
             <caption>Show horizontal lines</caption>
             <category>Settings</category>
-			<description>Whether to show horizontal lines (Does not affect X-axis).</description>
+            <description>Whether to show horizontal lines (Does not affect X-axis).</description>
         </property>
         <property key="scaleShowVerticalLines" type="boolean" required="true" defaultValue="true">
             <caption>Show vertical lines</caption>
             <category>Settings</category>
-			<description>Whether to show vertical grid lines (Does not effect Y-axis).</description>
+            <description>Whether to show vertical grid lines (Does not effect Y-axis).</description>
         </property>
         <property key="datasetStroke" type="boolean" required="true" defaultValue="true">
             <caption>DataSet stroke</caption>
@@ -327,29 +327,29 @@
             <description>Displays a legend outside the graph</description>
         </property>
         <property key="scaleShowLabelsBottom" type="boolean" required="true" defaultValue="true">
-			<caption>Show labels X-axis</caption>
+            <caption>Show labels X-axis</caption>
             <category>Settings</category>
             <description>Whether to show labels on the X-axis scale.</description>
         </property>
-		<property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
-			<caption>Show labels Y-axis</caption>
-			<category>Settings</category>
-			<description>Whether to show labels on Y-axis the scale.</description>
-		</property>
+        <property key="scaleShowLabels" type="boolean" required="true" defaultValue="true">
+            <caption>Show labels Y-axis</caption>
+            <category>Settings</category>
+            <description>Whether to show labels on Y-axis the scale.</description>
+        </property>
         <property key="showTooltips" type="boolean" required="true" defaultValue="true">
             <caption>Show tooltip</caption>
             <category>Settings</category>
-			<description>Determines whether to draw tooltips on the canvas or not.</description>
+            <description>Determines whether to draw tooltips on the canvas or not.</description>
         </property>
         <!--<property key="tooltipForm" type="form" required="false">
             <caption>Tooltip form</caption>
             <category>Settings</category>
-			<description>.</description>
+            <description>.</description>
         </property>-->
         <property key="maintainAspectRatio" type="boolean" required="true" defaultValue="true">
             <caption>Maintain aspect ratio</caption>
             <category>Settings</category>
-			<description>whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container</description>
+            <description>whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container</description>
         </property>
         <!-- Line settings -->
         <property key="bezierCurve" type="boolean" required="true" defaultValue="true">

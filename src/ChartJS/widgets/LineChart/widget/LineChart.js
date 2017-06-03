@@ -64,7 +64,14 @@ define([
                         xlabels.push(((this.scaleShowLabelsBottom === true) ? set.points[i].get(this.seriesxlabel) : ""));
                     }
 
-                    points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
+                    var pointvalue = set.points[i].get(this.seriesylabel);
+                    if (pointvalue === "") {
+                        points.push(null);
+                    } else {
+                        points.push(+pointvalue); // Convert to number, so the stackedbar doesnt break!
+                    }
+                    //points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
+
                 }
 
                 if (!xlabelsSet) {
@@ -209,7 +216,6 @@ define([
 
                 if (this.scaleBeginAtZero) {
                     chartProperties.options.scales.yAxes[0].ticks.suggestedMin = 0;
-                    chartProperties.options.scales.yAxes[0].ticks.suggestedMax = 4;
                 }
 
                 this._chart = new this._chartJS(this._ctx, chartProperties);
@@ -228,6 +234,4 @@ define([
     });
 });
 
-require(["ChartJS/widgets/LineChart/widget/LineChart"], function () {
-    "use strict";
-});
+require(["ChartJS/widgets/LineChart/widget/LineChart"]);

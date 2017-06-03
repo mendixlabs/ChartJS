@@ -142,12 +142,13 @@ define([
             this._mxObj = obj;
 
             if (this._handle !== null) {
-                mx.data.unsubscribe(this._handle);
+                this.unsubscribe(this._handle);
                 this._handle = null;
             }
 
             if (this._mxObj) {
-                this._handle = mx.data.subscribe({
+                logger.debug(this.id + ".update obj " + this._mxObj.getGuid());
+                this._handle = this.subscribe({
                     guid: this._mxObj.getGuid(),
                     callback: lang.hitch(this, this._loadData)
                 });
@@ -159,7 +160,7 @@ define([
                 domStyle.set(this.domNode, "display", "none");
             }
 
-            mendix.lang.nullExec(callback);
+            this._executeCallback(callback, "update");
         },
 
         _loadData: function () {
@@ -170,59 +171,134 @@ define([
             };
 
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
-                var obj = objs[0], // Chart object is always only one.
-                    j = null,
-                    dataset = null,
-                    pointguids = null,
-                    guids = obj.get(this._dataset);
+                if (objs && objs.length > 0) {
+                    var obj = objs[0], // Chart object is always only one.
+                        j = null,
+                        dataset = null,
+                        pointguids = null,
+                        guids = obj.get(this._dataset);
 
-                this._data.object = obj;
-                this._data.datasets = [];
+                    this._data.object = obj;
+                    this._data.datasets = [];
 
-                if (!guids) {
-                    logger.warn(this.id + "._loadData failed, no _dataset. Not rendering Chart");
-                    return;
+                    if (!guids) {
+                        logger.warn(this.id + "._loadData failed, no _dataset. Not rendering Chart");
+                        return;
+                    }
+
+                    // Retrieve datasets
+                    mx.data.get({
+                        guids: guids,
+                        callback: lang.hitch(this, function (datasets) {
+                            var set = {};
+
+                            this._datasetCounter = datasets.length;
+                            this._data.datasets = [];
+
+                            for (j = 0; j < datasets.length; j++) {
+                                dataset = datasets[j];
+                                pointguids = dataset.get(this._datapoint);
+                                if (typeof pointguids === "string" && pointguids !== "") {
+                                    pointguids = [pointguids];
+                                }
+                                if (typeof pointguids !== "string") {
+                                    mx.data.get({
+                                        guids: pointguids,
+                                        callback: lang.hitch(this, this.datasetAdd, dataset)
+                                    });
+                                } else {
+                                    this.datasetAdd(dataset, []);
+                                }
+                            }
+
+                        })
+                    });
+                } else {
+                    console.warn(this.id + "._loadData execution of microflow:" + this.datasourcemf + " has not returned any objects.");
                 }
-
-                // Retrieve datasets
-                mx.data.get({
-                    guids: guids,
-                    callback: lang.hitch(this, function (datasets) {
-                        var set = {};
-
-                        this._datasetCounter = datasets.length;
-                        this._data.datasets = [];
-
-                        for (j = 0; j < datasets.length; j++) {
-                            dataset = datasets[j];
-                            pointguids = dataset.get(this._datapoint);
-                            if (typeof pointguids === "string" && pointguids !== "") {
-                                pointguids = [pointguids];
-                            }
-                            if (typeof pointguids !== "string") {
-                                mx.data.get({
-                                    guids: pointguids,
-                                    callback: lang.hitch(this, this.datasetAdd, dataset)
-                                });
-                            } else {
-                                this.datasetAdd(dataset, []);
-                            }
-                        }
-
-                    })
-                });
             }), this._mxObj);
 
         },
 
+        _loadDataSingleSet: function () {
+            logger.debug(this.id + "._loadDataSingleSet");
+            this._executeMicroflow(this.datasourcemf, lang.hitch(this, function(objs) {
+                if (objs && objs.length > 0) {
+                    var obj = objs[0], // Chart object is always only one.
+                        j = null,
+                        dataset = null;
+
+                    this._data.object = obj;
+
+                    // Retrieve datasets
+                    mx.data.get({
+                        guids: obj.get(this._dataset),
+                        callback: lang.hitch(this, function(datasets) {
+                            var set = null;
+                            this._data.datasets = [];
+
+                            for (j = 0; j < datasets.length; j++) {
+                                dataset = datasets[j];
+
+                                set = {
+                                    dataset: dataset,
+                                    sorting: +(dataset.get(this.datasetsorting))
+                                };
+                                this._data.datasets.push(set);
+                            }
+                            this._processData();
+                        })
+                    });
+                } else {
+                    console.warn(this.id + "._loadDataSingleSet execution of microflow:" + this.datasourcemf + " has not returned any objects.");
+                }
+            }), this._mxObj);
+        },
+
         uninitialize: function () {
             logger.debug(this.id + ".uninitialize");
+
+            //console.log(this._data);
             if (this._handle !== null) {
-                mx.data.unsubscribe(this._handle);
+                this.unsubscribe(this._handle);
             }
 
             if (this._tooltipNode) {
                 domConstruct.destroy(this._tooltipNode);
+            }
+
+            if (mx.data.release && !mx.version || mx.version && parseInt(mx.version.split(".")[0]) < 7) { // mx.data.release is deprecated in MX7, so this is for MX5 & MX6
+                if (this._data && this._data.datasets && this._data.datasets.length > 0) {
+                    logger.debug(this.id + ".uninitialize release datasets");
+                    for (var i = 0; i < this._data.datasets.length; i++) {
+                        var data = this._data.datasets[i];
+                        if (data.dataset && data.dataset.getGuid) {
+                            logger.debug(this.id + ".uninitialize release dataset obj " + data.dataset.getGuid());
+                            mx.data.release(data.dataset);
+                        }
+                        if (data.points && data.points.length > 0) {
+                            for (var j = 0; j < data.points.length; j++) {
+                                var point = data.points[j];
+                                if (point && point.getGuid) {
+                                    logger.debug(this.id + ".uninitialize release datapoint " + point.getGuid());
+                                    mx.data.release(point);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (this._data.object && this._data.object.getGuid) {
+                    if (this.onDestroyMf) {
+                        this._executeMicroflow(this.onDestroyMf, lang.hitch(this, function () {
+                            logger.debug(this.id + ".uninitialize release obj " + this._data.object.getGuid());
+                            mx.data.release(this._data.object);
+                        }), this._data.object);
+                    } else {
+                        logger.debug(this.id + ".uninitialize release obj " + this._data.object.getGuid());
+                        mx.data.release(this._data.object);
+                    }
+                }
             }
         },
 
@@ -572,16 +648,16 @@ define([
                 maintainAspectRatio : this.maintainAspectRatio,
                 showTooltips : this.showTooltips,
                 animation: this.chartAnimation ? ({
-					duration: this.chartAnimation ? this.animationDuration : 0,
-					easing: this.animationEasing
-				}) : false
+                    duration: this.chartAnimation ? this.animationDuration : 0,
+                    easing: this.animationEasing
+                }) : false
             };
 
             return lang.mixin(lang.clone(defaultOptions), options);
         },
 
         _executeMicroflow: function (mf, callback, obj) {
-            logger.debug(this.id + "._executeMicroflow");
+            logger.debug(this.id + "._executeMicroflow " + mf);
             var _params = {
                 applyto: "selection",
                 actionname: mf,
@@ -596,11 +672,8 @@ define([
                 _params.guids = [obj.getGuid()];
             }
 
-            mx.data.action({
+            var mfAction = {
                 params: _params,
-                store: {
-                    caller: this.mxform
-                },
                 callback: lang.hitch(this, function (obj) {
                     if (typeof callback === "function") {
                         callback(obj);
@@ -609,7 +682,24 @@ define([
                 error: lang.hitch(this, function (error) {
                     console.log(this.id + "._executeMicroflow error: " + error.description);
                 })
-            }, this);
+            };
+
+            if (!mx.version || mx.version && parseInt(mx.version.split(".")[0]) < 6) {
+                mfAction.store = {
+                    caller: this.mxform
+                };
+            } else {
+                mfAction.origin = this.mxform;
+            }
+
+            mx.data.action(mfAction, this);
+        },
+
+        _executeCallback: function (cb, from) {
+            logger.debug(this.id + "._executeCallback" + (from ? " from " + from : ""));
+            if (cb && typeof cb === "function") {
+                cb();
+            }
         }
 
     });
