@@ -156,5 +156,3 @@ define([
         }
     });
 });
-
-require(["ChartJS/widgets/PolarChart/widget/PolarChart"]);

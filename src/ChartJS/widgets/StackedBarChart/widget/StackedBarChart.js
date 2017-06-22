@@ -191,5 +191,3 @@ define([
         }
     });
 });
-
-require(["ChartJS/widgets/StackedBarChart/widget/StackedBarChart"]);

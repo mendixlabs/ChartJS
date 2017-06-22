@@ -182,5 +182,3 @@ define([
         }
     });
 });
-
-require(["ChartJS/widgets/RadarChart/widget/RadarChart"]);

@@ -6,6 +6,8 @@ test/theme/
 test/userlib/
 test/.classpath
 test/.project
+test/.svn
+test/.mendix-cache
 *.launch
 *.tmp
 *.lock

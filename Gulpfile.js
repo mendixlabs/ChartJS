@@ -1,4 +1,4 @@
-// Generated on 2017-05-10 using generator-mendix 2.2.3 :: git+https://github.com/mendix/generator-mendix.git
+// Generated on 2016-11-11 using generator-mendix 2.0.1 :: git+https://github.com/mendix/generator-mendix.git
 /*jshint -W069,-W097*/
 "use strict";
 
@@ -14,56 +14,68 @@ var gulp = require("gulp"),
     del = require("del"),
     newer = require("gulp-newer"),
     gutil = require("gulp-util"),
-    plumber = require("gulp-plumber"),
     gulpif = require("gulp-if"),
     jsonTransform = require("gulp-json-transform"),
     intercept = require("gulp-intercept"),
     argv = require("yargs").argv,
     widgetBuilderHelper = require("widgetbuilder-gulp-helper"),
-    jsValidate = require("gulp-jsvalidate");
+    webpack = require("webpack"),
+    merge = require("webpack-merge"),
+    webpackConfig = require("./webpack.config.js");
+
+var webpackConfigRelease = webpackConfig.map(function(config) {
+    return merge(config, {
+        devtool: false,
+        plugins: [ new webpack.optimize.UglifyJsPlugin() ]
+    });
+});
 
 var pkg = require("./package.json"),
     paths = widgetBuilderHelper.generatePaths(pkg),
     xmlversion = widgetBuilderHelper.xmlversion;
 
-gulp.task("default", ["build"], function() {
-    gulp.watch("./src/**/*", ["compress"]);
-    gulp.watch("./src/**/*.js", ["copy:js"]);
-    gulp.watch("./src/**/*.html", ["copy:html"]);
+gulp.task("default", ["clean", "webpack"], function() {
+    gulp.watch("./src/**/*", ["webpack"]);
+    gulp.watch("./dist/tmp/src/**/*.js", ["copy:js"]);
 });
 
 gulp.task("clean", function () {
     return del([
+        "./dist/tmp",
         paths.WIDGET_TEST_DEST,
         paths.WIDGET_DIST_DEST
     ], { force: true });
 });
 
-gulp.task("compress", ["clean"], function () {
-    return gulp.src("src/**/*")
+gulp.task("webpack", function(callback) {
+    webpack(webpackConfig, function(error, stats) {
+        if (error) {
+            throw new gutil.PluginError("webpack", err);
+        }
+        gulp.start("compress");
+        callback()
+    });
+});
+
+gulp.task("release", ["clean"], function(callback) {
+    webpack(webpackConfigRelease, function(error, stats) {
+        if (error) {
+            throw new gutil.PluginError("webpack", err);
+        }
+        gulp.start("compress");
+        callback();
+    });
+});
+
+gulp.task("compress", function () {
+    return gulp.src("dist/tmp/src/**/*")
         .pipe(zip(pkg.name + ".mpk"))
         .pipe(gulp.dest(paths.TEST_WIDGETS_FOLDER))
         .pipe(gulp.dest("dist"));
 });
 
 gulp.task("copy:js", function () {
-    return gulp.src(["./src/**/*.js"])
-        .pipe(plumber(function (error) {
-            var msg = gutil.colors.red("Error");
-            if (error.fileName) {
-                msg += gutil.colors.red(" in ") + gutil.colors.cyan(error.fileName);
-            }
-            msg += " : " + gutil.colors.cyan(error.message);
-            gutil.log(msg);
-            this.emit("end");
-        }))
-        .pipe(jsValidate())
-        .pipe(newer(paths.TEST_WIDGETS_DEPLOYMENT_FOLDER))
-        .pipe(gulp.dest(paths.TEST_WIDGETS_DEPLOYMENT_FOLDER));
-});
-
-gulp.task("copy:html", function () {
-    return gulp.src(["./src/**/*.html"])
+    return gulp.src(["./dist/tmp/src/**/*.js"])
         .pipe(newer(paths.TEST_WIDGETS_DEPLOYMENT_FOLDER))
         .pipe(gulp.dest(paths.TEST_WIDGETS_DEPLOYMENT_FOLDER));
 });
