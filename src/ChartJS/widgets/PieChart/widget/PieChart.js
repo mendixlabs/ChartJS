@@ -119,5 +119,3 @@ define([
         }
     });
 });
-
-require(["ChartJS/widgets/PieChart/widget/PieChart"]);

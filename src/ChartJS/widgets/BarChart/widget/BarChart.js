@@ -183,4 +183,3 @@ define([
     });
 });
 
-require(["ChartJS/widgets/BarChart/widget/BarChart"]);

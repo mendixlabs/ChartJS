@@ -22,7 +22,7 @@ define([
     "dojo/ready",
 
     // External libraries
-    "ChartJS/lib/charts",
+    "chart.js",
 
     // Templates
     "dojo/text!ChartJS/templates/chartjs.html",

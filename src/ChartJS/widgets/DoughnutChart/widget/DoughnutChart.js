@@ -116,5 +116,3 @@ define([
         }
     });
 });
-
-require(["ChartJS/widgets/DoughnutChart/widget/DoughnutChart"]);

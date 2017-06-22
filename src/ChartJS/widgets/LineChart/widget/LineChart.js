@@ -233,5 +233,3 @@ define([
 
     });
 });
-
-require(["ChartJS/widgets/LineChart/widget/LineChart"]);
