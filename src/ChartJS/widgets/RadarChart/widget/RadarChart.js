@@ -183,6 +183,4 @@ define([
     });
 });
 
-require(["ChartJS/widgets/RadarChart/widget/RadarChart"], function () {
-    "use strict";
-});
+require(["ChartJS/widgets/RadarChart/widget/RadarChart"]);

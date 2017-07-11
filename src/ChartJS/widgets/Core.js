@@ -76,8 +76,6 @@ define([
 
         _tooltipNode: null,
 
-        _chartEntityObject: null,
-
         startup: function () {
             logger.debug(this.id + ".startup");
 
@@ -173,51 +171,88 @@ define([
             };
 
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
-                var obj = objs[0], // Chart object is always only one.
-                    j = null,
-                    dataset = null,
-                    pointguids = null,
-                    guids = obj.get(this._dataset);
+                if (objs && objs.length > 0) {
+                    var obj = objs[0], // Chart object is always only one.
+                        j = null,
+                        dataset = null,
+                        pointguids = null,
+                        guids = obj.get(this._dataset);
 
-                this._data.object = obj;
-                this._data.datasets = [];
+                    this._data.object = obj;
+                    this._data.datasets = [];
 
-                if (!guids) {
-                    logger.warn(this.id + "._loadData failed, no _dataset. Not rendering Chart");
-                    return;
+                    if (!guids) {
+                        logger.warn(this.id + "._loadData failed, no _dataset. Not rendering Chart");
+                        return;
+                    }
+
+                    // Retrieve datasets
+                    mx.data.get({
+                        guids: guids,
+                        callback: lang.hitch(this, function (datasets) {
+                            var set = {};
+
+                            this._datasetCounter = datasets.length;
+                            this._data.datasets = [];
+
+                            for (j = 0; j < datasets.length; j++) {
+                                dataset = datasets[j];
+                                pointguids = dataset.get(this._datapoint);
+                                if (typeof pointguids === "string" && pointguids !== "") {
+                                    pointguids = [pointguids];
+                                }
+                                if (typeof pointguids !== "string") {
+                                    mx.data.get({
+                                        guids: pointguids,
+                                        callback: lang.hitch(this, this.datasetAdd, dataset)
+                                    });
+                                } else {
+                                    this.datasetAdd(dataset, []);
+                                }
+                            }
+
+                        })
+                    });
+                } else {
+                    console.warn(this.id + "._loadData execution of microflow:" + this.datasourcemf + " has not returned any objects.");
                 }
-
-                this._chartEntityObject = obj;
-
-                // Retrieve datasets
-                mx.data.get({
-                    guids: guids,
-                    callback: lang.hitch(this, function (datasets) {
-                        var set = {};
-
-                        this._datasetCounter = datasets.length;
-                        this._data.datasets = [];
-
-                        for (j = 0; j < datasets.length; j++) {
-                            dataset = datasets[j];
-                            pointguids = dataset.get(this._datapoint);
-                            if (typeof pointguids === "string" && pointguids !== "") {
-                                pointguids = [pointguids];
-                            }
-                            if (typeof pointguids !== "string") {
-                                mx.data.get({
-                                    guids: pointguids,
-                                    callback: lang.hitch(this, this.datasetAdd, dataset)
-                                });
-                            } else {
-                                this.datasetAdd(dataset, []);
-                            }
-                        }
-
-                    })
-                });
             }), this._mxObj);
 
+        },
+
+        _loadDataSingleSet: function () {
+            logger.debug(this.id + "._loadDataSingleSet");
+            this._executeMicroflow(this.datasourcemf, lang.hitch(this, function(objs) {
+                if (objs && objs.length > 0) {
+                    var obj = objs[0], // Chart object is always only one.
+                        j = null,
+                        dataset = null;
+
+                    this._data.object = obj;
+
+                    // Retrieve datasets
+                    mx.data.get({
+                        guids: obj.get(this._dataset),
+                        callback: lang.hitch(this, function(datasets) {
+                            var set = null;
+                            this._data.datasets = [];
+
+                            for (j = 0; j < datasets.length; j++) {
+                                dataset = datasets[j];
+
+                                set = {
+                                    dataset: dataset,
+                                    sorting: +(dataset.get(this.datasetsorting))
+                                };
+                                this._data.datasets.push(set);
+                            }
+                            this._processData();
+                        })
+                    });
+                } else {
+                    console.warn(this.id + "._loadDataSingleSet execution of microflow:" + this.datasourcemf + " has not returned any objects.");
+                }
+            }), this._mxObj);
         },
 
         uninitialize: function () {
@@ -253,13 +288,16 @@ define([
                     }
                 }
 
-                if (this._chartEntityObject !== null) {
-                    logger.debug(this.id + ".uninitialize release obj " + this._chartEntityObject.getGuid());
-                    mx.data.release(this._chartEntityObject);
-                }
-
                 if (this._data.object && this._data.object.getGuid) {
-                    mx.data.release(this._data.object);
+                    if (this.onDestroyMf) {
+                        this._executeMicroflow(this.onDestroyMf, lang.hitch(this, function () {
+                            logger.debug(this.id + ".uninitialize release obj " + this._data.object.getGuid());
+                            mx.data.release(this._data.object);
+                        }), this._data.object);
+                    } else {
+                        logger.debug(this.id + ".uninitialize release obj " + this._data.object.getGuid());
+                        mx.data.release(this._data.object);
+                    }
                 }
             }
         },
@@ -610,16 +648,16 @@ define([
                 maintainAspectRatio : this.maintainAspectRatio,
                 showTooltips : this.showTooltips,
                 animation: this.chartAnimation ? ({
-					duration: this.chartAnimation ? this.animationDuration : 0,
-					easing: this.animationEasing
-				}) : false
+                    duration: this.chartAnimation ? this.animationDuration : 0,
+                    easing: this.animationEasing
+                }) : false
             };
 
             return lang.mixin(lang.clone(defaultOptions), options);
         },
 
         _executeMicroflow: function (mf, callback, obj) {
-            logger.debug(this.id + "._executeMicroflow");
+            logger.debug(this.id + "._executeMicroflow " + mf);
             var _params = {
                 applyto: "selection",
                 actionname: mf,

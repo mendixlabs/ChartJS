@@ -6,20 +6,20 @@ define([
     "dojo/on",
     "dojo/html",
     "dojo/dom-style"
-], function (declare, Core, lang, domQuery, on, html, domStyle) {
+], function(declare, Core, lang, domQuery, on, html, domStyle) {
     "use strict";
 
-    return declare("ChartJS.widgets.PieChart.widget.PieChart", [ Core ], {
+    return declare("ChartJS.widgets.PieChart.widget.PieChart", [Core], {
 
         _chartType: "pie",
 
-        _processData : function () {
+        _processData: function() {
             logger.debug(this.id + "._processData");
             var sets = [],
                 chartData = [],
                 points = null,
                 set = {
-                    points : []
+                    points: []
                 },
                 color = "",
                 highlightcolor = "",
@@ -40,18 +40,18 @@ define([
 
                 label = set.dataset.get(this.datasetlabel);
                 point = {
-                    label : label,
+                    label: label,
                     backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
                     hoverBackgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
-                    value : +(set.dataset.get(this.seriesylabel))
+                    value: +(set.dataset.get(this.seriesylabel))
                 };
 
                 chartData.push(point);
                 this._activeDatasets.push({
                     obj: set.dataset,
-                    dataset : point,
-                    idx : j,
-                    active : true
+                    dataset: point,
+                    idx: j,
+                    active: true
                 });
             }
 
@@ -59,40 +59,11 @@ define([
             this._createLegend(true);
         },
 
-        _loadData : function () {
-            logger.debug(this.id + "._loadData");
-            this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
-                var obj = objs[0], // Chart object is always only one.
-                    j = null,
-                    dataset = null;
-
-                this._data.object = obj;
-                this._chartEntityObject = obj;
-
-                // Retrieve datasets
-                mx.data.get({
-                    guids : obj.get(this._dataset),
-                    callback : lang.hitch(this, function (datasets) {
-                        var set = null;
-                        this._data.datasets = [];
-
-                        for (j = 0; j < datasets.length; j++) {
-                            dataset = datasets[j];
-
-                            set = {
-                                dataset : dataset,
-                                sorting : +(dataset.get(this.datasetsorting))
-                            };
-                            this._data.datasets.push(set);
-                        }
-                        this._processData();
-                    })
-                });
-            }), this._mxObj);
-
+        _loadData: function() {
+            this._loadDataSingleSet();
         },
 
-        _createChart : function (data) {
+        _createChart: function(data) {
             logger.debug(this.id + "._createChart");
             if (this._chart) {
                 var set = this._createDataSets(data);
@@ -104,39 +75,41 @@ define([
             } else {
                 var chartProperties = {
                     type: this._chartType,
-                    data:  this._createDataSets(data),
+                    data: this._createDataSets(data),
                     options: this._chartOptions({
 
-                      elements: {
-                        arc: {
-                          //String - The colour of each segment stroke
-                          borderColor: this.segmentStrokeColor,
-                          //Number - The width of each segment stroke
-                          borderWidth: this.segmentShowStroke ? this.segmentStrokeWidth : 0
-                        }
-                      },
-
-                        animation : {
-                          //Boolean - Whether we animate the rotation of the Doughnut
-                          animateRotate: this.animateRotate,
-                          //Boolean - Whether we animate scaling the Doughnut from the centre
-                          animateScale: this.animateScale,
-                          duration: this.animationDuration,
-                          //String - Animation easing effect
-                          easing: this.animationEasing
+                        elements: {
+                            arc: {
+                                //String - The colour of each segment stroke
+                                borderColor: this.segmentStrokeColor,
+                                //Number - The width of each segment stroke
+                                borderWidth: this.segmentShowStroke ? this.segmentStrokeWidth : 0
+                            }
                         },
 
-                        legendCallback : this._legendAlternateCallback,
+                        animation: {
+                            //Boolean - Whether we animate the rotation of the Doughnut
+                            animateRotate: this.animateRotate,
+                            //Boolean - Whether we animate scaling the Doughnut from the centre
+                            animateScale: this.animateScale,
+                            duration: this.animationDuration,
+                            //String - Animation easing effect
+                            easing: this.animationEasing
+                        },
+
+                        legendCallback: this._legendAlternateCallback,
 
                         //cutOut of pie
-                        cutoutPercentage : 0, //always zero for Pie chart
+                        cutoutPercentage: 0, //always zero for Pie chart
 
                     })
                 };
                 this._chart = new this._chartJS(this._ctx, chartProperties);
 
-                // Set the con
-                html.set(this._numberNode, this._data.object.get(this.numberInside).toString());
+                if (this.numberInside) {
+                    var content = this._data.object.get(this.numberInside);
+                    html.set(this._numberNode, content !== null ? content.toString() : "");
+                }
 
                 // Add class to determain chart type
                 this._addChartClass("chartjs-pie-chart");
@@ -147,6 +120,4 @@ define([
     });
 });
 
-require(["ChartJS/widgets/PieChart/widget/PieChart"], function () {
-    "use strict";
-});
+require(["ChartJS/widgets/PieChart/widget/PieChart"]);

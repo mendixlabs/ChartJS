@@ -1,7 +1,7 @@
 /* PieChart reference css file, all general ChartJS styles are in widgets/BarChart/widget/ui/BarChart.css */
 
 .pie-legend {
-    text-align	: center;
+    text-align    : center;
 }
 .pie-legend li {
     clear: none;
