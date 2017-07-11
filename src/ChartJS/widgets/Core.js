@@ -75,7 +75,6 @@ define([
         _addedToBody: false,
 
         _tooltipNode: null,
-        _destroyed: false,
 
         startup: function () {
             logger.debug(this.id + ".startup");
@@ -258,8 +257,6 @@ define([
 
         uninitialize: function () {
             logger.debug(this.id + ".uninitialize");
-
-            this._destroyed = true;
 
             //console.log(this._data);
             if (this._handle !== null) {
