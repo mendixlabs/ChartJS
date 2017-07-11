@@ -106,7 +106,7 @@ define([
                 };
                 this._chart = new this._chartJS(this._ctx, chartProperties);
 
-                if (this.numberInside) {
+                if (this.numberInside && this._numberNode) {
                     var content = this._data.object.get(this.numberInside);
                     html.set(this._numberNode, content !== null ? content.toString() : "");
                 }

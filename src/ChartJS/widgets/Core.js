@@ -75,6 +75,7 @@ define([
         _addedToBody: false,
 
         _tooltipNode: null,
+        _destroyed: false,
 
         startup: function () {
             logger.debug(this.id + ".startup");
@@ -132,7 +133,7 @@ define([
             this._data.datasets.push(set);
 
             this._datasetCounter--;
-            if (this._datasetCounter === 0) {
+            if (this._datasetCounter === 0 && !this._destroyed) {
                 this._processData();
             }
         },
@@ -257,6 +258,8 @@ define([
 
         uninitialize: function () {
             logger.debug(this.id + ".uninitialize");
+
+            this._destroyed = true;
 
             //console.log(this._data);
             if (this._handle !== null) {
