@@ -211,7 +211,11 @@ define([
                         scaleLineWidth: this.scaleLineWidth,
 
                         //The scale line color
-                        scaleLineColor: this.scaleLineColor
+                        scaleLineColor: this.scaleLineColor,
+
+                        animation: {
+                            onComplete: lang.hitch(this, this._animationComplete)
+                        }
                     })
                 };
 

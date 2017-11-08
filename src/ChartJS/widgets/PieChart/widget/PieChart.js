@@ -102,6 +102,9 @@ define([
                         //cutOut of pie
                         cutoutPercentage: 0, //always zero for Pie chart
 
+                        animation: {
+                            onComplete: lang.hitch(this, this._animationComplete)
+                        }
                     })
                 };
                 this._chart = new this._chartJS(this._ctx, chartProperties);

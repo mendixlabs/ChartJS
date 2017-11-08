@@ -66,6 +66,7 @@ define([
         _legendNode: null,
         _mxObj: null,
         _handle: null,
+        _dataURL: "",
 
         _chartType: null,
 
@@ -700,6 +701,11 @@ define([
             if (cb && typeof cb === "function") {
                 cb();
             }
+        },
+
+        _animationComplete: function () {
+            logger.debug(this.id + "._animationComplete");
+            // Use this.canvasNode.toDataURL() to get an image
         }
 
     });
