@@ -4,20 +4,20 @@ define([
     "dojo/_base/lang",
     "dojo/query",
     "dojo/on"
-], function (declare, Core, lang, domQuery, on) {
+], function(declare, Core, lang, domQuery, on) {
     "use strict";
 
-    return declare("ChartJS.widgets.LineChart.widget.LineChart", [ Core ], {
+    return declare("ChartJS.widgets.LineChart.widget.LineChart", [Core], {
 
         _chartType: "line",
 
-        _processData : function () {
+        _processData: function() {
             logger.debug(this.id + "._processData");
 
             var sets = [],
                 points = null,
                 set = {
-                    points : []
+                    points: []
                 },
                 xlabels = [],
                 xlabelsSet = false,
@@ -86,23 +86,23 @@ define([
                 }
 
                 _set = {
-                    label : (this.scaleShowLabelsBottom === true) ? label : "",
+                    label: (this.scaleShowLabelsBottom === true) ? label : "",
                     backgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.2") : color,
                     borderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.5") : color,
                     pointColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
                     pointBorderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.8") : color,
                     pointHoverBackgroundColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(color, "0.75") : highlightcolor,
                     pointHoverBorderColor: (this.seriesColorReduceOpacity) ? this._hexToRgb(highlightcolor, "1") : highlightcolor,
-                    data : points,
+                    data: points,
                     fill: this.seriescolorfilled,
-                    tension : this.bezierCurve ? _bezier : 0
+                    tension: this.bezierCurve ? _bezier : 0
 
                 };
                 this._chartData.datasets.push(_set);
                 this._activeDatasets.push({
-                    dataset : _set,
-                    idx : j,
-                    active : true
+                    dataset: _set,
+                    idx: j,
+                    active: true
                 });
             }
             this._chartData.labels = xlabels;
@@ -115,7 +115,7 @@ define([
             this._createLegend(false);
         },
 
-        _createChart : function (data) {
+        _createChart: function(data) {
             logger.debug(this.id + "._createChart");
 
             if (this._chart) {
@@ -132,7 +132,7 @@ define([
                     data: data,
                     options: this._chartOptions({
 
-                        scales : {
+                        scales: {
                             yAxes: [{
                                 display: this.scaleShow,
                                 //If stacked is set to true, the Y-axis needs to be stacked for it to work
@@ -147,17 +147,18 @@ define([
                                     color: this.scaleGridLineColor,
                                     lineWidth: this.scaleLineWidth
                                 },
-                                ticks : {
+                                ticks: {
+                                    max: this.maxYValue * 1, //CC
                                     fontFamily: this._font,
                                     beginAtZero: this.scaleBeginAtZero,
                                     display: this.scaleShowLabels,
-                                    callback: lang.hitch(this, function(value){
-                                            var round = parseInt(this.roundY);
-                                            if (!isNaN(round) && round >= 0) {
-                                                return Number(value).toFixed(round);
-                                            }
-                                            return value;
-                                        })
+                                    callback: lang.hitch(this, function(value) {
+                                        var round = parseInt(this.roundY);
+                                        if (!isNaN(round) && round >= 0) {
+                                            return Number(value).toFixed(round);
+                                        }
+                                        return value;
+                                    })
                                 }
                             }],
                             xAxes: [{
@@ -174,7 +175,7 @@ define([
                                 },
                                 type: "category",
                                 id: "x-axis-0",
-                                ticks : {
+                                ticks: {
                                     display: this.scaleShowLabelsBottom,
                                     fontFamily: this._font,
                                     maxTicksLimit: this.maxTickSize > 0 ? this.maxTickSize : null
@@ -184,33 +185,33 @@ define([
 
                         elements: {
                             point: {
-                                radius : this.pointDot ? this.pointRadius : 0,
-                                borderWidth : this.pointDot ? this.pointBorderWidth : 0,
-                                hitRadius : this.pointHitRadius,
-                                hoverRadius : this.pointHoverRadius,
-                                hoverBorderWidth : this.pointHoverBorderWidth
+                                radius: this.pointDot ? this.pointRadius : 0,
+                                borderWidth: this.pointDot ? this.pointBorderWidth : 0,
+                                hitRadius: this.pointHitRadius,
+                                hoverRadius: this.pointHoverRadius,
+                                hoverBorderWidth: this.pointHoverBorderWidth
                             }
                         },
 
                         //Boolean - Whether or not to render as a stacked chart
-                        stacked : this.isStacked,
+                        stacked: this.isStacked,
 
                         //Boolean - Whether to show a stroke for datasets
-                        datasetStroke : this.datasetStroke,
+                        datasetStroke: this.datasetStroke,
 
                         //Number - Pixel width of dataset stroke
-                        datasetStrokeWidth : this.datasetStrokeWidth,
+                        datasetStrokeWidth: this.datasetStrokeWidth,
 
                         //Boolean - Whether to fill the dataset with a colour
-                        datasetFill : this.datasetFill,
+                        datasetFill: this.datasetFill,
 
-                        legendCallback : this._legendCallback,
+                        legendCallback: this._legendCallback,
 
                         //The scale line width
-                        scaleLineWidth : this.scaleLineWidth,
+                        scaleLineWidth: this.scaleLineWidth,
 
                         //The scale line color
-                        scaleLineColor : this.scaleLineColor
+                        scaleLineColor: this.scaleLineColor
                     })
                 };
 
@@ -220,7 +221,7 @@ define([
 
                 this._chart = new this._chartJS(this._ctx, chartProperties);
 
-                this.connect(window, "resize", lang.hitch(this, function () {
+                this.connect(window, "resize", lang.hitch(this, function() {
                     this._resize();
                 }));
 

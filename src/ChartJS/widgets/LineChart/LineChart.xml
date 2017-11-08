@@ -9,6 +9,11 @@
 
     <properties>
         <!-- Appearance -->
+        <property key="maxYValue" type="string" required="true" defaultValue="0">
+            <caption>Maximum Y Value</caption>
+            <category>Appearance</category>
+            <description>The Maximum Y value on the chart</description>
+        </property>
         <property key="width" type="integer" required="true" defaultValue="500">
             <caption>Width</caption>
             <category>Appearance</category>
