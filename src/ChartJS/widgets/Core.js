@@ -705,6 +705,21 @@ define([
 
         _animationComplete: function () {
             logger.debug(this.id + "._animationComplete");
+			if(this.base64Attr) {
+				var ctx = this.canvasNode.getContext('2d');
+				var imgData=ctx.getImageData(0,0,this.canvasNode.width,this.canvasNode.height);
+				var data=imgData.data;
+				for(var i=0;i<data.length;i+=4){
+					if(data[i+3]<255){
+						data[i]=255;
+						data[i+1]=255;
+						data[i+2]=255;
+						data[i+3]=255;
+					}
+				}
+				ctx.putImageData(imgData,0,0);
+				this._mxObj.set(this.base64Attr, this.canvasNode.toDataURL("image/jpeg"));
+			}
             // Use this.canvasNode.toDataURL() to get an image
         }
 

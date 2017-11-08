@@ -108,9 +108,9 @@ define([
                 this._resize();
             }));
 
-            if (this.numberInside && this._numberNode) {
-                var content = this._data.object.get(this.numberInside);
-                html.set(this._numberNode, content !== null ? content.toString() : "");
+            // Set the con
+            if (this.numberInside) {
+                html.set(this._numberNode, this._data.object.get(this.numberInside).toString());
             }
 
             // Add class to determain chart type
