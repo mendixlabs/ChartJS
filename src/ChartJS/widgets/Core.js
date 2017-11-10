@@ -704,33 +704,47 @@ define([
         _animationComplete: function() {
             logger.debug(this.id + "._animationComplete");
             if (this.base64Attr) {
-                var ctx = this.canvasNode.getContext('2d');
-                var imgData = ctx.getImageData(0, 0, this.canvasNode.width, this.canvasNode.height);
-                var data = imgData.data;
-                // if the charttype is a donut, we have to fix up some translucency issues.
-                if (this._chartType === "doughnut") {
-                    for (var i = 0; i < data.length; i += 4) {
-                        if (data[i + 3] < 255) {
-                            data[i] = 255;
-                            data[i + 1] = 255;
-                            data[i + 2] = 255;
-                            data[i + 3] = 255;
-                        }
-                    }
-                    ctx.putImageData(imgData, 0, 0);
-                }
-                this._mxObj.set(this.base64Attr, this._getBase64StringFromCanvasNode());
+                this._mxObj.set(this.base64Attr, this._getBase64StringFromCanvasWithBackground("white"));
 
             }
         },
 
         /**
-         * Get Base64 String From Canvas Node
-         * --
-         * @returns {String} - the base64 string of whatever's in the canvasnode
+         * Get Base64 String From Canvas Node with Background
+         * ---
+         * @author Conner Charlebois
+         * @since  10 Nov, 2017
+         * @param   {String} backgroundColor - CSS color for the background fill
+         * @returns {String} - the base64 String with the background fill applied.
+         * @see https://stackoverflow.com/a/44174406/1513051
          */
-        _getBase64StringFromCanvasNode: function() {
-            return this.canvasNode.toDataURL(this._chartType === "doughnut" ? "image/jpeg" : "image/png");
+        _getBase64StringFromCanvasWithBackground: function(backgroundColor) {
+
+            var context = this.canvasNode.getContext('2d');
+            var canvas = context.canvas;
+            //cache height and width        
+            var w = canvas.width;
+            var h = canvas.height;
+            //get the current ImageData for the canvas.
+            var data = context.getImageData(0, 0, w, h);
+            //store the current globalCompositeOperation
+            var compositeOperation = context.globalCompositeOperation;
+            //set to draw behind current content
+            context.globalCompositeOperation = "destination-over";
+            //set background color
+            context.fillStyle = backgroundColor;
+            //draw background / rect on entire canvas
+            context.fillRect(0, 0, w, h);
+            //get the image data from the canvas
+            var imageData = canvas.toDataURL("image/jpeg");
+            //clear the canvas
+            context.clearRect(0, 0, w, h);
+            //restore it with original / cached ImageData
+            context.putImageData(data, 0, 0);
+            //reset the globalCompositeOperation to what it was
+            context.globalCompositeOperation = compositeOperation;
+
+            return imageData;
         }
 
     });
