@@ -127,6 +127,22 @@ define([
             } else {
                 //logger.debug("stacked:" + this.isStacked);
 
+                var ticksOptions = {
+                    fontFamily: this._font,
+                    beginAtZero: this.scaleBeginAtZero,
+                    display: this.scaleShowLabels,
+                    callback: lang.hitch(this, function(value) {
+                        var round = parseInt(this.roundY);
+                        if (!isNaN(round) && round >= 0) {
+                            return Number(value).toFixed(round);
+                        }
+                        return value;
+                    })
+                };
+                if (this.maxYValue) {
+                    ticksOptions.max = this.maxYValue * 1;
+                }
+
                 var chartProperties = {
                     type: this._chartType,
                     data: data,
@@ -147,19 +163,7 @@ define([
                                     color: this.scaleGridLineColor,
                                     lineWidth: this.scaleLineWidth
                                 },
-                                ticks: {
-                                    // max: (this.maxYValue ? this.maxYValue * 1 : false), //CC
-                                    fontFamily: this._font,
-                                    beginAtZero: this.scaleBeginAtZero,
-                                    display: this.scaleShowLabels,
-                                    callback: lang.hitch(this, function(value) {
-                                        var round = parseInt(this.roundY);
-                                        if (!isNaN(round) && round >= 0) {
-                                            return Number(value).toFixed(round);
-                                        }
-                                        return value;
-                                    })
-                                }
+                                ticks: ticksOptions
                             }],
                             xAxes: [{
                                 display: this.scaleShow,
