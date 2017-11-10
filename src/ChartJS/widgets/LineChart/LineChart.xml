@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<widget id="ChartJS.widgets.LineChart.widget.LineChart" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
+<widget id="ChartJS.widgets.LineChart.widget.LineChart" needsEntityContext="true" 
+    xmlns="http://www.mendix.com/widget/1.0/">
     <name>ChartJS - Line Chart</name>
     <description>.</description>
-
-    <icon>
-        iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAFRklEQVR42u3csUqtVxSF0QNK7A56q1uIgljFVKmtU6Y5ksoq75LHy+OEVCHRi31g4tXFmmPARNu9/fdXejgAAAAAAAAAAAAAAAAAAPA/np+fz0+n09emvZ75s+8dRnh4ePjx5ce/TXs7MyAAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAgDFBACKCQAUEwAoJgBQTACgmABAMQGAYgIAxQQAigkAFBMAKCYAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAgDFBACKCQAUEwAoJgBQTACgmABAMQGAYgIAxQQAigkAFBMAKCYAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAsAKV1dXPx2Px99adnl5+ct73JsAsML5+fkfhwEf10ft7Ozsz/e4NwFgBQHICAArCEBGAFhBADICwAoCkBEAVhCAjACwggBkBIAVBCAjAKwgABkBYAUByAgAKwhARgBYQQAyAsAKApARAFYQgIwAsIIAZASAFQQgIwCsIAAZAWAFAcgIACsIQEYAWEEAMgLACgKQEQBWEICMALCCAGQEgBUEICMArCAAGQFgBQHICAArCEBGAFhBADICwAoCkBEAVhCAjACwggBkBIAVBCAjAKwgABkBYAUByAgAKwhARgBYQQAyAsAKApARAFYQgIwAsIIAZASAFQQgIwCsIAAZAWAFAcgIACsIQEYAWEEAMgLACgKQEQBWEICMALCCAGQEgBUEICMArCAAGQFgBQHICAArCEBGAFhBADICwAoCkBGA3M3Nza/X19e/t+z29vbn97i370IAMgKQe/sbfPp5Pmpvb2wmAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGCQ+/v7L3d3d/cte3H9Hvf2+Pj4w2ef5aP3euZ3+uauP/ssH/zNffncVw4AAAAAAAAAAAAAAAAAAAB8d8fj8a+Li4u/zaxrr2//8PLLP4cB/+rIzD52396+AJh1TgDMiicAZsUTALPiCYBZ8QTArHgCYFY8ATArngCYFU8AzIonAGbFEwCz4gmAWfEEwKx4AmBWPAEwK54AmBVPAMyKJwBmxRMAs+IJgFnxBMCseAJgVjwBMCueAJgVTwDMivft7T89PX09nU5mVrbXt38AAAAAAAAAAAAAAAAAAIb7D5VqMu+N+RwAAAAAAElFTkSuQmCC
-    </icon>
-
+    <icon>        iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAFRklEQVR42u3csUqtVxSF0QNK7A56q1uIgljFVKmtU6Y5ksoq75LHy+OEVCHRi31g4tXFmmPARNu9/fdXejgAAAAAAAAAAAAAAAAAAPA/np+fz0+n09emvZ75s+8dRnh4ePjx5ce/TXs7MyAAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAgDFBACKCQAUEwAoJgBQTACgmABAMQGAYgIAxQQAigkAFBMAKCYAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAgDFBACKCQAUEwAoJgBQTACgmABAMQGAYgIAxQQAigkAFBMAKCYAUEwAoJgAQDEBgGICAMUEAIoJABQTACgmAFBMAKCYAEAxAYBiAsAKV1dXPx2Px99adnl5+ct73JsAsML5+fkfhwEf10ft7Ozsz/e4NwFgBQHICAArCEBGAFhBADICwAoCkBEAVhCAjACwggBkBIAVBCAjAKwgABkBYAUByAgAKwhARgBYQQAyAsAKApARAFYQgIwAsIIAZASAFQQgIwCsIAAZAWAFAcgIACsIQEYAWEEAMgLACgKQEQBWEICMALCCAGQEgBUEICMArCAAGQFgBQHICAArCEBGAFhBADICwAoCkBEAVhCAjACwggBkBIAVBCAjAKwgABkBYAUByAgAKwhARgBYQQAyAsAKApARAFYQgIwAsIIAZASAFQQgIwCsIAAZAWAFAcgIACsIQEYAWEEAMgLACgKQEQBWEICMALCCAGQEgBUEICMArCAAGQFgBQHICAArCEBGAFhBADICwAoCkBGA3M3Nza/X19e/t+z29vbn97i370IAMgKQe/sbfPp5Pmpvb2wmAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGAQAcgIQE4ABhGAjADkBGCQ+/v7L3d3d/cte3H9Hvf2+Pj4w2ef5aP3euZ3+uauP/ssH/zNffncVw4AAAAAAAAAAAAAAAAAAAB8d8fj8a+Li4u/zaxrr2//8PLLP4cB/+rIzD52396+AJh1TgDMiicAZsUTALPiCYBZ8QTArHgCYFY8ATArngCYFU8AzIonAGbFEwCz4gmAWfEEwKx4AmBWPAEwK54AmBVPAMyKJwBmxRMAs+IJgFnxBMCseAJgVjwBMCueAJgVTwDMivft7T89PX09nU5mVrbXt38AAAAAAAAAAAAAAAAAAIb7D5VqMu+N+RwAAAAAAElFTkSuQmCC    </icon>
     <properties>
         <!-- Appearance -->
         <property key="maxYValue" type="string" required="false" defaultValue="">
@@ -126,15 +123,7 @@
             <returnType type="Object" entityProperty="sourceentity"></returnType>
         </property>
         <!--Placeholder-->
-        <!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false">
-            <caption>Attribute to trigger</caption>
-            <category>Data Set</category>
-            <description>Attribute to trigger the microflow.</description>
-            <attributeTypes>
-                <attributeType name="Enum"/>
-                <attributeType name="String"/>
-            </attributeTypes>
-        </property>-->
+        <!--<property key="sourceTrigger" type="attribute" entityProperty="sourceentity" allowNonPersistableEntities="true" required="false"><caption>Attribute to trigger</caption><category>Data Set</category><description>Attribute to trigger the microflow.</description><attributeTypes><attributeType name="Enum"/><attributeType name="String"/></attributeTypes></property>-->
         <!-- Data Set -->
         <property key="datasetentity" type="entity" required="true" allowNonPersistableEntities="true" entityProperty="sourceentity" isPath="yes" pathType="referenceSet">
             <caption>Data Set Entity</caption>
@@ -252,6 +241,14 @@
             <description>Number of decimals to round the value on the Y-axis. Disable it by setting it to '-1'</description>
         </property>
         <!-- Behavior -->
+        <property key="base64Attr" type="attribute" required="false">
+            <caption>Base 64 Attribute</caption>
+            <category>Behavior</category>
+            <description>The attribute to store the base64 encoding of the chart when rendered.</description>
+            <attributeTypes>
+                <attributeType name="String"/>
+            </attributeTypes>
+        </property>
         <property key="onclickmf" type="microflow" required="false">
             <caption>On Click Microflow</caption>
             <category>Behavior</category>
@@ -346,11 +343,7 @@
             <category>Settings</category>
             <description>Determines whether to draw tooltips on the canvas or not.</description>
         </property>
-        <!--<property key="tooltipForm" type="form" required="false">
-            <caption>Tooltip form</caption>
-            <category>Settings</category>
-            <description>.</description>
-        </property>-->
+        <!--<property key="tooltipForm" type="form" required="false"><caption>Tooltip form</caption><category>Settings</category><description>.</description></property>-->
         <property key="maintainAspectRatio" type="boolean" required="true" defaultValue="true">
             <caption>Maintain aspect ratio</caption>
             <category>Settings</category>
