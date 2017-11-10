@@ -148,7 +148,7 @@ define([
                                     lineWidth: this.scaleLineWidth
                                 },
                                 ticks: {
-                                    max: this.maxYValue * 1, //CC
+                                    // max: (this.maxYValue ? this.maxYValue * 1 : false), //CC
                                     fontFamily: this._font,
                                     beginAtZero: this.scaleBeginAtZero,
                                     display: this.scaleShowLabels,
