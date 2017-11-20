@@ -90,7 +90,8 @@ define([
                         animateScale: this.animateScale,
                         duration: this.animationDuration,
                         //String - Animation easing effect
-                        easing: this.animationEasing
+                        easing: this.animationEasing,
+                        onComplete: lang.hitch(this, this._animationComplete)
                     },
 
                     legendCallback: this._legendAlternateCallback,
@@ -98,9 +99,6 @@ define([
                     //Number - The percentage of the chart that we cut out of the middle
                     cutoutPercentage: this.percentageInnerCutout,
 
-                    animation: {
-                        onComplete: lang.hitch(this, this._animationComplete)
-                    }
                 })
             });
 

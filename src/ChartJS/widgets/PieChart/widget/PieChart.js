@@ -94,7 +94,8 @@ define([
                             animateScale: this.animateScale,
                             duration: this.animationDuration,
                             //String - Animation easing effect
-                            easing: this.animationEasing
+                            easing: this.animationEasing,
+                            onComplete: lang.hitch(this, this._animationComplete)
                         },
 
                         legendCallback: this._legendAlternateCallback,
@@ -102,9 +103,6 @@ define([
                         //cutOut of pie
                         cutoutPercentage: 0, //always zero for Pie chart
 
-                        animation: {
-                            onComplete: lang.hitch(this, this._animationComplete)
-                        }
                     })
                 };
                 this._chart = new this._chartJS(this._ctx, chartProperties);
