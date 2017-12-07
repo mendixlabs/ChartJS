@@ -704,7 +704,10 @@ define([
         _animationComplete: function() {
             logger.debug(this.id + "._animationComplete");
             if (this.base64Attr) {
-                this._mxObj.set(this.base64Attr, this._getBase64StringFromCanvasWithBackground("white"));
+                var base64String = this._getBase64StringFromCanvasWithBackground("white");
+                if (base64String) {
+                    this._mxObj.set(this.base64Attr, base64String);
+                }
 
             }
         },
@@ -712,14 +715,18 @@ define([
         /**
          * Get Base64 String From Canvas Node with Background
          * ---
+         * @since Dec 7, 2017 
+         * + returns null if the canvasNode is undefined
          * @author Conner Charlebois
          * @since  10 Nov, 2017
          * @param   {String} backgroundColor - CSS color for the background fill
          * @returns {String} - the base64 String with the background fill applied.
          * @see https://stackoverflow.com/a/44174406/1513051
+         * 
          */
         _getBase64StringFromCanvasWithBackground: function(backgroundColor) {
 
+            if (!this.canvasNode) return null;
             var context = this.canvasNode.getContext('2d');
             var canvas = context.canvas;
             //cache height and width        
