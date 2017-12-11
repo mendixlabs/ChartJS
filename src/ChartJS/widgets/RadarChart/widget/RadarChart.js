@@ -170,7 +170,11 @@ define([
                         //Boolean - Whether to fill the dataset with a colour
                         datasetFill : this.datasetFill,
 
-                        legendCallback : this._legendCallback
+                        legendCallback : this._legendCallback,
+
+                        animation: {
+                            onComplete: lang.hitch(this, this._animationComplete)
+                        }
                     })
                 });
 

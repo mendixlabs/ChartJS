@@ -211,14 +211,14 @@
                 <description>Microflow to invoke when chart canvas is clicked. This Microflow will pass the Dataset object 'Data set entity'</description>
                 <returnType type="Void"></returnType>
             </property>
-            <property key="onDestroyMf" type="microflow" required="false" entityProperty="sourceentity">
-                <caption>On Destroy Microflow</caption>
-                <category>Behavior</category>
-                <description>Microflow to be called when the widget is destroyed. This can be used to destroy the Chart Entity from 'Data Source'.
-
-Note: This is experimental. In case of non-persistent objects this should not be necessary, and in MX 7 this is useless. Only use this if you experience memory leaks in Mendix 5</description>
-                <returnType type="Void"></returnType>
-            </property>
+			<property key="base64Attr" type="attribute" required="false">
+				<caption>Base 64 Attribute</caption>
+				<category>Behavior</category>
+				<description>The attribute to store the base64 encoding of the chart when rendered.</description>
+				<attributeTypes>
+					<attributeType name="String"/>
+				</attributeTypes>
+			</property>
             <!-- Settings -->
             <property key="responsive" type="boolean" required="true" defaultValue="true">
                 <caption>Responsive</caption>
