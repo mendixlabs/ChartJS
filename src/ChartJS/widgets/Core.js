@@ -28,20 +28,20 @@ define([
     "dojo/text!ChartJS/templates/chartjs.html",
     "dojo/text!ChartJS/templates/tooltip.html"
 
-], function (
+], function(
 
-       // Mixins
-       declare, _WidgetBase, _TemplatedMixin,
+    // Mixins
+    declare, _WidgetBase, _TemplatedMixin,
 
-        // Client API and DOJO functions
-        dom, dojoDom, domQuery, domProp, domGeom, domClass, domAttr, domStyle, win, domConstruct, dojoArray, lang, html, ready,
+    // Client API and DOJO functions
+    dom, dojoDom, domQuery, domProp, domGeom, domClass, domAttr, domStyle, win, domConstruct, dojoArray, lang, html, ready,
 
-        // External libraries
-        _charts,
+    // External libraries
+    _charts,
 
-        // Templates
-        _chartJSTemplate,
-        _chartJSTooltipTemplate) {
+    // Templates
+    _chartJSTemplate,
+    _chartJSTooltipTemplate) {
 
     "use strict";
 
@@ -66,6 +66,7 @@ define([
         _legendNode: null,
         _mxObj: null,
         _handle: null,
+        _dataURL: "",
 
         _chartType: null,
 
@@ -76,7 +77,7 @@ define([
 
         _tooltipNode: null,
 
-        startup: function () {
+        startup: function() {
             logger.debug(this.id + ".startup");
 
             var domNode = null;
@@ -111,12 +112,12 @@ define([
             //     domConstruct.place(this._tooltipNode, win.body());
             // }
 
-            this.connect(this.mxform, "resize", lang.hitch(this, function () {
+            this.connect(this.mxform, "resize", lang.hitch(this, function() {
                 this._resize();
             }));
         },
 
-        datasetAdd: function (dataset, datapoints) {
+        datasetAdd: function(dataset, datapoints) {
             logger.debug(this.id + ".datasetAdd");
             var set = {
                 dataset: dataset,
@@ -137,7 +138,7 @@ define([
             }
         },
 
-        update: function (obj, callback) {
+        update: function(obj, callback) {
             logger.debug(this.id + ".update");
             this._mxObj = obj;
 
@@ -163,14 +164,14 @@ define([
             this._executeCallback(callback, "update");
         },
 
-        _loadData: function () {
+        _loadData: function() {
             logger.debug(this.id + "._loadData");
             this._data = {
                 object: this._mxObj,
                 datasets: []
             };
 
-            this._executeMicroflow(this.datasourcemf, lang.hitch(this, function (objs) {
+            this._executeMicroflow(this.datasourcemf, lang.hitch(this, function(objs) {
                 if (objs && objs.length > 0) {
                     var obj = objs[0], // Chart object is always only one.
                         j = null,
@@ -189,7 +190,7 @@ define([
                     // Retrieve datasets
                     mx.data.get({
                         guids: guids,
-                        callback: lang.hitch(this, function (datasets) {
+                        callback: lang.hitch(this, function(datasets) {
                             var set = {};
 
                             this._datasetCounter = datasets.length;
@@ -220,7 +221,7 @@ define([
 
         },
 
-        _loadDataSingleSet: function () {
+        _loadDataSingleSet: function() {
             logger.debug(this.id + "._loadDataSingleSet");
             this._executeMicroflow(this.datasourcemf, lang.hitch(this, function(objs) {
                 if (objs && objs.length > 0) {
@@ -255,7 +256,7 @@ define([
             }), this._mxObj);
         },
 
-        uninitialize: function () {
+        uninitialize: function() {
             logger.debug(this.id + ".uninitialize");
 
             //console.log(this._data);
@@ -290,7 +291,7 @@ define([
 
                 if (this._data.object && this._data.object.getGuid) {
                     if (this.onDestroyMf) {
-                        this._executeMicroflow(this.onDestroyMf, lang.hitch(this, function () {
+                        this._executeMicroflow(this.onDestroyMf, lang.hitch(this, function() {
                             logger.debug(this.id + ".uninitialize release obj " + this._data.object.getGuid());
                             mx.data.release(this._data.object);
                         }), this._data.object);
@@ -302,7 +303,7 @@ define([
             }
         },
 
-        customTooltip: function (tooltip) {
+        customTooltip: function(tooltip) {
             logger.debug(this.id + ".customTooltip");
             // Tooltip Element
             var tooltipEl = domQuery("#chartjsTooltip")[0],
@@ -331,7 +332,7 @@ define([
                     location: "content",
                     context: contextObj,
                     domNode: tooltipElContent,
-                    callback: function (form) {
+                    callback: function(form) {
                         var whatEver = null;
                     }
                 }, this);
@@ -358,7 +359,7 @@ define([
 
         },
 
-        _createCtx: function () {
+        _createCtx: function() {
             logger.debug(this.id + "._createCtx");
             var position = domGeom.position(this.domNode.parentElement, false);
             domAttr.set(this.canvasNode, "id", "canvasid_" + this.id);
@@ -385,26 +386,26 @@ define([
 
         },
 
-        _processData: function () {
+        _processData: function() {
             // STUB
             console.error("_processData: This is placeholder function that should be overwritten by the implementing widget.");
         },
 
-        _createChart: function (data) {
+        _createChart: function(data) {
             // STUB
             console.error("_createChart: This is placeholder function that should be overwritten by the implementing widget.", data);
         },
 
-        _onClickChart: function (evt) {
+        _onClickChart: function(evt) {
             logger.debug(this.id + "._onClickChart");
             var elements = this._chart.getElementAtEvent(evt);
             if (elements.length) {
                 var el = elements[0],
-                datasetIndex = el._datasetIndex,
-                pointIndex = el._index,
-                dataset =  this._data.datasets[datasetIndex],
-                datasetObject = dataset ? dataset.dataset : null,
-                dataPointObject = dataset && dataset.points ? dataset.points[pointIndex] : null;
+                    datasetIndex = el._datasetIndex,
+                    pointIndex = el._index,
+                    dataset = this._data.datasets[datasetIndex],
+                    datasetObject = dataset ? dataset.dataset : null,
+                    dataPointObject = dataset && dataset.points ? dataset.points[pointIndex] : null;
 
                 if (this.onclickDataSetMf && datasetObject) {
                     if (this._chartType === "pie" || this._chartType === "doughnut" || this._chartType === "polarArea") {
@@ -425,7 +426,7 @@ define([
             }
         },
 
-        _createLegend: function (isSingleSeries) {
+        _createLegend: function(isSingleSeries) {
             logger.debug(this.id + "._createLegend");
             var listNodes = null,
                 k = null;
@@ -443,7 +444,7 @@ define([
             }
         },
 
-        _legendCallback: function (chart) {
+        _legendCallback: function(chart) {
             logger.debug(this.id + "._legendCallback");
             var text = [];
             text.push("<ul class=\"" + chart.id + "-legend chart-legend\">");
@@ -477,7 +478,7 @@ define([
             return text.join("");
         },
 
-        _onClickLegend: function (idx, isSingleSeries) {
+        _onClickLegend: function(idx, isSingleSeries) {
             logger.debug(this.id + "._onClickLegend", idx, isSingleSeries);
             var activeSet = null,
                 activeSetLegend = null,
@@ -511,17 +512,15 @@ define([
             }
         },
 
-        _createDataSets: function (data) {
+        _createDataSets: function(data) {
             logger.debug(this.id + "._createDataSets");
             var _chartData = {
                 labels: [],
-                datasets: [
-                    {
-                        data: [],
-                        backgroundColor: [],
-                        hoverBackgroundColor: []
-                    }
-                ]
+                datasets: [{
+                    data: [],
+                    backgroundColor: [],
+                    hoverBackgroundColor: []
+                }]
             };
 
             for (var j = 0; j < data.length; j++) {
@@ -534,9 +533,9 @@ define([
             return _chartData;
         },
 
-        _sortArrayObj: function (values) {
+        _sortArrayObj: function(values) {
             logger.debug(this.id + "._sortArrayObj");
-            return values.sort(lang.hitch(this, function (a, b) {
+            return values.sort(lang.hitch(this, function(a, b) {
                 var aa = +(a.sorting),
                     bb = +(b.sorting);
                 if (aa > bb) {
@@ -550,7 +549,7 @@ define([
             }));
         },
 
-        _isNumber: function (n, attr) {
+        _isNumber: function(n, attr) {
             // Fix for older MX versions who do not have the .isNumeric method
             if (typeof n.isNumeric === "function") {
                 return n.isNumeric(attr);
@@ -558,9 +557,9 @@ define([
             return n.isNumber(attr);
         },
 
-        _sortArrayMx: function (values, sortAttr) {
+        _sortArrayMx: function(values, sortAttr) {
             logger.debug(this.id + "._sortArrayMx");
-            return values.sort(lang.hitch(this, function (a, b) {
+            return values.sort(lang.hitch(this, function(a, b) {
                 var aa = +(a.get(sortAttr)),
                     bb = +(b.get(sortAttr));
                 //if the attribute is numeric
@@ -577,18 +576,18 @@ define([
             }));
         },
 
-        _addChartClass: function (className) {
+        _addChartClass: function(className) {
             logger.debug(this.id + "._addChartClass");
             domClass.remove(this.domNode, className);
             domClass.add(this.domNode, className);
         },
 
-        _resize: function () {
+        _resize: function() {
             logger.debug(this.id + "._resize");
             var position = domGeom.position(this.domNode.parentElement, false);
 
             clearTimeout(this._resizeTimer);
-            this._resizeTimer = setTimeout(lang.hitch(this, function (){
+            this._resizeTimer = setTimeout(lang.hitch(this, function() {
                 //Only resize when chart is set to responsive and width and height of parent element > 0
                 if (this._chart && this.responsive && position.w > 0 && position.h > 0) {
                     this._chart.resize();
@@ -596,7 +595,7 @@ define([
             }), 50);
         },
 
-        _hexToRgb: function (hex, alpha) {
+        _hexToRgb: function(hex, alpha) {
             //logger.debug(this.id + "._hexToRgb", hex, alpha);
             if (hex !== null) {
                 var regex = null,
@@ -606,7 +605,7 @@ define([
                 // From Stackoverflow here: http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
                 // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
                 shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-                hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+                hex = hex.replace(shorthandRegex, function(m, r, g, b) {
                     return r + r + g + g + b + b;
                 });
 
@@ -625,7 +624,7 @@ define([
             return "rgba(220,220,220," + alpha + ")";
         },
 
-        _chartOptions: function (options) {
+        _chartOptions: function(options) {
             logger.debug(this.id + "._chartOptions");
             // returns default chart options, mixed with specific options for a chart
 
@@ -636,17 +635,17 @@ define([
                     fontFamily: this._font,
                     fontSize: this.titleSize
                 },
-                responsive : this.responsive,
-                responsiveAnimationDuration : (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
-                tooltips : {
-                    enabled : this.showTooltips
+                responsive: this.responsive,
+                responsiveAnimationDuration: (this.responsiveAnimationDuration > 0 ? this.responsiveAnimationDuration : 0),
+                tooltips: {
+                    enabled: this.showTooltips
                 },
                 legend: {
-                    display : this.showLegend,
-                    labels : { fontFamily : this._font }
+                    display: this.showLegend,
+                    labels: { fontFamily: this._font }
                 },
-                maintainAspectRatio : this.maintainAspectRatio,
-                showTooltips : this.showTooltips,
+                maintainAspectRatio: this.maintainAspectRatio,
+                showTooltips: this.showTooltips,
                 animation: this.chartAnimation ? ({
                     duration: this.chartAnimation ? this.animationDuration : 0,
                     easing: this.animationEasing
@@ -656,7 +655,7 @@ define([
             return lang.mixin(lang.clone(defaultOptions), options);
         },
 
-        _executeMicroflow: function (mf, callback, obj) {
+        _executeMicroflow: function(mf, callback, obj) {
             logger.debug(this.id + "._executeMicroflow " + mf);
             var _params = {
                 applyto: "selection",
@@ -674,12 +673,12 @@ define([
 
             var mfAction = {
                 params: _params,
-                callback: lang.hitch(this, function (obj) {
+                callback: lang.hitch(this, function(obj) {
                     if (typeof callback === "function") {
                         callback(obj);
                     }
                 }),
-                error: lang.hitch(this, function (error) {
+                error: lang.hitch(this, function(error) {
                     console.log(this.id + "._executeMicroflow error: " + error.description);
                 })
             };
@@ -695,11 +694,64 @@ define([
             mx.data.action(mfAction, this);
         },
 
-        _executeCallback: function (cb, from) {
+        _executeCallback: function(cb, from) {
             logger.debug(this.id + "._executeCallback" + (from ? " from " + from : ""));
             if (cb && typeof cb === "function") {
                 cb();
             }
+        },
+
+        _animationComplete: function() {
+            logger.debug(this.id + "._animationComplete");
+            if (this.base64Attr) {
+                var base64String = this._getBase64StringFromCanvasWithBackground("white");
+                if (base64String) {
+                    this._mxObj.set(this.base64Attr, base64String);
+                }
+
+            }
+        },
+
+        /**
+         * Get Base64 String From Canvas Node with Background
+         * ---
+         * @since Dec 7, 2017 
+         * + returns null if the canvasNode is undefined
+         * @author Conner Charlebois
+         * @since  10 Nov, 2017
+         * @param   {String} backgroundColor - CSS color for the background fill
+         * @returns {String} - the base64 String with the background fill applied.
+         * @see https://stackoverflow.com/a/44174406/1513051
+         * 
+         */
+        _getBase64StringFromCanvasWithBackground: function(backgroundColor) {
+
+            if (!this.canvasNode) return null;
+            var context = this.canvasNode.getContext('2d');
+            var canvas = context.canvas;
+            //cache height and width        
+            var w = canvas.width;
+            var h = canvas.height;
+            //get the current ImageData for the canvas.
+            var data = context.getImageData(0, 0, w, h);
+            //store the current globalCompositeOperation
+            var compositeOperation = context.globalCompositeOperation;
+            //set to draw behind current content
+            context.globalCompositeOperation = "destination-over";
+            //set background color
+            context.fillStyle = backgroundColor;
+            //draw background / rect on entire canvas
+            context.fillRect(0, 0, w, h);
+            //get the image data from the canvas
+            var imageData = canvas.toDataURL("image/jpeg");
+            //clear the canvas
+            context.clearRect(0, 0, w, h);
+            //restore it with original / cached ImageData
+            context.putImageData(data, 0, 0);
+            //reset the globalCompositeOperation to what it was
+            context.globalCompositeOperation = compositeOperation;
+
+            return imageData;
         }
 
     });
