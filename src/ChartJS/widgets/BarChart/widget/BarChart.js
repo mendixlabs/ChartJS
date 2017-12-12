@@ -12,6 +12,7 @@ define([
 
         _processData : function () {
             logger.debug(this.id + "._processData");
+            console.log(this);
             var sets = [],
                 points = null,
                 set = {
@@ -58,8 +59,12 @@ define([
                 label = set.dataset.get(this.datasetlabel);
 
                 for (i = 0; i < set.points.length; i++) {
-                    if (!xlabelsSet) {
-                        xlabels.push(((this.scaleShowLabelsBottom === true) ? set.points[i].get(this.seriesxlabel) : ""));
+                    var xlabel = ((this.scaleShowLabelsBottom === true) ? set.points[i].get(this.seriesxlabel) : "");
+                    // if (!xlabelsSet) {
+                    //     xlabels.push(xlabel);
+                    // }
+                    if ("" !== xlabel && -1 === xlabels.indexOf(xlabel)) {
+                        xlabels.push(xlabel);
                     }
 
                     points.push(+(set.points[i].get(this.seriesylabel))); // Convert to integer, so the stackedbar doesnt break!
