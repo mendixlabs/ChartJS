@@ -712,24 +712,12 @@ define([
             }
         },
 
-        /**
-         * Get Base64 String From Canvas Node with Background
-         * ---
-         * @since Dec 7, 2017 
-         * + returns null if the canvasNode is undefined
-         * @author Conner Charlebois
-         * @since  10 Nov, 2017
-         * @param   {String} backgroundColor - CSS color for the background fill
-         * @returns {String} - the base64 String with the background fill applied.
-         * @see https://stackoverflow.com/a/44174406/1513051
-         * 
-         */
         _getBase64StringFromCanvasWithBackground: function(backgroundColor) {
 
             if (!this.canvasNode) return null;
             var context = this.canvasNode.getContext('2d');
             var canvas = context.canvas;
-            //cache height and width        
+            //cache height and width
             var w = canvas.width;
             var h = canvas.height;
             //get the current ImageData for the canvas.

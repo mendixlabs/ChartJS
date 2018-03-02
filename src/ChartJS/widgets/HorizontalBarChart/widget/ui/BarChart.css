@@ -1,0 +1,47 @@
+.chartjs-node {
+    position: relative;
+}
+
+.legend-node {
+    width: 250px;
+    padding: 5px;
+}
+.legend-node ul {
+    padding: 5px 0 5px 15px;
+    margin: 0;
+}
+.legend-node ul span {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 4px;
+    margin-right: 8px;
+}
+.legend-node ul li {
+    list-style-type : none;
+    cursor: pointer;
+}
+.legend-node ul li.legend-inactive {
+    opacity: 0.5;
+    filter:Alpha(opacity=50);
+}
+
+.chartjs-custom-tooltip {
+    position: absolute;
+    top: -50px;
+    left: -40px;
+    opacity: 0;
+}
+.chartjs-custom-tooltip .triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 25px 15px 25px;
+    border-color: transparent transparent #f1f1f1 transparent;
+}
+.chartjs-custom-tooltip .content {
+    border-color: #f1f1f1;
+    display: inline-block;
+    padding: 10px;
+    background-color: #f1f1f1;
+}
