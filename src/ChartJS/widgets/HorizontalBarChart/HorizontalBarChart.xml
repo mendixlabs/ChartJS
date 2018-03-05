@@ -361,6 +361,11 @@ Note: This is experimental. In case of non-persistent objects this should not be
             <category>Settings Bar Chart</category>
             <description>Pixel width of the bar stroke.</description>
         </property>
+        <property key="horizontalStackedBar" type="boolean" required="true" defaultValue="false">
+            <caption>Horizontal Stacked Bar</caption>
+            <category>Settings (Stacked) Bar Chart</category>
+            <description>Create a horizontal stacked bar chart.</description>
+        </property>
         <property key="barValueSpacing" type="string" required="true" defaultValue="5">
             <caption>Bar X Spacing</caption>
             <category>Settings (Stacked) Bar Chart</category>

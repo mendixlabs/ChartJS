@@ -8,6 +8,8 @@ define([
 
     return declare("ChartJS.widgets.HorizontalBarChart.widget.HorizontalBarChart", [ Core ], {
 
+        horizontalStackedBar: false,
+
         _chartType: "horizontalBar"
 
     });

@@ -8,6 +8,8 @@ define([
 
     return declare("ChartJS.widgets.BarChart.widget.BarChart", [ Core ], {
 
+        horizontalStackedBar: false,
+
         _chartType: "bar",
 
         _processData : function () {
@@ -125,7 +127,7 @@ define([
                                     display: this.scaleShowVerticalLines,
                                     color: this.scaleGridLineColor,
                                     lineWidth: this.scaleLineWidth
-                                },
+                                }
                             }],
                             yAxes: [{
                                 display: this.scaleShow,
@@ -143,7 +145,7 @@ define([
                                     display: this.scaleShowHorizontalLines,
                                     color: this.scaleGridLineColor,
                                     lineWidth: this.scaleLineWidth
-                                },
+                                }
                             }]
                         },
 
@@ -172,6 +174,11 @@ define([
                         }
                     })
                 };
+
+                if (this.horizontalStackedBar) {
+                    chartProperties.options.scales.yAxes[0].stacked = true;
+                    chartProperties.options.scales.xAxes[0].stacked = true;
+                }
 
                 if (this.scaleBeginAtZero) {
                     chartProperties.options.scales.yAxes[0].ticks.suggestedMin = 0;
