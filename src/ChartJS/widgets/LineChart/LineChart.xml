@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<widget id="ChartJS.widgets.LineChart.widget.LineChart" needsEntityContext="true" 
+<widget id="ChartJS.widgets.LineChart.widget.LineChart" needsEntityContext="true"
     xmlns="http://www.mendix.com/widget/1.0/">
     <name>ChartJS - Line Chart</name>
     <description>.</description>
@@ -399,11 +399,6 @@
             <caption>Scale line width</caption>
             <category>Settings Line Chart</category>
             <description>The scale line width.</description>
-        </property>
-        <property key="scaleLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.1)">
-            <caption>Scale line color</caption>
-            <category>Settings Line Chart</category>
-            <description>The scale line color.</description>
         </property>
     </properties>
 </widget>
