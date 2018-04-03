@@ -335,6 +335,11 @@ Note: This is experimental. In case of non-persistent objects this should not be
             <category>Settings</category>
             <description>Whether to show labels on the y-axis scale.</description>
         </property>
+        <property key="scaleLineWidth" type="string" required="true" defaultValue="1.0">
+            <caption>Scale line width</caption>
+            <category>Settings</category>
+            <description>The scale line width.</description>
+        </property>
         <property key="showTooltips" type="boolean" required="true" defaultValue="true">
             <caption>Show tooltip</caption>
             <category>Settings</category>
@@ -349,42 +354,6 @@ Note: This is experimental. In case of non-persistent objects this should not be
             <caption>Maintain aspect ratio</caption>
             <category>Settings</category>
             <description>Maintain the aspect ratio?</description>
-        </property>
-        <!-- Bar chart settings -->
-        <property key="barShowStroke" type="boolean" required="true" defaultValue="true">
-            <caption>Bar show stroke</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>If there is a stroke on each bar.</description>
-        </property>
-        <property key="barStrokeWidth" type="string" required="true" defaultValue="2">
-            <caption>Bar stroke width</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>Pixel width of the bar stroke.</description>
-        </property>
-        <property key="barValueSpacing" type="string" required="true" defaultValue="5">
-            <caption>Bar X Spacing</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>Spacing between each of the X value sets.</description>
-        </property>
-        <property key="barDatasetSpacing" type="string" required="true" defaultValue="1">
-            <caption>Bar dataset spacing</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>Spacing between data sets within X values.</description>
-        </property>
-        <property key="relativeBars" type="boolean" required="true" defaultValue="false">
-            <caption>Relative Bars</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>Whether bars should be rendered on a percentage base.</description>
-        </property>
-        <property key="scaleLineWidth" type="string" required="true" defaultValue="1.0">
-            <caption>Scale line width</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>The scale line width.</description>
-        </property>
-        <property key="scaleLineColor" type="string" required="true" defaultValue="rgba(0,0,0,.1)">
-            <caption>Scale line color</caption>
-            <category>Settings Stacked Bar Chart</category>
-            <description>The scale line color.</description>
         </property>
     </properties>
 </widget>

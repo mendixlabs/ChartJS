@@ -11,10 +11,12 @@ test/.project
 *.lock
 .idea/
 
-dist/
+build/
 
 node_modules/
-.editorconfig
+
 *DS_Store*
 .vscode/
 *.bak
+
+yarn-error.log

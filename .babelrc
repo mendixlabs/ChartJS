@@ -1,0 +1,14 @@
+{
+    "presets": [
+        "stage-1",
+        ["env", {
+            "modules": false
+        }]
+    ],
+    "plugins": [
+        ["transform-runtime", {
+            "polyfill": false,
+            "regenerator": true
+        }]
+    ]
+}
