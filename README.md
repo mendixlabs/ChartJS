@@ -1,4 +1,4 @@
-# Mendix ChartJS widget [![Support](https://img.shields.io/badge/Mendix%20Support%3A-Platform-green.svg)](https://docs.mendix.com/community/app-store/app-store-content-support)
+# Mendix ChartJS widget [![Support](https://img.shields.io/badge/Mendix%20Support%3A-Community-green.svg)](https://docs.mendix.com/community/app-store/app-store-content-support)
 
 This [widget](https://appstore.home.mendix.com/link/app/1712/Mendix/ChartJS-Widget) is a wrapper for the [ChartJS library](http://www.chartjs.org/) and you can use it to visualize your aggregated data.
 
